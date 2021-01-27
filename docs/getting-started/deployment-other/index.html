@@ -116,8 +116,22 @@ configuration is setup to connect to an external PostgreSQL Database.</p>
 
 <span class="hljs-keyword">CMD</span><span class="bash"> [<span class="hljs-string">"node"</span>, <span class="hljs-string">"packages/backend"</span>, <span class="hljs-string">"--config"</span>, <span class="hljs-string">"app-config.yaml"</span>, <span class="hljs-string">"--config"</span>, <span class="hljs-string">"app-config.production.yaml"</span>]</span>
 </code></pre>
-<p>You can add the Dockerfile to the root of your project, and run the following to
-build the container under a specified tag.</p>
+<p>Before building you should also include a <code>.dockerignore</code>. This will greatly
+improve the context boot up time of Docker as we are no longer sending all of
+the <code>node_modules</code> into the context. It also helps us avoid some limitations and
+errors that may occur when trying to share the <code>node_modules</code> folder to inside
+the build.</p>
+<p>You can add the following contents to the root of your repository at
+<code>.dockerignore</code> and it might look something like the following:</p>
+<pre><code class="hljs css language-dockerignore"><span class="hljs-string">.git</span>
+node_modules
+packages/*<span class="hljs-string">/node_modules</span>
+plugins/*<span class="hljs-string">/node_modules</span>
+plugins/*<span class="hljs-string">/dist</span>
+</code></pre>
+<p>Once you have added both the <code>Dockerfile</code> and <code>.dockerignore</code> to the root of
+your project, and run the following to build the container under a specified
+tag.</p>
 <pre><code class="hljs css language-sh">$ docker build -t example-deployment .
 </code></pre>
 <p>To run the image locally you can run:</p>
