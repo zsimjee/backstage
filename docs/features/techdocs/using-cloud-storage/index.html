@@ -128,8 +128,7 @@ file's content and set as an environment variable. And then use</p>
     <span class="hljs-attr">type:</span> <span class="hljs-string">'googleGcs'</span>
     <span class="hljs-attr">googleGcs:</span>
       <span class="hljs-attr">bucketName:</span> <span class="hljs-string">'name-of-techdocs-storage-bucket'</span>
-      <span class="hljs-attr">credentials:</span>
-        <span class="hljs-string">$env:</span> <span class="hljs-string">GOOGLE_APPLICATION_CREDENTIALS</span>
+      <span class="hljs-attr">credentials:</span> <span class="hljs-string">${GOOGLE_APPLICATION_CREDENTIALS}</span>
 </code></pre>
 <p><strong>4. That's it!</strong></p>
 <p>Your Backstage app is now ready to use Google Cloud Storage for TechDocs, to
@@ -188,13 +187,10 @@ environment variables and the <code>~/.aws/credentials</code> config file.</p>
     <span class="hljs-attr">type:</span> <span class="hljs-string">'awsS3'</span>
     <span class="hljs-attr">awsS3:</span>
       <span class="hljs-attr">bucketName:</span> <span class="hljs-string">'name-of-techdocs-storage-bucket'</span>
-      <span class="hljs-attr">region:</span>
-        <span class="hljs-string">$env:</span> <span class="hljs-string">AWS_REGION</span>
+      <span class="hljs-attr">region:</span> <span class="hljs-string">${AWS_REGION}</span>
       <span class="hljs-attr">credentials:</span>
-        <span class="hljs-attr">accessKeyId:</span>
-          <span class="hljs-string">$env:</span> <span class="hljs-string">AWS_ACCESS_KEY_ID</span>
-        <span class="hljs-attr">secretAccessKey:</span>
-          <span class="hljs-string">$env:</span> <span class="hljs-string">AWS_SECRET_ACCESS_KEY</span>
+        <span class="hljs-attr">accessKeyId:</span> <span class="hljs-string">${AWS_ACCESS_KEY_ID}</span>
+        <span class="hljs-attr">secretAccessKey:</span> <span class="hljs-string">${AWS_SECRET_ACCESS_KEY}</span>
 </code></pre>
 <p>Refer to the
 <a href="https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/getting-your-credentials.html">official AWS documentation for obtaining the credentials</a>.</p>
@@ -207,8 +203,7 @@ to assume a role before accessing S3.</p>
     <span class="hljs-attr">type:</span> <span class="hljs-string">'awsS3'</span>
     <span class="hljs-attr">awsS3:</span>
       <span class="hljs-attr">bucketName:</span> <span class="hljs-string">'name-of-techdocs-storage-bucket'</span>
-      <span class="hljs-attr">region:</span>
-        <span class="hljs-string">$env:</span> <span class="hljs-string">AWS_REGION</span>
+      <span class="hljs-attr">region:</span> <span class="hljs-string">${AWS_REGION}</span>
       <span class="hljs-attr">credentials:</span>
         <span class="hljs-attr">roleArn:</span> <span class="hljs-string">arn:aws:iam::123456789012:role/my-backstage-role</span>
 </code></pre>
@@ -260,8 +255,7 @@ details.</p>
     <span class="hljs-attr">azureBlobStorage:</span>
       <span class="hljs-attr">containerName:</span> <span class="hljs-string">'name-of-techdocs-storage-bucket'</span>
       <span class="hljs-attr">credentials:</span>
-        <span class="hljs-attr">accountName:</span>
-          <span class="hljs-string">$env:</span> <span class="hljs-string">TECHDOCS_AZURE_BLOB_STORAGE_ACCOUNT_NAME</span>
+        <span class="hljs-attr">accountName:</span> <span class="hljs-string">${TECHDOCS_AZURE_BLOB_STORAGE_ACCOUNT_NAME}</span>
 </code></pre>
 <p><strong>3b. Authentication using app-config.yaml</strong></p>
 <p>If you do not prefer (3a) and optionally like to use a service account, you can
@@ -276,10 +270,8 @@ for more details.</p>
     <span class="hljs-attr">azureBlobStorage:</span>
       <span class="hljs-attr">containerName:</span> <span class="hljs-string">'name-of-techdocs-storage-bucket'</span>
       <span class="hljs-attr">credentials:</span>
-        <span class="hljs-attr">accountName:</span>
-          <span class="hljs-string">$env:</span> <span class="hljs-string">TECHDOCS_AZURE_BLOB_STORAGE_ACCOUNT_NAME</span>
-        <span class="hljs-attr">accountKey:</span>
-          <span class="hljs-string">$env:</span> <span class="hljs-string">TECHDOCS_AZURE_BLOB_STORAGE_ACCOUNT_KEY</span>
+        <span class="hljs-attr">accountName:</span> <span class="hljs-string">${TECHDOCS_AZURE_BLOB_STORAGE_ACCOUNT_NAME}</span>
+        <span class="hljs-attr">accountKey:</span> <span class="hljs-string">${TECHDOCS_AZURE_BLOB_STORAGE_ACCOUNT_KEY}</span>
 </code></pre>
 <p><strong>4. That's it!</strong></p>
 <p>Your Backstage app is now ready to use Azure Blob Storage for TechDocs, to store
@@ -321,20 +313,13 @@ for more details.</p>
     <span class="hljs-attr">openStackSwift:</span>
       <span class="hljs-attr">containerName:</span> <span class="hljs-string">'name-of-techdocs-storage-bucket'</span>
       <span class="hljs-attr">credentials:</span>
-        <span class="hljs-attr">userName:</span>
-          <span class="hljs-string">$env:</span> <span class="hljs-string">OPENSTACK_SWIFT_STORAGE_USERNAME</span>
-        <span class="hljs-attr">password:</span>
-          <span class="hljs-string">$env:</span> <span class="hljs-string">OPENSTACK_SWIFT_STORAGE_PASSWORD</span>
-      <span class="hljs-attr">authUrl:</span>
-        <span class="hljs-string">$env:</span> <span class="hljs-string">OPENSTACK_SWIFT_STORAGE_AUTH_URL</span>
-      <span class="hljs-attr">keystoneAuthVersion:</span>
-        <span class="hljs-string">$env:</span> <span class="hljs-string">OPENSTACK_SWIFT_STORAGE_AUTH_VERSION</span>
-      <span class="hljs-attr">domainId:</span>
-        <span class="hljs-string">$env:</span> <span class="hljs-string">OPENSTACK_SWIFT_STORAGE_DOMAIN_ID</span>
-      <span class="hljs-attr">domainName:</span>
-        <span class="hljs-string">$env:</span> <span class="hljs-string">OPENSTACK_SWIFT_STORAGE_DOMAIN_NAME</span>
-      <span class="hljs-attr">region:</span>
-        <span class="hljs-string">$env:</span> <span class="hljs-string">OPENSTACK_SWIFT_STORAGE_REGION</span>
+        <span class="hljs-attr">userName:</span> <span class="hljs-string">${OPENSTACK_SWIFT_STORAGE_USERNAME}</span>
+        <span class="hljs-attr">password:</span> <span class="hljs-string">${OPENSTACK_SWIFT_STORAGE_PASSWORD}</span>
+      <span class="hljs-attr">authUrl:</span> <span class="hljs-string">${OPENSTACK_SWIFT_STORAGE_AUTH_URL}</span>
+      <span class="hljs-attr">keystoneAuthVersion:</span> <span class="hljs-string">${OPENSTACK_SWIFT_STORAGE_AUTH_VERSION}</span>
+      <span class="hljs-attr">domainId:</span> <span class="hljs-string">${OPENSTACK_SWIFT_STORAGE_DOMAIN_ID}</span>
+      <span class="hljs-attr">domainName:</span> <span class="hljs-string">${OPENSTACK_SWIFT_STORAGE_DOMAIN_NAME}</span>
+      <span class="hljs-attr">region:</span> <span class="hljs-string">${OPENSTACK_SWIFT_STORAGE_REGION}</span>
 </code></pre>
 <p><strong>4. That's it!</strong></p>
 <p>Your Backstage app is now ready to use OpenStack Swift Storage for TechDocs, to

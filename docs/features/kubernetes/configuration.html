@@ -78,8 +78,7 @@
         <span class="hljs-bullet">-</span> <span class="hljs-attr">url:</span> <span class="hljs-string">http://127.0.0.1:9999</span>
           <span class="hljs-attr">name:</span> <span class="hljs-string">minikube</span>
           <span class="hljs-attr">authProvider:</span> <span class="hljs-string">'serviceAccount'</span>
-          <span class="hljs-attr">serviceAccountToken:</span>
-            <span class="hljs-string">$env:</span> <span class="hljs-string">K8S_MINIKUBE_TOKEN</span>
+          <span class="hljs-attr">serviceAccountToken:</span> <span class="hljs-string">${K8S_MINIKUBE_TOKEN}</span>
         <span class="hljs-bullet">-</span> <span class="hljs-attr">url:</span> <span class="hljs-string">http://127.0.0.2:9999</span>
           <span class="hljs-attr">name:</span> <span class="hljs-string">aws-cluster-1</span>
           <span class="hljs-attr">authProvider:</span> <span class="hljs-string">'aws'</span>

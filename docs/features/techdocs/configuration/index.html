@@ -120,22 +120,18 @@ configuration options for TechDocs.</p>
       <span class="hljs-comment"># https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/loading-node-credentials-environment.html</span>
       <span class="hljs-comment"># https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/loading-node-credentials-shared.html</span>
       <span class="hljs-attr">credentials:</span>
-        <span class="hljs-attr">accessKeyId:</span>
-          <span class="hljs-string">$env:</span> <span class="hljs-string">TECHDOCS_AWSS3_ACCESS_KEY_ID_CREDENTIAL</span>
-        <span class="hljs-attr">secretAccessKey:</span>
-          <span class="hljs-string">$env:</span> <span class="hljs-string">TECHDOCS_AWSS3_SECRET_ACCESS_KEY_CREDENTIAL</span>
+        <span class="hljs-attr">accessKeyId:</span> <span class="hljs-string">${TECHDOCS_AWSS3_ACCESS_KEY_ID_CREDENTIAL}</span>
+        <span class="hljs-attr">secretAccessKey:</span> <span class="hljs-string">${TECHDOCS_AWSS3_SECRET_ACCESS_KEY_CREDENTIAL}</span>
 
       <span class="hljs-comment"># (Optional) AWS Region of the bucket.</span>
       <span class="hljs-comment"># If not set, AWS_REGION environment variable or aws config file will be used.</span>
       <span class="hljs-comment"># https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/setting-region.html</span>
-      <span class="hljs-attr">region:</span>
-        <span class="hljs-string">$env:</span> <span class="hljs-string">AWS_REGION</span>
+      <span class="hljs-attr">region:</span> <span class="hljs-string">${AWS_REGION}</span>
 
       <span class="hljs-comment"># (Optional) Endpoint URI to send requests to.</span>
       <span class="hljs-comment"># If not set, the default endpoint is built from the configured region.</span>
       <span class="hljs-comment"># https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#constructor-property</span>
-      <span class="hljs-attr">endpoint:</span>
-        <span class="hljs-string">$env:</span> <span class="hljs-string">AWS_ENDPOINT</span>
+      <span class="hljs-attr">endpoint:</span> <span class="hljs-string">${AWS_ENDPOINT}</span>
 
     <span class="hljs-comment"># Required when techdocs.publisher.type is set to 'azureBlobStorage'. Skip otherwise.</span>
 
@@ -146,13 +142,11 @@ configuration options for TechDocs.</p>
       <span class="hljs-comment"># (Required) An account name is required to write to a storage blob container.</span>
       <span class="hljs-comment"># https://docs.microsoft.com/en-us/rest/api/storageservices/authorize-with-shared-key</span>
       <span class="hljs-attr">credentials:</span>
-        <span class="hljs-attr">accountName:</span>
-          <span class="hljs-string">$env:</span> <span class="hljs-string">TECHDOCS_AZURE_BLOB_STORAGE_ACCOUNT_NAME</span>
+        <span class="hljs-attr">accountName:</span> <span class="hljs-string">${TECHDOCS_AZURE_BLOB_STORAGE_ACCOUNT_NAME}</span>
         <span class="hljs-comment"># (Optional) An account key is required to write to a storage container.</span>
         <span class="hljs-comment"># If missing,AZURE_TENANT_ID, AZURE_CLIENT_ID, AZURE_CLIENT_SECRET environment variable will be used.</span>
         <span class="hljs-comment"># https://docs.microsoft.com/en-us/azure/storage/common/storage-auth?toc=/azure/storage/blobs/toc.json</span>
-        <span class="hljs-attr">accountKey:</span>
-          <span class="hljs-string">$env:</span> <span class="hljs-string">TECHDOCS_AZURE_BLOB_STORAGE_ACCOUNT_KEY</span>
+        <span class="hljs-attr">accountKey:</span> <span class="hljs-string">${TECHDOCS_AZURE_BLOB_STORAGE_ACCOUNT_KEY}</span>
 
   <span class="hljs-comment"># (Optional and Legacy) TechDocs makes API calls to techdocs-backend using this URL. e.g. get docs of an entity, get metadata, etc.</span>
   <span class="hljs-comment"># You don't have to specify this anymore.</span>

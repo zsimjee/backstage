@@ -129,44 +129,31 @@ of the operation. Also this URL is used to verify that authentication requests
 are coming from only this endpoint.</p>
 <p>These values are configured via the <code>app-config.yaml</code> present in the root of
 your app folder.</p>
-<pre><code class="hljs">auth:
-  provider<span class="hljs-variable">s:</span>
-    google:
-      developmen<span class="hljs-variable">t:</span>
-        clientId:
-          $<span class="hljs-keyword">en</span><span class="hljs-variable">v:</span> AUTH_GOOGLE_CLIENT_ID
-        clientSecre<span class="hljs-variable">t:</span>
-          $<span class="hljs-keyword">en</span><span class="hljs-variable">v:</span> AUTH_GOOGLE_CLIENT_SECRET
-    githu<span class="hljs-variable">b:</span>
-      developmen<span class="hljs-variable">t:</span>
-        clientId:
-          $<span class="hljs-keyword">en</span><span class="hljs-variable">v:</span> AUTH_GITHUB_CLIENT_ID
-        clientSecre<span class="hljs-variable">t:</span>
-          $<span class="hljs-keyword">en</span><span class="hljs-variable">v:</span> AUTH_GITHUB_CLIENT_SECRET
-        enterpriseInstanceUr<span class="hljs-variable">l:</span>
-          $<span class="hljs-keyword">en</span><span class="hljs-variable">v:</span> AUTH_GITHUB_ENTERPRISE_INSTANCE_URL
-    gitla<span class="hljs-variable">b:</span>
-      developmen<span class="hljs-variable">t:</span>
-        clientId:
-          $<span class="hljs-keyword">en</span><span class="hljs-variable">v:</span>
-    oauth2:
-      developmen<span class="hljs-variable">t:</span>
-        clientId:
-          $<span class="hljs-keyword">en</span><span class="hljs-variable">v:</span> AUTH_OAUTH2_CLIENT_ID
-        clientSecre<span class="hljs-variable">t:</span>
-          $<span class="hljs-keyword">en</span><span class="hljs-variable">v:</span> AUTH_OAUTH2_CLIENT_SECRET
-        authorizationUr<span class="hljs-variable">l:</span>
-          $<span class="hljs-keyword">en</span><span class="hljs-variable">v:</span> AUTH_OAUTH2_AUTH_URL
-        tokenUr<span class="hljs-variable">l:</span>
-          $<span class="hljs-keyword">en</span><span class="hljs-variable">v:</span> AUTH_OAUTH2_TOKEN_URL
-        scope:
-          $<span class="hljs-keyword">en</span><span class="hljs-variable">v:</span> AUTH_OAUTH2_SCOPE
-    sam<span class="hljs-variable">l:</span>
-      entryPoin<span class="hljs-variable">t:</span>
-        $<span class="hljs-keyword">en</span><span class="hljs-variable">v:</span> AUTH_SAML_ENTRY_POINT
-      issuer:
-        $<span class="hljs-keyword">en</span><span class="hljs-variable">v:</span> AUTH_SAML_ISSUER
-            ...
+<pre><code class="hljs"><span class="hljs-symbol">auth:</span>
+<span class="hljs-symbol">  providers:</span>
+<span class="hljs-symbol">    google:</span>
+<span class="hljs-symbol">      development:</span>
+<span class="hljs-symbol">        clientId:</span> ${AUTH_GOOGLE_CLIENT_ID}
+<span class="hljs-symbol">        clientSecret:</span> ${AUTH_GOOGLE_CLIENT_SECRET}
+<span class="hljs-symbol">    github:</span>
+<span class="hljs-symbol">      development:</span>
+<span class="hljs-symbol">        clientId:</span> ${AUTH_GITHUB_CLIENT_ID}
+<span class="hljs-symbol">        clientSecret:</span> ${AUTH_GITHUB_CLIENT_SECRET}
+<span class="hljs-symbol">        enterpriseInstanceUrl:</span> ${AUTH_GITHUB_ENTERPRISE_INSTANCE_URL}
+<span class="hljs-symbol">    gitlab:</span>
+<span class="hljs-symbol">      development:</span>
+<span class="hljs-symbol">        clientId:</span> ${AUTH_GITLAB_CLIENT_ID}
+<span class="hljs-symbol">    oauth2:</span>
+<span class="hljs-symbol">      development:</span>
+<span class="hljs-symbol">        clientId:</span> ${AUTH_OAUTH2_CLIENT_ID}
+<span class="hljs-symbol">        clientSecret:</span> ${AUTH_OAUTH2_CLIENT_SECRET}
+<span class="hljs-symbol">        authorizationUrl:</span> ${AUTH_OAUTH2_AUTH_URL}
+<span class="hljs-symbol">        tokenUrl:</span> ${AUTH_OAUTH2_TOKEN_URL}
+<span class="hljs-symbol">        scope:</span> ${AUTH_OAUTH2_SCOPE}
+<span class="hljs-symbol">    saml:</span>
+<span class="hljs-symbol">      entryPoint:</span> ${AUTH_SAML_ENTRY_POINT}
+<span class="hljs-symbol">      issuer:</span> ${AUTH_SAML_ISSUER}
+    ...
 </code></pre>
 <h2><a class="anchor" aria-hidden="true" id="implementing-your-own-auth-wrapper"></a><a href="#implementing-your-own-auth-wrapper" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Implementing Your Own Auth Wrapper</h2>
 <p>The core interface of any auth wrapper is the <code>AuthProviderRouteHandlers</code>

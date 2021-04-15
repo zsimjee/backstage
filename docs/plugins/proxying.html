@@ -87,8 +87,9 @@ const service = createServiceBuilder(<span class="hljs-keyword">module</span>)
   <span class="hljs-string">'/larger-example/v1'</span><span class="hljs-string">:</span>
     <span class="hljs-attr">target:</span> <span class="hljs-string">http://larger.example.com:8080/svc.v1</span>
     <span class="hljs-attr">headers:</span>
-      <span class="hljs-attr">Authorization:</span>
-        <span class="hljs-string">$env:</span> <span class="hljs-string">EXAMPLE_AUTH_HEADER</span>
+      <span class="hljs-attr">Authorization:</span> <span class="hljs-string">${EXAMPLE_AUTH_HEADER}</span>
+      <span class="hljs-comment"># ...or interpolating a value into part of a string,</span>
+      <span class="hljs-comment"># Authorization: Bearer ${EXAMPLE_AUTH_TOKEN}</span>
 </code></pre>
 <p>Each key under the proxy configuration entry is a route to match, below the
 prefix that the proxy plugin is mounted on. It must start with a slash. For

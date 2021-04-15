@@ -74,10 +74,8 @@ the credentials automatically.</p>
 <p>Explicit credentials can be set in the following format:</p>
 <pre><code class="hljs css language-yaml"><span class="hljs-attr">integrations:</span>
   <span class="hljs-attr">googleGcs:</span>
-    <span class="hljs-attr">clientEmail:</span>
-      <span class="hljs-string">$env:</span> <span class="hljs-string">GCS_CLIENT_EMAIL</span>
-    <span class="hljs-attr">privateKey:</span>
-      <span class="hljs-string">$env:</span> <span class="hljs-string">GCS_PRIVATE_KEY</span>
+    <span class="hljs-attr">clientEmail:</span> <span class="hljs-string">${GCS_CLIENT_EMAIL}</span>
+    <span class="hljs-attr">privateKey:</span> <span class="hljs-string">${GCS_PRIVATE_KEY}</span>
 </code></pre>
 <p>Then make sure the environment variables <code>GCS_CLIENT_EMAIL</code> and
 <code>GCS_PRIVATE_KEY</code> are set when you run Backstage.</p>

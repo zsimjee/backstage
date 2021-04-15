@@ -119,13 +119,10 @@ each provider and steps beyond that are common for all.</p>
   <span class="hljs-attr">providers:</span>
     <span class="hljs-attr">github:</span>
       <span class="hljs-attr">development:</span>
-        <span class="hljs-attr">clientId:</span>
-          <span class="hljs-string">$env:</span> <span class="hljs-string">AUTH_GITHUB_CLIENT_ID</span>
-        <span class="hljs-attr">clientSecret:</span>
-          <span class="hljs-string">$env:</span> <span class="hljs-string">AUTH_GITHUB_CLIENT_SECRET</span>
-        <span class="hljs-comment">## uncomment the following two lines if using enterprise</span>
-        <span class="hljs-comment"># enterpriseInstanceUrl:</span>
-        <span class="hljs-comment">#  $env: AUTH_GITHUB_ENTERPRISE_INSTANCE_URL</span>
+        <span class="hljs-attr">clientId:</span> <span class="hljs-string">${AUTH_GITHUB_CLIENT_ID}</span>
+        <span class="hljs-attr">clientSecret:</span> <span class="hljs-string">${AUTH_GITHUB_CLIENT_SECRET}</span>
+        <span class="hljs-comment">## uncomment the following line if using enterprise</span>
+        <span class="hljs-comment"># enterpriseInstanceUrl: ${AUTH_GITHUB_ENTERPRISE_INSTANCE_URL}</span>
 </code></pre>
 <h3><a class="anchor" aria-hidden="true" id="2-generate-a-github-client-id-and-secret"></a><a href="#2-generate-a-github-client-id-and-secret" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>2. Generate a GitHub client ID and secret</h3>
 <ul>
@@ -153,10 +150,8 @@ environment variables defined in the <code>app-config.yaml</code> file,
   <span class="hljs-attr">providers:</span>
     <span class="hljs-attr">gitlab:</span>
       <span class="hljs-attr">development:</span>
-        <span class="hljs-attr">clientId:</span>
-          <span class="hljs-string">$env:</span> <span class="hljs-string">AUTH_GITLAB_CLIENT_ID</span>
-        <span class="hljs-attr">clientSecret:</span>
-          <span class="hljs-string">$env:</span> <span class="hljs-string">AUTH_GITLAB_CLIENT_SECRET</span>
+        <span class="hljs-attr">clientId:</span> <span class="hljs-string">${AUTH_GITLAB_CLIENT_ID}</span>
+        <span class="hljs-attr">clientSecret:</span> <span class="hljs-string">${AUTH_GITLAB_CLIENT_SECRET}</span>
         <span class="hljs-attr">audience:</span> <span class="hljs-string">https://gitlab.com</span> <span class="hljs-comment"># Or your self-hosted GitLab instance URL</span>
 </code></pre>
 <h3><a class="anchor" aria-hidden="true" id="2-generate-a-gitlab-application-client-id-and-secret"></a><a href="#2-generate-a-gitlab-application-client-id-and-secret" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>2. Generate a GitLab Application client ID and secret</h3>
@@ -196,10 +191,8 @@ environment variables defined in the <code>app-config.yaml</code> file,
   <span class="hljs-attr">providers:</span>
     <span class="hljs-attr">google:</span>
       <span class="hljs-attr">development:</span>
-        <span class="hljs-attr">clientId:</span>
-          <span class="hljs-string">$env:</span> <span class="hljs-string">AUTH_GOOGLE_CLIENT_ID</span>
-        <span class="hljs-attr">clientSecret:</span>
-          <span class="hljs-string">$env:</span> <span class="hljs-string">AUTH_GOOGLE_CLIENT_SECRET</span>
+        <span class="hljs-attr">clientId:</span> <span class="hljs-string">${AUTH_GOOGLE_CLIENT_ID}</span>
+        <span class="hljs-attr">clientSecret:</span> <span class="hljs-string">${AUTH_GOOGLE_CLIENT_SECRET}</span>
 </code></pre>
 <h3><a class="anchor" aria-hidden="true" id="2-generate-google-credentials-in-google-cloud-console"></a><a href="#2-generate-google-credentials-in-google-cloud-console" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>2. Generate Google Credentials in Google Cloud console</h3>
 <ul>
@@ -231,12 +224,9 @@ those to environment variables defined in the <code>app-config.yaml</code> file,
   <span class="hljs-attr">providers:</span>
     <span class="hljs-attr">microsoft:</span>
       <span class="hljs-attr">development:</span>
-        <span class="hljs-attr">clientId:</span>
-          <span class="hljs-string">$env:</span> <span class="hljs-string">AUTH_MICROSOFT_CLIENT_ID</span>
-        <span class="hljs-attr">clientSecret:</span>
-          <span class="hljs-string">$env:</span> <span class="hljs-string">AUTH_MICROSOFT_CLIENT_SECRET</span>
-        <span class="hljs-attr">tenantId:</span>
-          <span class="hljs-string">$env:</span> <span class="hljs-string">AUTH_MICROSOFT_TENANT_ID</span>
+        <span class="hljs-attr">clientId:</span> <span class="hljs-string">${AUTH_MICROSOFT_CLIENT_ID}</span>
+        <span class="hljs-attr">clientSecret:</span> <span class="hljs-string">${AUTH_MICROSOFT_CLIENT_SECRET}</span>
+        <span class="hljs-attr">tenantId:</span> <span class="hljs-string">${AUTH_MICROSOFT_TENANT_ID}</span>
 </code></pre>
 <h3><a class="anchor" aria-hidden="true" id="2-create-a-microsoft-app-registration-in-microsoft-portal"></a><a href="#2-create-a-microsoft-app-registration-in-microsoft-portal" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>2. Create a Microsoft App Registration in Microsoft Portal</h3>
 <ul>
@@ -270,12 +260,9 @@ created.</li>
   <span class="hljs-attr">providers:</span>
     <span class="hljs-attr">auth0:</span>
       <span class="hljs-attr">development:</span>
-        <span class="hljs-attr">clientId:</span>
-          <span class="hljs-string">$env:</span> <span class="hljs-string">AUTH_AUTH0_CLIENT_ID</span>
-        <span class="hljs-attr">clientSecret:</span>
-          <span class="hljs-string">$env:</span> <span class="hljs-string">AUTH_AUTH0_CLIENT_SECRET</span>
-        <span class="hljs-attr">domain:</span>
-          <span class="hljs-string">$env:</span> <span class="hljs-string">AUTH_AUTH0_DOMAIN_ID</span>
+        <span class="hljs-attr">clientId:</span> <span class="hljs-string">${AUTH_AUTH0_CLIENT_ID}</span>
+        <span class="hljs-attr">clientSecret:</span> <span class="hljs-string">${AUTH_AUTH0_CLIENT_SECRET}</span>
+        <span class="hljs-attr">domain:</span> <span class="hljs-string">${AUTH_AUTH0_DOMAIN_ID}</span>
 </code></pre>
 <h3><a class="anchor" aria-hidden="true" id="2-create-an-auth0-application-in-the-auth0-management-console"></a><a href="#2-create-an-auth0-application-in-the-auth0-management-console" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>2. Create an Auth0 application in the Auth0 management console</h3>
 <ul>
