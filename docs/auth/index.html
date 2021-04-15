@@ -105,14 +105,14 @@ the local <code>auth.environment</code> setting will be selected.</p>
 <p>After configuring an authentication provider, the <code>app</code> frontend package needs a
 small update to show this provider as a login option. The <code>SignInPage</code> component
 handles this, and takes either a <code>provider</code> or <code>providers</code> (array) prop of
-<code>SignInConfig</code> definitions.</p>
+<code>SignInProviderConfig</code> definitions.</p>
 <p>These reference the <a href="/docs/reference/utility-apis/README">ApiRef</a> exported by
 the provider. Again, an example using GitHub that can be adapted to any of the
 built-in providers:</p>
 <pre><code class="hljs css language-diff"># packages/app/src/App.tsx
-<span class="hljs-addition">+ import { githubAuthApiRef, SignInConfig, SignInPage } from '@backstage/core';</span>
+<span class="hljs-addition">+ import { githubAuthApiRef, SignInProviderConfig, SignInPage } from '@backstage/core';</span>
 
-<span class="hljs-addition">+ const githubProvider: SignInConfig = {</span>
+<span class="hljs-addition">+ const githubProvider: SignInProviderConfig = {</span>
 <span class="hljs-addition">+  id: 'github-auth-provider',</span>
 <span class="hljs-addition">+  title: 'GitHub',</span>
 <span class="hljs-addition">+  message: 'Sign in using GitHub',</span>
