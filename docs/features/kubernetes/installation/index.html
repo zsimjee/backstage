@@ -75,12 +75,8 @@ package.</p>
 <span class="hljs-built_in">cd</span> packages/app
 yarn add @backstage/plugin-kubernetes
 </code></pre>
-<p>Once the package has been installed, you need to import the plugin in your app.
-Add the following to <code>packages/app/src/plugins.ts</code>:</p>
-<p><code>plugins.ts</code>:</p>
-<pre><code class="hljs css language-typescript"><span class="hljs-keyword">export</span> { plugin <span class="hljs-keyword">as</span> Kubernetes } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/plugin-kubernetes'</span>;
-</code></pre>
-<p>Now, add the &quot;Kubernetes&quot; tab to the catalog entity page. In
+<p>Once the package has been installed, you need to import the plugin in your app
+by adding the &quot;Kubernetes&quot; tab to the catalog entity page. In
 <code>packages/app/src/components/catalog/EntityPage.tsx</code>, you'll add a router to get
 to the tab, and add the tab itself.</p>
 <p><code>EntityPage.tsx</code>:</p>

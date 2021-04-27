@@ -81,13 +81,7 @@ package.json. Backstage Apps are set up as monorepos with
 <a href="https://classic.yarnpkg.com/en/docs/workspaces/">yarn workspaces</a>. Since
 CircleCI is a frontend UI plugin, it goes in <code>app</code> rather than <code>backend</code>.</p>
 <ol start="2">
-<li>Add the plugin itself to the App:</li>
-</ol>
-<pre><code class="hljs css language-js"><span class="hljs-comment">// packages/app/src/plugins.ts</span>
-<span class="hljs-keyword">export</span> { plugin <span class="hljs-keyword">as</span> CircleCi } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/plugin-circleci'</span>;
-</code></pre>
-<ol start="3">
-<li>Register the plugin in the entity pages:</li>
+<li>Add the <code>EntityCircleCIContent</code> extension to the entity pages in the app:</li>
 </ol>
 <pre><code class="hljs css language-diff"> // packages/app/src/components/catalog/EntityPage.tsx
 <span class="hljs-addition">+import {</span>

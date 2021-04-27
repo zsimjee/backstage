@@ -80,11 +80,8 @@ Navigate to your new Backstage application directory. And then to your
 yarn add @backstage/plugin-techdocs
 </code></pre>
 <p>Once the package has been installed, you need to import the plugin in your app.</p>
-<p>Add the following to <code>packages/app/src/plugins.ts</code>:</p>
-<pre><code class="hljs css language-typescript"><span class="hljs-keyword">export</span> { plugin <span class="hljs-keyword">as</span> TechDocs } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/plugin-techdocs'</span>;
-</code></pre>
-<p>Now we can add a route for the TechDocs page. In <code>packages/app/src/App.tsx</code>,
-import TechDocsPage and add the following to <code>FlatRoutes</code>:</p>
+<p>In <code>packages/app/src/App.tsx</code>, import <code>TechDocsPage</code> and add the following to
+<code>FlatRoutes</code>:</p>
 <pre><code class="hljs css language-tsx"><span class="hljs-keyword">import</span> { TechDocsPage } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/plugin-techdocs'</span>;
 
 <span class="hljs-regexp">//</span> ...
