@@ -83,7 +83,7 @@ const service = createServiceBuilder(<span class="hljs-keyword">module</span>)
 <p>Example:</p>
 <pre><code class="hljs css language-yaml"><span class="hljs-comment"># in app-config.yaml</span>
 <span class="hljs-attr">proxy:</span>
-  <span class="hljs-string">'/simple-example'</span><span class="hljs-string">:</span> <span class="hljs-string">http://simple.example.com:8080</span>
+  <span class="hljs-attr">simple-example:</span> <span class="hljs-string">http://simple.example.com:8080</span>
   <span class="hljs-string">'/larger-example/v1'</span><span class="hljs-string">:</span>
     <span class="hljs-attr">target:</span> <span class="hljs-string">http://larger.example.com:8080/svc.v1</span>
     <span class="hljs-attr">headers:</span>
@@ -92,10 +92,11 @@ const service = createServiceBuilder(<span class="hljs-keyword">module</span>)
       <span class="hljs-comment"># Authorization: Bearer ${EXAMPLE_AUTH_TOKEN}</span>
 </code></pre>
 <p>Each key under the proxy configuration entry is a route to match, below the
-prefix that the proxy plugin is mounted on. It must start with a slash. For
-example, if the backend mounts the proxy plugin as <code>/proxy</code>, the above
-configuration will lead to the proxy acting on backend requests to
-<code>/api/proxy/simple-example/...</code> and <code>/api/proxy/larger-example/v1/...</code>.</p>
+prefix that the proxy plugin is mounted on. If it does not start with a slash,
+one will be prefixed automatically. For example, if the backend mounts the proxy
+plugin as <code>/proxy</code>, the above configuration will lead to the proxy acting on
+backend requests to <code>/api/proxy/simple-example/...</code> and
+<code>/api/proxy/larger-example/v1/...</code>.</p>
 <p>The value inside each route is either a simple URL string, or an object on the
 format accepted by
 <a href="https://www.npmjs.com/package/http-proxy-middleware">http-proxy-middleware</a>.</p>
