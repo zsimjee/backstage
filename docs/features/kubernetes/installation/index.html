@@ -65,50 +65,43 @@
         </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/backstage/backstage/edit/master/docs/features/kubernetes/installation.md" target="_blank" rel="noreferrer noopener">Edit</a><h1 id="__docusaurus" class="postHeaderTitle">Installation</h1></header><article><div><span><p>The Kubernetes feature is a plugin to Backstage, and it is exposed as a tab when
 viewing entities in the software catalog.</p>
 <p>If you haven't setup Backstage already, read the
-<a href="/docs/getting-started/">Getting Started</a>.</p>
+<a href="/docs/getting-started/">Getting Started</a> guide.</p>
 <h2><a class="anchor" aria-hidden="true" id="adding-the-kubernetes-frontend-plugin"></a><a href="#adding-the-kubernetes-frontend-plugin" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Adding the Kubernetes frontend plugin</h2>
-<p>The first step is to add the frontend Kubernetes plugin to your Backstage
-application. Navigate to your new Backstage application directory. And then to
+<p>The first step is to add the Kubernetes frontend plugin to your Backstage
+application. Navigate to your new Backstage application directory, and then to
 your <code>packages/app</code> directory, and install the <code>@backstage/plugin-kubernetes</code>
 package.</p>
-<pre><code class="hljs css language-bash"><span class="hljs-built_in">cd</span> my-backstage-app/
+<pre><code class="hljs css language-bash"><span class="hljs-comment"># From your Backstage root directory</span>
 <span class="hljs-built_in">cd</span> packages/app
 yarn add @backstage/plugin-kubernetes
 </code></pre>
 <p>Once the package has been installed, you need to import the plugin in your app
-by adding the &quot;Kubernetes&quot; tab to the catalog entity page. In
-<code>packages/app/src/components/catalog/EntityPage.tsx</code>, you'll add a router to get
-to the tab, and add the tab itself.</p>
-<p><code>EntityPage.tsx</code>:</p>
-<pre><code class="hljs css language-tsx"><span class="hljs-keyword">import</span> { Router <span class="hljs-keyword">as</span> KubernetesRouter } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/plugin-kubernetes'</span>;
+by adding the &quot;Kubernetes&quot; tab to the respective catalog pages.</p>
+<pre><code class="hljs css language-tsx"><span class="hljs-comment">// In packages/app/src/components/catalog/EntityPage.tsx</span>
+<span class="hljs-keyword">import</span> { EntityKubernetesContent } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/plugin-kubernetes'</span>;
 
-<span class="hljs-comment">// ...</span>
-
-<span class="hljs-keyword">const</span> ServiceEntityPage = <span class="hljs-function">(<span class="hljs-params">{ entity }: { entity: Entity }</span>) =&gt;</span> (
-  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">EntityPageLayout</span>&gt;</span>
-    // ...
-    <span class="hljs-tag">&lt;<span class="hljs-name">EntityPageLayout.Content</span>
-      <span class="hljs-attr">path</span>=<span class="hljs-string">"/kubernetes/*"</span>
-      <span class="hljs-attr">title</span>=<span class="hljs-string">"Kubernetes"</span>
-      <span class="hljs-attr">element</span>=<span class="hljs-string">{</span>&lt;<span class="hljs-attr">KubernetesRouter</span> <span class="hljs-attr">entity</span>=<span class="hljs-string">{entity}</span> /&gt;</span>}
-    /&gt;
-    // ...
-  <span class="hljs-tag">&lt;/<span class="hljs-name">EntityPageLayout</span>&gt;</span></span>
-);
-</code></pre>
+<span class="hljs-comment">// You can add the tab to any number of pages, the service page is shown as an</span>
+<span class="hljs-comment">// example here</span>
+<span class="hljs-keyword">const</span> serviceEntityPage = (
+  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">EntityLayout</span>&gt;</span>
+    {/* other tabs... */}
+    <span class="hljs-tag">&lt;<span class="hljs-name">EntityLayout.Route</span> <span class="hljs-attr">path</span>=<span class="hljs-string">"/kubernetes"</span> <span class="hljs-attr">title</span>=<span class="hljs-string">"Kubernetes"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">EntityKubernetesContent</span> /&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">EntityLayout.Route</span>&gt;</span>
+</span></code></pre>
 <p>That's it! But now, we need the Kubernetes Backend plugin for the frontend to
 work.</p>
 <h2><a class="anchor" aria-hidden="true" id="adding-kubernetes-backend-plugin"></a><a href="#adding-kubernetes-backend-plugin" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Adding Kubernetes Backend plugin</h2>
 <p>Navigate to <code>packages/backend</code> of your Backstage app, and install the
 <code>@backstage/plugin-kubernetes-backend</code> package.</p>
-<pre><code class="hljs css language-bash"><span class="hljs-built_in">cd</span> my-backstage-app/
+<pre><code class="hljs css language-bash"><span class="hljs-comment"># From your Backstage root directory</span>
 <span class="hljs-built_in">cd</span> packages/backend
 yarn add @backstage/plugin-kubernetes-backend
 </code></pre>
 <p>Create a file called <code>kubernetes.ts</code> inside <code>packages/backend/src/plugins/</code> and
-add the following</p>
-<p><code>kubernetes.ts</code>:</p>
-<pre><code class="hljs css language-typescript"><span class="hljs-keyword">import</span> { createRouter } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/plugin-kubernetes-backend'</span>;
+add the following:</p>
+<pre><code class="hljs css language-typescript"><span class="hljs-comment">// In packages/backend/src/plugins/kubernetes.ts</span>
+<span class="hljs-keyword">import</span> { createRouter } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/plugin-kubernetes-backend'</span>;
 <span class="hljs-keyword">import</span> { PluginEnvironment } <span class="hljs-keyword">from</span> <span class="hljs-string">'../types'</span>;
 
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createPlugin</span>(<span class="hljs-params">{
@@ -121,16 +114,14 @@ add the following</p>
 <p>And import the plugin to <code>packages/backend/src/index.ts</code>. There are three lines
 of code you'll need to add, and they should be added near similar code in your
 existing Backstage backend.</p>
-<p><code>index.ts</code>:</p>
-<pre><code class="hljs css language-typescript"><span class="hljs-keyword">import</span> kubernetes <span class="hljs-keyword">from</span> <span class="hljs-string">'./plugins/kubernetes'</span>;
-
+<pre><code class="hljs css language-typescript"><span class="hljs-comment">// In packages/backend/src/index.ts</span>
+<span class="hljs-keyword">import</span> kubernetes <span class="hljs-keyword">from</span> <span class="hljs-string">'./plugins/kubernetes'</span>;
 <span class="hljs-comment">// ...</span>
-
-<span class="hljs-keyword">const</span> kubernetesEnv = useHotMemoize(<span class="hljs-keyword">module</span>, () =&gt; createEnv('kubernetes'));
-
-// ...
-
-apiRouter.use('/kubernetes', await kubernetes(kubernetesEnv));
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">main</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-comment">// ...</span>
+  <span class="hljs-keyword">const</span> kubernetesEnv = useHotMemoize(<span class="hljs-keyword">module</span>, () =&gt; createEnv('kubernetes'));
+  // ...
+  apiRouter.use('/kubernetes', await kubernetes(kubernetesEnv));
 </code></pre>
 <p>That's it! The Kubernetes frontend and backend have now been added to your
 Backstage app.</p>
@@ -143,7 +134,7 @@ Backstage app.</p>
 <h2><a class="anchor" aria-hidden="true" id="troubleshooting"></a><a href="#troubleshooting" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Troubleshooting</h2>
 <p>After installing the plugins in the code, if the Kubernetes information is not
 showing up, you'll need to <a href="/docs/features/kubernetes/troubleshooting">troubleshoot it</a>.</p>
-</span></div></article></div><div class="docLastUpdate"><em>Last updated on 5/2/2021</em></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/features/kubernetes/overview"><span class="arrow-prev">← </span><span>Overview</span></a><a class="docs-next button" href="/docs/features/kubernetes/configuration"><span>Configuration</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#adding-the-kubernetes-frontend-plugin">Adding the Kubernetes frontend plugin</a></li><li><a href="#adding-kubernetes-backend-plugin">Adding Kubernetes Backend plugin</a></li><li><a href="#running-backstage-locally">Running Backstage locally</a></li><li><a href="#configuration">Configuration</a></li><li><a href="#troubleshooting">Troubleshooting</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><div class="footer-title"><a href="/"><h2 class="footerLogo"></h2></a></div><div><h5>Docs</h5><a href="/docs/overview/what-is-backstage">What is Backstage?</a><a href="/docs/getting-started/">Getting started</a><a href="/docs/features/software-catalog/software-catalog-overview">Service Catalog</a><a href="/docs/plugins/create-a-plugin">Create a Plugin</a><a href="/docs/dls/design">Designing for Backstage</a></div><div><h5>Community</h5><a href="https://discord.gg/MUpMjP2">Support chatroom</a><a href="https://github.com/backstage/backstage/blob/master/CONTRIBUTING.md">Contributing</a><a href="https://mailchi.mp/spotify/backstage-community">Subscribe to our newsletter</a><a href="https://www.cncf.io/sandbox-projects/">CNCF Sandbox</a></div><div><h5>More</h5><a href="https://spotify.github.io/">Open Source @ Spotify</a><a href="https://engineering.atspotify.com/">Spotify Engineering Blog</a><a href="https://developer.spotify.com/">Spotify for Developers</a><a href="https://github.com/backstage/backstage">GitHub</a><a class="github-button" href="https://github.com/backstage/backstage" data-icon="octicon-star" data-count-href="/backstage/backstage/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a><div class="social"><a href="https://twitter.com/SpotifyEng" class="twitter-follow-button">Follow @SpotifyEng</a></div></div></section><p style="text-align:center"><a href="https://spotify.github.io">Made with ❤️  at Spotify</a></p><p class="copyright">Copyright © 2021 Backstage Project Authors. All rights reserved. The Linux Foundation has registered trademarks and uses trademarks. For a list of trademarks of The Linux Foundation, please see our Trademark Usage page: https://www.linuxfoundation.org/trademark-usage</p></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script><script>
+</span></div></article></div><div class="docLastUpdate"><em>Last updated on 5/3/2021</em></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/features/kubernetes/overview"><span class="arrow-prev">← </span><span>Overview</span></a><a class="docs-next button" href="/docs/features/kubernetes/configuration"><span>Configuration</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#adding-the-kubernetes-frontend-plugin">Adding the Kubernetes frontend plugin</a></li><li><a href="#adding-kubernetes-backend-plugin">Adding Kubernetes Backend plugin</a></li><li><a href="#running-backstage-locally">Running Backstage locally</a></li><li><a href="#configuration">Configuration</a></li><li><a href="#troubleshooting">Troubleshooting</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><div class="footer-title"><a href="/"><h2 class="footerLogo"></h2></a></div><div><h5>Docs</h5><a href="/docs/overview/what-is-backstage">What is Backstage?</a><a href="/docs/getting-started/">Getting started</a><a href="/docs/features/software-catalog/software-catalog-overview">Service Catalog</a><a href="/docs/plugins/create-a-plugin">Create a Plugin</a><a href="/docs/dls/design">Designing for Backstage</a></div><div><h5>Community</h5><a href="https://discord.gg/MUpMjP2">Support chatroom</a><a href="https://github.com/backstage/backstage/blob/master/CONTRIBUTING.md">Contributing</a><a href="https://mailchi.mp/spotify/backstage-community">Subscribe to our newsletter</a><a href="https://www.cncf.io/sandbox-projects/">CNCF Sandbox</a></div><div><h5>More</h5><a href="https://spotify.github.io/">Open Source @ Spotify</a><a href="https://engineering.atspotify.com/">Spotify Engineering Blog</a><a href="https://developer.spotify.com/">Spotify for Developers</a><a href="https://github.com/backstage/backstage">GitHub</a><a class="github-button" href="https://github.com/backstage/backstage" data-icon="octicon-star" data-count-href="/backstage/backstage/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a><div class="social"><a href="https://twitter.com/SpotifyEng" class="twitter-follow-button">Follow @SpotifyEng</a></div></div></section><p style="text-align:center"><a href="https://spotify.github.io">Made with ❤️  at Spotify</a></p><p class="copyright">Copyright © 2021 Backstage Project Authors. All rights reserved. The Linux Foundation has registered trademarks and uses trademarks. For a list of trademarks of The Linux Foundation, please see our Trademark Usage page: https://www.linuxfoundation.org/trademark-usage</p></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script><script>
                 document.addEventListener('keyup', function(e) {
                   if (e.target !== document.body) {
                     return;
