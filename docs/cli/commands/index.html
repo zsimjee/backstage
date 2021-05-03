@@ -154,6 +154,7 @@ usually a low value such as <code>2</code> is enough.</p>
 
 Options:
   --stats          Write bundle stats to output directory
+  --lax            Do not require environment variables to be set
   --config &lt;path&gt;  Config files to load instead of app-config.yaml (default: [])
   -h, --help       display help for command
 </code></pre>
@@ -427,6 +428,7 @@ frontend when building the <code>my-app</code> package, you can use the followin
 
 Options:
   --package &lt;name&gt;   Only load config schema that applies to the given package
+  --lax              Do not require environment variables to be set
   --frontend         Print only the frontend configuration
   --with-secrets     Include secrets in the printed configuration
   --format &lt;format&gt;  Format to print the configuration in, either json or yaml [yaml]
@@ -442,6 +444,7 @@ local packages in the repo.</p>
 
 Options:
   --package &lt;name&gt;  Only load config schema that applies to the given package
+  --lax                   Do not require environment variables to be set
   --config &lt;path&gt;   Config files to load instead of app-config.yaml (default: [])
   -h, --help        display help for command
 </code></pre>
