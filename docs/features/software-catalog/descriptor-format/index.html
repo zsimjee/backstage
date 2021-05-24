@@ -382,43 +382,60 @@ with it (such as the default kind being <code>Group</code> if not specified).</p
 <p>See the <a href="/docs/features/software-catalog/well-known-relations">well-known relations section</a> for a list of
 well-known / common relations and their semantics.</p>
 <h2><a class="anchor" aria-hidden="true" id="common-to-all-kinds-status"></a><a href="#common-to-all-kinds-status" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Common to All Kinds: Status</h2>
-<p>The <code>status</code> root field is a read-only set of statuses, pertaining to the
+<p>The <code>status</code> root object is a read-only set of statuses, pertaining to the
 current state or health of the entity, described in the
-<a href="/docs/features/software-catalog/well-known-statuses">well-known statuses section</a>. Each status field
-contains a specific blob of data that describes some aspect of the state of the
-entity, as seen from the point of view of some specific system. Different
-systems may contribute to this status object, under their own respective keys.</p>
+<a href="/docs/features/software-catalog/well-known-statuses">well-known statuses section</a>.</p>
+<p>Currently, the only defined field is the <code>items</code> array. Each of its items
+contains a specific data structure that describes some aspect of the state of
+the entity, as seen from the point of view of some specific system. Different
+systems may contribute to this array, under their own respective <code>type</code> keys.</p>
 <p>The current main use case for this field is for the ingestion processes of the
-catalog itself to convey information about failures and warnings back to the
-user.</p>
+catalog itself to convey information about errors and warnings back to the user.</p>
 <p>A status field as part of a single entity that's read out of the API may look as
 follows.</p>
 <pre><code class="hljs css language-js">{
   <span class="hljs-comment">// ...</span>
   <span class="hljs-string">"status"</span>: {
-    <span class="hljs-string">"backstage.io/catalog-processing"</span>: {
-      <span class="hljs-string">"errors"</span>: []
-    }
+    <span class="hljs-string">"items"</span>: [
+      {
+        <span class="hljs-string">"type"</span>: <span class="hljs-string">"backstage.io/catalog-processing"</span>,
+        <span class="hljs-string">"level"</span>: <span class="hljs-string">"error"</span>,
+        <span class="hljs-string">"message"</span>: <span class="hljs-string">"NotFoundError: File not found"</span>,
+        <span class="hljs-string">"error"</span>: {
+          <span class="hljs-string">"name"</span>: <span class="hljs-string">"NotFoundError"</span>,
+          <span class="hljs-string">"message"</span>: <span class="hljs-string">"File not found"</span>,
+          <span class="hljs-string">"stack"</span>: <span class="hljs-string">"..."</span>
+        }
+      }
+    ]
   },
   <span class="hljs-string">"spec"</span>: {
     <span class="hljs-comment">// ...</span>
   }
 }
 </code></pre>
-<p>The keys of the <code>status</code> object are arbitrary strings. We recommend that any
-statuses that are not strictly private within the organization be namespaced to
-avoid collisions. Statuses emitted by Backstage core processes will for example
-be prefixed with <code>backstage.io/</code> as in the example above.</p>
-<p>The values of the <code>status</code> object are currently left unrestricted, except that
-they must be objects. We reserve the right to extend this model in the future,
-such that some fields of those value objects gain standardized meaning. We may
-for example want to add a standard concept of &quot;severity&quot; or &quot;level&quot; to these.</p>
-<p>Entity descriptor YAML files are not supposed to contain this field. Instead,
-catalog processors analyze the entity descriptor data and its surroundings, and
-deduce status entries that are then attached onto the entity as read from the
-catalog.</p>
+<p>The fields of a status item are:</p>
+<table>
+<thead>
+<tr><th>Field</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>type</code></td><td>String</td><td>The type of status as a unique key per source. Each type may appear more than once in the array.</td></tr>
+<tr><td><code>level</code></td><td>String</td><td>The level / severity of the status item: 'info', 'warning, or 'error'.</td></tr>
+<tr><td><code>message</code></td><td>String</td><td>A brief message describing the status, intended for human consumption.</td></tr>
+<tr><td><code>error</code></td><td>Object</td><td>An optional serialized error object related to the status.</td></tr>
+</tbody>
+</table>
+<p>The <code>type</code> is an arbitrary string, but we recommend that types that are not
+strictly private within the organization be namespaced to avoid collisions.
+Types emitted by Backstage core processes will for example be prefixed with
+<code>backstage.io/</code> as in the example above.</p>
+<p>Entity descriptor YAML files are not supposed to contain a <code>status</code> root key.
+Instead, catalog processors analyze the entity descriptor data and its
+surroundings, and deduce status entries that are then attached onto the entity
+as read from the catalog.</p>
 <p>See the <a href="/docs/features/software-catalog/well-known-statuses">well-known statuses section</a> for a list of
-well-known / common relations and their semantics.</p>
+well-known / common status types.</p>
 <h2><a class="anchor" aria-hidden="true" id="kind-component"></a><a href="#kind-component" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Kind: Component</h2>
 <p>Describes the following entity kind:</p>
 <table>
