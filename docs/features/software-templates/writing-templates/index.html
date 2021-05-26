@@ -261,17 +261,17 @@ will render our custom component that we've built which makes it easy to select
 a repository provider, and insert a project or owner, and repository name.</p>
 <p>You can see it in the above full example which is a separate step and it looks a
 little like this:</p>
-<pre><code class="hljs css language-yaml">   <span class="hljs-bullet">-</span> <span class="hljs-attr">title:</span> <span class="hljs-string">Choose</span> <span class="hljs-string">a</span> <span class="hljs-string">location</span>
-      <span class="hljs-attr">required:</span>
-        <span class="hljs-bullet">-</span> <span class="hljs-string">repoUrl</span>
-      <span class="hljs-attr">properties:</span>
-        <span class="hljs-attr">repoUrl:</span>
-          <span class="hljs-attr">title:</span> <span class="hljs-string">Repository</span> <span class="hljs-string">Location</span>
-          <span class="hljs-attr">type:</span> <span class="hljs-string">string</span>
-          <span class="hljs-attr">ui:field:</span> <span class="hljs-string">RepoUrlPicker</span>
-          <span class="hljs-attr">ui:options:</span>
-            <span class="hljs-attr">allowedHosts:</span>
-              <span class="hljs-bullet">-</span> <span class="hljs-string">github.com</span>
+<pre><code class="hljs css language-yaml"><span class="hljs-bullet">-</span> <span class="hljs-attr">title:</span> <span class="hljs-string">Choose</span> <span class="hljs-string">a</span> <span class="hljs-string">location</span>
+  <span class="hljs-attr">required:</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-string">repoUrl</span>
+  <span class="hljs-attr">properties:</span>
+    <span class="hljs-attr">repoUrl:</span>
+      <span class="hljs-attr">title:</span> <span class="hljs-string">Repository</span> <span class="hljs-string">Location</span>
+      <span class="hljs-attr">type:</span> <span class="hljs-string">string</span>
+      <span class="hljs-attr">ui:field:</span> <span class="hljs-string">RepoUrlPicker</span>
+      <span class="hljs-attr">ui:options:</span>
+        <span class="hljs-attr">allowedHosts:</span>
+          <span class="hljs-bullet">-</span> <span class="hljs-string">github.com</span>
 </code></pre>
 <p>The <code>allowedHosts</code> part should be set to where you wish to enable this template
 to publish to. And it can be any host that is listed in your <code>integrations</code>
