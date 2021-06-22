@@ -114,8 +114,11 @@ that returns a new API instance.</p>
 <pre><code class="hljs css language-ts">createApiFactory({
   api: errorApiRef,
   deps: { alertApi: alertApiRef },
-  factory: <span class="hljs-function">(<span class="hljs-params">{ alertApi }</span>) =&gt;</span>
-    <span class="hljs-keyword">new</span> ErrorAlerter(alertApi, <span class="hljs-keyword">new</span> ErrorApiForwarder()),
+  factory: <span class="hljs-function">(<span class="hljs-params">{ alertApi }</span>) =&gt;</span> {
+    <span class="hljs-keyword">const</span> errorApi = <span class="hljs-keyword">new</span> ErrorAlerter(alertApi, <span class="hljs-keyword">new</span> ErrorApiForwarder());
+    UnhandledErrorForwarder.forward(errorApi, { hidden: <span class="hljs-literal">false</span> });
+    <span class="hljs-keyword">return</span> errorApi;
+  },
 });
 </code></pre>
 <p>In this example the <code>errorApiRef</code> is our API, which encapsulates the <code>ErrorApi</code>
