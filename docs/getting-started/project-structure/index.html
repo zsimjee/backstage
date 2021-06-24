@@ -161,17 +161,15 @@ This package is used to read config objects. It does not know how to merge,
 but only reads files and passes them on to the config. As this part is only
 used by the backend, we chose to separate <code>config</code> and <code>config-loader</code> into
 two different packages.</p></li>
-<li><p><a href="https://github.com/backstage/backstage/tree/master/packages/core"><code>core/</code></a> -
+<li><p><a href="https://github.com/backstage/backstage/tree/master/packages/core-app-api"><code>core-app-api/</code></a> -
+This package contains the core APIs that are used to wire together Backstage
+apps.</p></li>
+<li><p><a href="https://github.com/backstage/backstage/tree/master/packages/core-components"><code>core-components/</code></a> -
 This package contains our visual React components, some of which you can find
 in
-<a href="https://backstage.io/storybook/?path=/story/plugins-examples--plugin-with-data">plugin examples</a>.
-Apart from that it re-exports everything from [<code>core-api</code>] so that users only
-need to rely on one package.</p></li>
-<li><p><a href="https://github.com/backstage/backstage/tree/master/packages/core-api"><code>core-api/</code></a> -
-This package contains APIs and definitions of such. It is it's own package
-because we needed to split our <code>test-utils</code> package. It's an implementation
-detail that we try to hide from our users, and no one should have to depend on
-it directly.</p></li>
+<a href="https://backstage.io/storybook/?path=/story/plugins-examples--plugin-with-data">plugin examples</a>.</p></li>
+<li><p><a href="https://github.com/backstage/backstage/tree/master/packages/core-plugin-api"><code>core-plugin-api/</code></a> -
+This package contains the core APIs that are used to build Backstage plugins.</p></li>
 <li><p><a href="https://github.com/backstage/backstage/tree/master/packages/create-app"><code>create-app/</code></a> -
 An CLI to specifically scaffold a new Backstage App. It does so by using a
 <a href="https://github.com/backstage/backstage/tree/master/packages/create-app/templates/default-app">template</a>.</p></li>
