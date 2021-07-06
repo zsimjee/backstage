@@ -50,6 +50,7 @@ import todo from './plugins/todo';
 import graphql from './plugins/graphql';
 import app from './plugins/app';
 import badges from './plugins/badges';
+import debug from './plugins/debug';
 import { PluginEnvironment } from './types';
 
 function makeCreateEnv(config: Config) {
@@ -101,6 +102,7 @@ async function main() {
   const graphqlEnv = useHotMemoize(module, () => createEnv('graphql'));
   const appEnv = useHotMemoize(module, () => createEnv('app'));
   const badgesEnv = useHotMemoize(module, () => createEnv('badges'));
+  const debugEnv = useHotMemoize(module, () => createEnv('debug'));
 
   const apiRouter = Router();
   apiRouter.use('/catalog', await catalog(catalogEnv));
@@ -116,6 +118,7 @@ async function main() {
   apiRouter.use('/proxy', await proxy(proxyEnv));
   apiRouter.use('/graphql', await graphql(graphqlEnv));
   apiRouter.use('/badges', await badges(badgesEnv));
+  apiRouter.use('/debug', await debug(debugEnv));
   apiRouter.use(notFoundHandler());
 
   const service = createServiceBuilder(module)
