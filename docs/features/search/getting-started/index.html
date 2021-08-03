@@ -270,11 +270,9 @@ an example:</p>
 <p>Backstage Search isn't a search engine itself, rather, it provides an interface
 between your Backstage instance and a
 <a href="/docs/features/search/concepts#search-engines">Search Engine</a> of your choice. Currently, we only
-support one, an in-memory search Engine called Lunr. It can be instantiated like
-this:</p>
-<pre><code class="hljs css language-typescript"><span class="hljs-keyword">const</span> searchEngine = <span class="hljs-keyword">new</span> LunrSearchEngine({ logger });
-<span class="hljs-keyword">const</span> indexBuilder = <span class="hljs-keyword">new</span> IndexBuilder({ logger, searchEngine });
-</code></pre>
+support two engines, an in-memory search Engine called Lunr and ElasticSearch.
+See <a href="/docs/features/search/search-engines">Search Engines</a> documentation for more information how
+to configure these in your Backstage instance.</p>
 <p>Backstage Search can be used to power search of anything! Plugins like the
 Catalog offer default <a href="/docs/features/search/concepts#collators">collators</a> (e.g.
 <a href="https://github.com/backstage/backstage/blob/df12cc25aa4934a98bc42ed03c07f64a1a0a9d72/plugins/catalog-backend/src/search/DefaultCatalogCollator.ts">DefaultCatalogCollator</a>)
