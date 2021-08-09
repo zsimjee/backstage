@@ -221,7 +221,7 @@ new <code>CustomCatalogIndexPage</code>.</p>
 <pre><code class="hljs css language-diff"># packages/app/src/App.tsx
 const routes = (
   &lt;FlatRoutes&gt;
-    &lt;Navigate key="/" to="/catalog" /&gt;
+    &lt;Navigate key="/" to="catalog" /&gt;
 <span class="hljs-deletion">-    &lt;Route path="/catalog" element={&lt;CatalogIndexPage /&gt;} /&gt;</span>
 <span class="hljs-addition">+    &lt;Route path="/catalog" element={&lt;CustomCatalogIndexPage /&gt;} /&gt;</span>
 </code></pre>
