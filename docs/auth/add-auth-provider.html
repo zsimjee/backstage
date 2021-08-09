@@ -249,9 +249,7 @@ flow.</p>
     req: express.Request,
     options: Record&lt;<span class="hljs-built_in">string</span>, <span class="hljs-built_in">string</span>&gt;,
   ): <span class="hljs-built_in">Promise</span>&lt;RedirectInfo&gt;;
-  handler(
-    req: express.Request,
-  ): <span class="hljs-built_in">Promise</span>&lt;{
+  handler(req: express.Request): <span class="hljs-built_in">Promise</span>&lt;{
     response: AuthResponse&lt;OAuthProviderInfo&gt;;
     refreshToken?: <span class="hljs-built_in">string</span>;
   }&gt;;

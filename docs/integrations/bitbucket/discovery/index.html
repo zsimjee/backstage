@@ -104,13 +104,11 @@ matching repository is processed.</p>
 <p><code>BitbucketDiscoveryProcessor.fromConfig</code> takes an optional parameter
 <code>options.parser</code> where you can set your own parser to be used for each matched
 repository.</p>
-<pre><code class="hljs css language-typescript"><span class="hljs-keyword">const</span> customRepositoryParser: BitbucketRepositoryParser = <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span>* <span class="hljs-title">customRepositoryParser</span>(<span class="hljs-params">{
-  client,
-  repository,
-}</span>) </span>{
-  <span class="hljs-comment">// Custom logic for interpret the matching repository.</span>
-  <span class="hljs-comment">// See defaultRepositoryParser for an example</span>
-};
+<pre><code class="hljs css language-typescript"><span class="hljs-keyword">const</span> customRepositoryParser: BitbucketRepositoryParser =
+  <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span>* <span class="hljs-title">customRepositoryParser</span>(<span class="hljs-params">{ client, repository }</span>) </span>{
+    <span class="hljs-comment">// Custom logic for interpret the matching repository.</span>
+    <span class="hljs-comment">// See defaultRepositoryParser for an example</span>
+  };
 
 <span class="hljs-keyword">const</span> processor = BitbucketDiscoveryProcessor.fromConfig(env.config, {
   parser: customRepositoryParser,
