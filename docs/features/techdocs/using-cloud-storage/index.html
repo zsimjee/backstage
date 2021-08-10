@@ -102,7 +102,7 @@ already be set in Compute Engine, Google Kubernetes Engine, etc. Read
 <p>If you do not prefer (3a) and optionally like to use a service account, you can
 follow these steps.</p>
 <p>Create a new Service Account and a key associated with it. In roles of the
-service account, use &quot;Storage Admin&quot;.</p>
+service account, use &quot;Storage Object Admin&quot;.</p>
 <p>If you want to create a custom role, make sure to include both <code>get</code> and
 <code>create</code> permissions for both &quot;Objects&quot; and &quot;Buckets&quot;. See
 <a href="https://cloud.google.com/storage/docs/access-control/iam-permissions">https://cloud.google.com/storage/docs/access-control/iam-permissions</a></p>
@@ -161,6 +161,8 @@ permissions to:</p>
 <ul>
 <li><code>s3:ListBucket</code> to retrieve bucket metadata</li>
 <li><code>s3:PutObject</code> to upload files to the bucket</li>
+<li><code>s3:DeleteObject</code> and <code>s3:DeleteObjectVersion</code> to delete stale content during
+re-publishing</li>
 </ul>
 <p>To <em>read</em> TechDocs from the S3 bucket the IAM policy needs to have at a minimum
 permissions to:</p>
@@ -321,6 +323,9 @@ for more details.</p>
         <span class="hljs-attr">accountName:</span> <span class="hljs-string">${TECHDOCS_AZURE_BLOB_STORAGE_ACCOUNT_NAME}</span>
         <span class="hljs-attr">accountKey:</span> <span class="hljs-string">${TECHDOCS_AZURE_BLOB_STORAGE_ACCOUNT_KEY}</span>
 </code></pre>
+<p>In either case, the account or credentials used to access your container and all
+TechDocs objects underneath it should have the <code>Storage Blog Data Owner</code> role
+applied, in order to read, write, and delete objects as needed.</p>
 <p><strong>4. That's it!</strong></p>
 <p>Your Backstage app is now ready to use Azure Blob Storage for TechDocs, to store
 and read the static generated documentation files. When you start the backend of
