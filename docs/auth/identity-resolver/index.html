@@ -171,20 +171,20 @@ resolvers:</p>
       google: createGoogleProvider({
         signIn: {
           resolver: <span class="hljs-keyword">async</span> ({ profile: { email } }, ctx) =&gt; {
-            <span class="hljs-keyword">const</span> [sub] = email?.split(<span class="hljs-string">'@'</span>) ?? <span class="hljs-string">''</span>;
+            <span class="hljs-keyword">const</span> [id] = email?.split(<span class="hljs-string">'@'</span>) ?? <span class="hljs-string">''</span>;
             <span class="hljs-comment">// Fetch from an external system that returns entity claims like:</span>
             <span class="hljs-comment">// ['user:default/breanna.davison', ...]</span>
             <span class="hljs-keyword">const</span> ent = <span class="hljs-keyword">await</span> externalSystemClient.getUsernames(email);
 
             <span class="hljs-comment">// Resolve group membership from the Backstage catalog</span>
             <span class="hljs-keyword">const</span> fullEnt = <span class="hljs-keyword">await</span> ctx.catalogIdentityClient.resolveCatalogMembership({
-              entityRefs: [sub].concat(ent),
+              entityRefs: [id].concat(ent),
               logger: ctx.logger,
             });
             <span class="hljs-keyword">const</span> token = <span class="hljs-keyword">await</span> ctx.tokenIssuer.issueToken({
-              claims: { sub, ent: fullEnt },
+              claims: { sub: id, ent: fullEnt },
             });
-            <span class="hljs-keyword">return</span> { sub, token };
+            <span class="hljs-keyword">return</span> { id, token };
           },
         },
       }),
