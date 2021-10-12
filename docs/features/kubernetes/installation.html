@@ -101,14 +101,18 @@ yarn add @backstage/plugin-kubernetes-backend
 <p>Create a file called <code>kubernetes.ts</code> inside <code>packages/backend/src/plugins/</code> and
 add the following:</p>
 <pre><code class="hljs css language-typescript"><span class="hljs-comment">// In packages/backend/src/plugins/kubernetes.ts</span>
-<span class="hljs-keyword">import</span> { createRouter } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/plugin-kubernetes-backend'</span>;
+<span class="hljs-keyword">import</span> { KubernetesBuilder } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/plugin-kubernetes-backend'</span>;
 <span class="hljs-keyword">import</span> { PluginEnvironment } <span class="hljs-keyword">from</span> <span class="hljs-string">'../types'</span>;
 
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createPlugin</span>(<span class="hljs-params">{
   logger,
   config,
 }: PluginEnvironment</span>) </span>{
-  <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> createRouter({ logger, config });
+  <span class="hljs-keyword">const</span> { router } = <span class="hljs-keyword">await</span> KubernetesBuilder.createBuilder({
+    logger,
+    config,
+  }).build();
+  <span class="hljs-keyword">return</span> router;
 }
 </code></pre>
 <p>And import the plugin to <code>packages/backend/src/index.ts</code>. There are three lines
