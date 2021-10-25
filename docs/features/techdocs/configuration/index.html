@@ -118,6 +118,10 @@ configuration options for TechDocs.</p>
       <span class="hljs-comment"># (Required) Cloud Storage Bucket Name</span>
       <span class="hljs-attr">bucketName:</span> <span class="hljs-string">'techdocs-storage'</span>
 
+      <span class="hljs-comment"># (Optional) Location in storage bucket to save files</span>
+      <span class="hljs-comment"># If not set, the default location will be the root of the storage bucket</span>
+      <span class="hljs-attr">bucketRootPath:</span> <span class="hljs-string">'/'</span>
+
       <span class="hljs-comment"># (Optional) An API key is required to write to a storage bucket.</span>
       <span class="hljs-comment"># If missing, GOOGLE_APPLICATION_CREDENTIALS environment variable will be used.</span>
       <span class="hljs-comment"># https://cloud.google.com/docs/authentication/production</span>
@@ -129,6 +133,10 @@ configuration options for TechDocs.</p>
     <span class="hljs-attr">awsS3:</span>
       <span class="hljs-comment"># (Required) AWS S3 Bucket Name</span>
       <span class="hljs-attr">bucketName:</span> <span class="hljs-string">'techdocs-storage'</span>
+
+      <span class="hljs-comment"># (Optional) Location in storage bucket to save files</span>
+      <span class="hljs-comment"># If not set, the default location will be the root of the storage bucket</span>
+      <span class="hljs-attr">bucketRootPath:</span> <span class="hljs-string">'/'</span>
 
       <span class="hljs-comment"># (Optional) An API key is required to write to a storage bucket.</span>
       <span class="hljs-comment"># If not set, environment variables or aws config file will be used to authenticate.</span>
