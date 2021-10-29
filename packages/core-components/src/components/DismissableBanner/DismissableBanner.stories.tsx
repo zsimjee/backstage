@@ -105,14 +105,3 @@ export const Fixed = () => (
     </ApiProvider>
   </div>
 );
-export const Warning = () => (
-  <div style={containerStyle}>
-    <ApiProvider apis={apis}>
-      <DismissableBanner
-        message="This is a dismissable banner with a warning message"
-        variant="warning"
-        id="warning_dismissable"
-      />
-    </ApiProvider>
-  </div>
-);

@@ -76,7 +76,6 @@ export type BackstagePaletteAdditions = {
     error: string;
     text: string;
     link: string;
-    warning: string;
   };
 };
 
