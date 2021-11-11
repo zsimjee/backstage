@@ -114,8 +114,8 @@
 <tr><td><a href="/docs/reference/core-plugin-api.apirefconfig">ApiRefConfig</a></td><td>API reference configuration - holds an ID of the referenced API.</td></tr>
 <tr><td><a href="/docs/reference/core-plugin-api.apirefstotypes">ApiRefsToTypes</a></td><td>Unwraps type with <a href="/docs/reference/core-plugin-api.apiref">ApiRef</a> properties into a type holding their respective API types. Reverse type transform of <a href="/docs/reference/core-plugin-api.typestoapirefs">TypesToApiRefs</a><!-- -->.</td></tr>
 <tr><td><a href="/docs/reference/core-plugin-api.apireftype">ApiRefType</a></td><td>Transforms ApiRef type into its inner API type.</td></tr>
-<tr><td><a href="/docs/reference/core-plugin-api.appcomponents">AppComponents</a></td><td>Basic app components.</td></tr>
-<tr><td><a href="/docs/reference/core-plugin-api.appcontext">AppContext</a></td><td>Provides plugins and components registered in the app.</td></tr>
+<tr><td><a href="/docs/reference/core-plugin-api.appcomponents">AppComponents</a></td><td>A set of replaceable core components that are part of every Backstage app.</td></tr>
+<tr><td><a href="/docs/reference/core-plugin-api.appcontext">AppContext</a></td><td>The central context providing runtime app specific state that plugin views want to consume.</td></tr>
 <tr><td><a href="/docs/reference/core-plugin-api.apptheme">AppTheme</a></td><td>Describes a theme provided by the app.</td></tr>
 <tr><td><a href="/docs/reference/core-plugin-api.appthemeapi">AppThemeApi</a></td><td>The AppThemeApi gives access to the current app theme, and allows switching to other options that have been registered as a part of the App.</td></tr>
 <tr><td><a href="/docs/reference/core-plugin-api.authprovider">AuthProvider</a></td><td>Information about the auth provider that we're requesting a login towards.</td></tr>
@@ -125,14 +125,14 @@
 <tr><td><a href="/docs/reference/core-plugin-api.backstageidentity">BackstageIdentity</a></td><td>A (user id, token) pair.</td></tr>
 <tr><td><a href="/docs/reference/core-plugin-api.backstageidentityapi">BackstageIdentityApi</a></td><td>This API provides access to the user's identity within Backstage.</td></tr>
 <tr><td><a href="/docs/reference/core-plugin-api.backstageplugin">BackstagePlugin</a></td><td>Plugin type.</td></tr>
-<tr><td><a href="/docs/reference/core-plugin-api.booterrorpageprops">BootErrorPageProps</a></td><td>Props for the BootErrorPage.</td></tr>
+<tr><td><a href="/docs/reference/core-plugin-api.booterrorpageprops">BootErrorPageProps</a></td><td>Props for the <code>BootErrorPage</code> component of <a href="/docs/reference/core-plugin-api.appcomponents">AppComponents</a><!-- -->.</td></tr>
 <tr><td><a href="/docs/reference/core-plugin-api.commonanalyticscontext">CommonAnalyticsContext</a></td><td>Common analytics context attributes.</td></tr>
 <tr><td><a href="/docs/reference/core-plugin-api.componentloader">ComponentLoader</a></td><td>Lazy or synchronous retrieving of extension components.</td></tr>
 <tr><td><a href="/docs/reference/core-plugin-api.configapi">ConfigApi</a></td><td>The Config API is used to provide a mechanism to access the runtime configuration of the system.</td></tr>
 <tr><td><a href="/docs/reference/core-plugin-api.discoveryapi">DiscoveryApi</a></td><td>The discovery API is used to provide a mechanism for plugins to discover the endpoint to use to talk to their backend counterpart.</td></tr>
 <tr><td><a href="/docs/reference/core-plugin-api.error_2">Error_2</a></td><td>Mirrors the JavaScript Error class, for the purpose of providing documentation and optional fields.</td></tr>
 <tr><td><a href="/docs/reference/core-plugin-api.errorapi">ErrorApi</a></td><td>The error API is used to report errors to the app, and display them to the user.</td></tr>
-<tr><td><a href="/docs/reference/core-plugin-api.errorboundaryfallbackprops">ErrorBoundaryFallbackProps</a></td><td>Props for the ErrorBoundaryFallback.</td></tr>
+<tr><td><a href="/docs/reference/core-plugin-api.errorboundaryfallbackprops">ErrorBoundaryFallbackProps</a></td><td>Props for the fallback error boundary.</td></tr>
 <tr><td><a href="/docs/reference/core-plugin-api.errorcontext">ErrorContext</a></td><td>Provides additional information about an error that was posted to the application.</td></tr>
 <tr><td><a href="/docs/reference/core-plugin-api.extension">Extension</a></td><td>Plugin extension type.</td></tr>
 <tr><td><a href="/docs/reference/core-plugin-api.externalrouteref">ExternalRouteRef</a></td><td>Route descriptor, to be later bound to a concrete route by the app. Used to implement cross-plugin route references.</td></tr>
@@ -167,8 +167,8 @@
 <tr><td><a href="/docs/reference/core-plugin-api.routepath">RoutePath</a></td><td>Type alias for paths.</td></tr>
 <tr><td><a href="/docs/reference/core-plugin-api.routeref">RouteRef</a></td><td>Absolute route reference.</td></tr>
 <tr><td><a href="/docs/reference/core-plugin-api.sessionapi">SessionApi</a></td><td>The SessionApi provides basic controls for any auth provider that is tied to a persistent session.</td></tr>
-<tr><td><a href="/docs/reference/core-plugin-api.signinpageprops">SignInPageProps</a></td><td>Props for the SignInPage.</td></tr>
-<tr><td><a href="/docs/reference/core-plugin-api.signinresult">SignInResult</a></td><td>Data and handlers associated with the user sign in event.</td></tr>
+<tr><td><a href="/docs/reference/core-plugin-api.signinpageprops">SignInPageProps</a></td><td>Props for the <code>SignInPage</code> component of <a href="/docs/reference/core-plugin-api.appcomponents">AppComponents</a><!-- -->.</td></tr>
+<tr><td><a href="/docs/reference/core-plugin-api.signinresult">SignInResult</a></td><td>The outcome of signing in on the sign-in page.</td></tr>
 <tr><td><a href="/docs/reference/core-plugin-api.storagevaluechange">StorageValueChange</a></td><td>Describes a value change event.</td></tr>
 <tr><td><a href="/docs/reference/core-plugin-api.subrouteref">SubRouteRef</a></td><td>Descriptor of a route relative to an absolute <a href="/docs/reference/core-plugin-api.routeref">RouteRef</a><!-- -->.</td></tr>
 <tr><td><a href="/docs/reference/core-plugin-api.subscription">Subscription</a></td><td>Subscription returned when subscribing to an Observable, see TC39.</td></tr>
