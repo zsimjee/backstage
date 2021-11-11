@@ -165,6 +165,7 @@ component. Component extensions support lazy loading out of the box using the
 a component:</p>
 <pre><code class="hljs css language-ts"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> FooPage = plugin.provide(
   createRoutableExtension({
+    name: <span class="hljs-string">'FooPage'</span>,
     component: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">'./components/FooPage'</span>).then(<span class="hljs-function"><span class="hljs-params">m</span> =&gt;</span> m.FooPage),
     mountPoint: fooPageRouteRef,
   }),
@@ -397,6 +398,7 @@ to that page.</p>
 
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> MyPage = myPlugin.provide(
   createRoutableExtension({
+    <span class="hljs-attr">name</span>: <span class="hljs-string">'MyPage'</span>,
     <span class="hljs-attr">component</span>: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">'./components/MyPage'</span>).then(<span class="hljs-function"><span class="hljs-params">m</span> =&gt;</span> m.MyPage),
     <span class="hljs-attr">mountPoint</span>: rootRouteRef,
   }),

@@ -112,6 +112,7 @@ extension using <code>createRoutableExtension</code> from <code>@backstage/core-
 <span class="hljs-comment">// Each extension should also be exported from your plugin package.</span>
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> ExamplePage = examplePlugin.provide(
   createRoutableExtension({
+    <span class="hljs-attr">name</span>: <span class="hljs-string">'ExamplePage'</span>,
     <span class="hljs-comment">// The component needs to be lazy-loaded. It's what will actually be rendered in the end.</span>
     <span class="hljs-attr">component</span>: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span>
       <span class="hljs-keyword">import</span>(<span class="hljs-string">'./components/ExampleComponent'</span>).then(<span class="hljs-function"><span class="hljs-params">m</span> =&gt;</span> m.ExampleComponent),
