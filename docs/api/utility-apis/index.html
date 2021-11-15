@@ -219,7 +219,7 @@ for an example.</p>
 <p>Defining a custom implementation of a utility API is easy, you simply need to
 export a class that <code>implements</code> the target API, for example:</p>
 <pre><code class="hljs css language-ts"><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> IgnoringErrorApi <span class="hljs-keyword">implements</span> ErrorApi {
-  post(error: <span class="hljs-built_in">Error</span>, context?: ErrorContext) {
+  post(error: ErrorApiError, context?: ErrorApiErrorContext) {
     <span class="hljs-comment">// ignore error</span>
   }
 }
