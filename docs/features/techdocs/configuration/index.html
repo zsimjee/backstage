@@ -161,6 +161,12 @@ configuration options for TechDocs.</p>
       <span class="hljs-comment"># This allows providers like LocalStack, Minio and Wasabi (and possibly others) to be used to host tech docs.</span>
       <span class="hljs-attr">s3ForcePathStyle:</span> <span class="hljs-literal">false</span>
 
+      <span class="hljs-comment"># (Optional) AWS Server Side Encryption</span>
+      <span class="hljs-comment"># Defaults to undefined.</span>
+      <span class="hljs-comment"># If not set, encrypted buckets will fail to publish.</span>
+      <span class="hljs-comment"># https://docs.aws.amazon.com/AmazonS3/latest/userguide/specifying-s3-encryption.html</span>
+      <span class="hljs-attr">sse:</span> <span class="hljs-string">'aws:kms'</span> <span class="hljs-comment"># or AES256</span>
+
     <span class="hljs-comment"># Required when techdocs.publisher.type is set to 'azureBlobStorage'. Skip otherwise.</span>
 
     <span class="hljs-attr">azureBlobStorage:</span>
