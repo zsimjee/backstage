@@ -29,7 +29,7 @@ import { Stitcher } from './Stitcher';
 
 describe('Stitcher', () => {
   const databases = TestDatabases.create({
-    ids: ['POSTGRES_13', 'POSTGRES_9', 'SQLITE_3'],
+    ids: ['POSTGRES_13', 'POSTGRES_9', 'MYSQL_8', 'SQLITE_3'],
   });
   const logger = getVoidLogger();
 

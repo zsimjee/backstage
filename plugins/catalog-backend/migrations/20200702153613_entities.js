@@ -31,6 +31,7 @@ exports.up = async function up(knex) {
   }
   await knex.schema.alterTable('entities', table => {
     table.dropUnique([], 'entities_unique_name');
+    table.dropForeign(['location_id']);
   });
   // Setup temporary tables
   await knex.schema.renameTable('entities_search', 'tmp_entities_search');
@@ -52,16 +53,12 @@ exports.up = async function up(knex) {
       table
         .string('etag')
         .notNullable()
-        .comment(
-          'An opaque string that changes for each update operation to any part of the entity, including metadata.',
-        );
+        .comment('An opaque string that changes for each update operation');
       table
-        .string('generation')
+        .integer('generation')
         .notNullable()
         .unsigned()
-        .comment(
-          'A positive nonzero number that indicates the current generation of data for this entity; the value is incremented each time the spec changes.',
-        );
+        .comment('Current generation of data for this entity');
       table
         .string('api_version')
         .notNullable()
@@ -98,9 +95,7 @@ exports.up = async function up(knex) {
   // entities_search
   //
   await knex.schema.createTable('entities_search', table => {
-    table.comment(
-      'Flattened key-values from the entities, used for quick filtering',
-    );
+    table.comment('Flattened key-values from the entities, for filtering');
     table
       .uuid('entity_id')
       .references('id')
@@ -162,16 +157,12 @@ exports.down = async function down(knex) {
       table
         .string('etag')
         .notNullable()
-        .comment(
-          'An opaque string that changes for each update operation to any part of the entity, including metadata.',
-        );
+        .comment('An opaque string that changes for each update operation');
       table
-        .string('generation')
+        .integer('generation')
         .notNullable()
         .unsigned()
-        .comment(
-          'A positive nonzero number that indicates the current generation of data for this entity; the value is incremented each time the spec changes.',
-        );
+        .comment('Current generation of data for this entity');
       table
         .string('api_version')
         .notNullable()
@@ -208,9 +199,7 @@ exports.down = async function down(knex) {
   // entities_search
   //
   await knex.schema.createTable('entities_search', table => {
-    table.comment(
-      'Flattened key-values from the entities, used for quick filtering',
-    );
+    table.comment('Flattened key-values from the entities, for filtering');
     table
       .uuid('entity_id')
       .references('id')

@@ -53,6 +53,16 @@ import { generateStableHash } from './util';
 const BATCH_SIZE = 50;
 const MAX_ANCESTOR_DEPTH = 32;
 
+function nowPlusSeconds(tx: Knex.Transaction, seconds: number) {
+  const client = tx.client.config.client;
+  if (client === 'sqlite3') {
+    return tx.raw(`datetime('now', ?)`, [`${seconds} seconds`]);
+  } else if (client === 'pg') {
+    return tx.raw(`now() + interval '${seconds} seconds'`);
+  }
+  return tx.raw(`date_add(now(), interval ${seconds} second)`);
+}
+
 export class DefaultProcessingDatabase implements ProcessingDatabase {
   constructor(
     private readonly options: {
@@ -228,7 +238,14 @@ export class DefaultProcessingDatabase implements ProcessingDatabase {
               .withRecursive('ancestors', function ancestors(outer) {
                 return outer
                   .select({
-                    root_id: tx.raw('CAST(NULL as INT)', []),
+                    root_id: tx.raw(
+                      `CAST(NULL as ${
+                        tx.client.config.client.startsWith('mysql')
+                          ? 'unsigned'
+                          : 'int'
+                      })`,
+                      [],
+                    ),
                     via_entity_ref: 'entity_ref',
                     to_entity_ref: 'entity_ref',
                   })
@@ -355,10 +372,7 @@ export class DefaultProcessingDatabase implements ProcessingDatabase {
         items.map(i => i.entity_ref),
       )
       .update({
-        next_update_at:
-          tx.client.config.client === 'sqlite3'
-            ? tx.raw(`datetime('now', ?)`, [`${interval} seconds`])
-            : tx.raw(`now() + interval '${interval} seconds'`),
+        next_update_at: nowPlusSeconds(tx, interval),
       });
 
     return {

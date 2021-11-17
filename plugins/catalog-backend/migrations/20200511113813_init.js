@@ -26,9 +26,7 @@ exports.up = async function up(knex) {
       // locations
       //
       .createTable('locations', table => {
-        table.comment(
-          'Registered locations that shall be contiuously scanned for catalog item updates',
-        );
+        table.comment('Registered locations to scan for updates');
         table
           .uuid('id')
           .primary()
@@ -55,16 +53,12 @@ exports.up = async function up(knex) {
         table
           .string('etag')
           .notNullable()
-          .comment(
-            'An opaque string that changes for each update operation to any part of the entity, including metadata.',
-          );
+          .comment('An opaque string that changes for each update');
         table
-          .string('generation')
+          .integer('generation')
           .notNullable()
           .unsigned()
-          .comment(
-            'A positive nonzero number that indicates the current generation of data for this entity; the value is incremented each time the spec changes.',
-          );
+          .comment('Current generation of data');
         table
           .string('api_version')
           .notNullable()
@@ -98,9 +92,7 @@ exports.up = async function up(knex) {
       // entities_search
       //
       .createTable('entities_search', table => {
-        table.comment(
-          'Flattened key-values from the entities, used for quick filtering',
-        );
+        table.comment('Flattened entity key-values, for quick filtering');
         table
           .uuid('entity_id')
           .references('id')

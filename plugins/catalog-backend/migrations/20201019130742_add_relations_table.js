@@ -21,7 +21,7 @@
  */
 exports.up = async function up(knex) {
   await knex.schema.createTable('entities_relations', table => {
-    table.comment('All relations between entities in the catalog');
+    table.comment('All relations between entities');
     table
       .uuid('originating_entity_id')
       .references('id')

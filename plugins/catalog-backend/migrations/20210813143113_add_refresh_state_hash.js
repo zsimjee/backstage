@@ -24,9 +24,7 @@ exports.up = async function up(knex) {
     table
       .text('result_hash')
       .nullable()
-      .comment(
-        'A hash of the processed contents, used to avoid duplicate work',
-      );
+      .comment('A hash of the processed contents, to avoid duplicate work');
   });
 };
 

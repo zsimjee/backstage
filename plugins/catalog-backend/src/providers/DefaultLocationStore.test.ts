@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 import { TestDatabaseId, TestDatabases } from '@backstage/backend-test-utils';
 import { v4 as uuid } from 'uuid';
 import { applyDatabaseMigrations } from '../database/migrations';
@@ -20,7 +21,7 @@ import { DefaultLocationStore } from './DefaultLocationStore';
 
 describe('DefaultLocationStore', () => {
   const databases = TestDatabases.create({
-    ids: ['POSTGRES_13', 'POSTGRES_9', 'SQLITE_3'],
+    ids: ['POSTGRES_13', 'POSTGRES_9', 'MYSQL_8', 'SQLITE_3'],
   });
 
   async function createLocationStore(databaseId: TestDatabaseId) {

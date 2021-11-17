@@ -29,7 +29,7 @@ import { NextEntitiesCatalog } from './NextEntitiesCatalog';
 
 describe('NextEntitiesCatalog', () => {
   const databases = TestDatabases.create({
-    ids: ['POSTGRES_13', 'POSTGRES_9', 'SQLITE_3'],
+    ids: ['POSTGRES_13', 'POSTGRES_9', 'MYSQL_8', 'SQLITE_3'],
   });
 
   async function createDatabase(databaseId: TestDatabaseId) {
