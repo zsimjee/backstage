@@ -331,7 +331,7 @@ backend.</p>
           <span class="hljs-attr">imagePullPolicy:</span> <span class="hljs-string">IfNotPresent</span>
           <span class="hljs-attr">ports:</span>
             <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">http</span>
-              <span class="hljs-attr">containerPort:</span> <span class="hljs-number">7000</span>
+              <span class="hljs-attr">containerPort:</span> <span class="hljs-number">7007</span>
           <span class="hljs-attr">envFrom:</span>
             <span class="hljs-bullet">-</span> <span class="hljs-attr">secretRef:</span>
                 <span class="hljs-attr">name:</span> <span class="hljs-string">postgres-secrets</span>
@@ -341,11 +341,11 @@ backend.</p>
 <span class="hljs-comment"># https://backstage.io/docs/plugins/observability#health-checks</span>
 <span class="hljs-comment">#          readinessProbe:</span>
 <span class="hljs-comment">#            httpGet:</span>
-<span class="hljs-comment">#              port: 7000</span>
+<span class="hljs-comment">#              port: 7007</span>
 <span class="hljs-comment">#              path: /healthcheck</span>
 <span class="hljs-comment">#          livenessProbe:</span>
 <span class="hljs-comment">#            httpGet:</span>
-<span class="hljs-comment">#              port: 7000</span>
+<span class="hljs-comment">#              port: 7007</span>
 <span class="hljs-comment">#              path: /healthcheck</span>
 </code></pre>
 <p>For production deployments, the <code>image</code> reference will usually be a full URL to
@@ -409,7 +409,7 @@ correct pods.</p>
       <span class="hljs-attr">targetPort:</span> <span class="hljs-string">http</span>
 </code></pre>
 <p>The <code>selector</code> here is telling the Service which pods to target, and the port
-mapping translates normal HTTP port 80 to the backend http port (7000) on the
+mapping translates normal HTTP port 80 to the backend http port (7007) on the
 pod.</p>
 <p>Apply this Service to the Kubernetes cluster:</p>
 <pre><code class="hljs css language-shell"><span class="hljs-meta">$</span><span class="bash"> kubectl apply -f kubernetes/backstage-service.yaml</span>
@@ -418,9 +418,9 @@ service/backstage created
 <p>Now we have a fully operational Backstage deployment! 🎉 For a <em><strong>grand
 reveal</strong></em>, you can forward a local port to the service:</p>
 <pre><code class="hljs css language-shell"><span class="hljs-meta">$</span><span class="bash"> sudo kubectl port-forward --namespace=backstage svc/backstage 80:80</span>
-Forwarding from 127.0.0.1:80 -&gt; 7000
+Forwarding from 127.0.0.1:80 -&gt; 7007
 </code></pre>
-<p>This shows port 7000 since <code>port-forward</code> doesn't <em>really</em> support services, so
+<p>This shows port 7007 since <code>port-forward</code> doesn't <em>really</em> support services, so
 it cheats by looking up the first pod for a service and connecting to the mapped
 pod port.</p>
 <p>Note that <code>app.baseUrl</code> and <code>backend.baseUrl</code> in your <code>app-config.yaml</code> should
@@ -436,7 +436,7 @@ the default HTTP port 80):</p>
 <span class="hljs-attr">backend:</span>
   <span class="hljs-attr">baseUrl:</span> <span class="hljs-string">http://localhost</span>
   <span class="hljs-attr">listen:</span>
-    <span class="hljs-attr">port:</span> <span class="hljs-number">7000</span>
+    <span class="hljs-attr">port:</span> <span class="hljs-number">7007</span>
   <span class="hljs-attr">cors:</span>
     <span class="hljs-attr">origin:</span> <span class="hljs-string">http://localhost</span>
 </code></pre>
