@@ -270,10 +270,13 @@ ensure that events instrumented across plugins can easily be aggregated.</p></li
 that you can use in your unit tests to spy on and make assertions about any
 analytics events captured.</p>
 <p>Use it like this:</p>
-<pre><code class="hljs css language-tsx"><span class="hljs-keyword">import</span> { ApiProvider, ApiRegistry } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/core-app-api'</span>;
+<pre><code class="hljs css language-tsx"><span class="hljs-keyword">import</span> { render, fireEvent, waitFor } <span class="hljs-keyword">from</span> <span class="hljs-string">'@testing-library/react'</span>;
 <span class="hljs-keyword">import</span> { analyticsApiRef } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/core-plugin-api'</span>;
-<span class="hljs-keyword">import</span> { MockAnalyticsApi, wrapInTestApp } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/test-utils'</span>;
-<span class="hljs-keyword">import</span> { render, fireEvent, waitFor } <span class="hljs-keyword">from</span> <span class="hljs-string">'@testing-library/react'</span>;
+<span class="hljs-keyword">import</span> {
+  MockAnalyticsApi,
+  TestApiProvider,
+  wrapInTestApp,
+} <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/test-utils'</span>;
 
 describe(<span class="hljs-string">'SomeComponent'</span>, () =&gt; {
   it(<span class="hljs-string">'should capture event on click'</span>, () =&gt; {
@@ -283,9 +286,9 @@ describe(<span class="hljs-string">'SomeComponent'</span>, () =&gt; {
     <span class="hljs-comment">// Render the component being tested</span>
     <span class="hljs-keyword">const</span> { getByText } = render(
       wrapInTestApp(
-        <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">ApiProvider</span> <span class="hljs-attr">apis</span>=<span class="hljs-string">{ApiRegistry.from([[analyticsApiRef,</span> <span class="hljs-attr">apiSpy</span>]])}&gt;</span>
+        <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">TestApiProvider</span> <span class="hljs-attr">apis</span>=<span class="hljs-string">{[[analyticsApiRef,</span> <span class="hljs-attr">apiSpy</span>]]}&gt;</span>
           <span class="hljs-tag">&lt;<span class="hljs-name">SomeComponentUnderTest</span> /&gt;</span>
-        <span class="hljs-tag">&lt;/<span class="hljs-name">ApiProvider</span>&gt;</span></span>,
+        <span class="hljs-tag">&lt;/<span class="hljs-name">TestApiProvider</span>&gt;</span></span>,
       ),
     );
 
