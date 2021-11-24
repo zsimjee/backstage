@@ -26,7 +26,7 @@ import fs from 'fs-extra';
 import { isBinaryFile } from 'isbinaryfile';
 
 /*
- * Maximise compatibility with Jinja (and therefore cookiecutter)
+ * Maximize compatibility with Jinja (and therefore cookiecutter)
  * using nunjucks jinja compat mode. Since this method mutates
  * the global nunjucks instance, we can't enable this per-template,
  * or only for templates with cookiecutter compat enabled, so the
