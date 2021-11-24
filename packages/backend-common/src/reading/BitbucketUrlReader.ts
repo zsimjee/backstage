@@ -23,7 +23,7 @@ import {
   getBitbucketRequestOptions,
   ScmIntegrations,
 } from '@backstage/integration';
-import fetch from 'cross-fetch';
+import fetch, { Response } from 'node-fetch';
 import parseGitUrl from 'git-url-parse';
 import { trimEnd } from 'lodash';
 import { Minimatch } from 'minimatch';
@@ -211,7 +211,7 @@ export class BitbucketUrlReader implements UrlReader {
       throw new Error(message);
     }
 
-    const commits = await commitsResponse.json();
+    const commits: any = await commitsResponse.json();
     if (isHosted) {
       if (
         commits &&

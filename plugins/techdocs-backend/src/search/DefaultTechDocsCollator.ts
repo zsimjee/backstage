@@ -120,7 +120,7 @@ export class DefaultTechDocsCollator implements DocumentCollator {
                 entityInfo,
               ),
             );
-            const searchIndex = await searchIndexResponse.json();
+            const searchIndex: any = await searchIndexResponse.json();
 
             return searchIndex.docs.map((doc: MkSearchIndexDoc) => ({
               title: unescape(doc.title),

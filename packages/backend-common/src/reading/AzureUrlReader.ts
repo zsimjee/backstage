@@ -22,7 +22,7 @@ import {
   getAzureRequestOptions,
   ScmIntegrations,
 } from '@backstage/integration';
-import fetch from 'cross-fetch';
+import fetch, { Response } from 'node-fetch';
 import { Minimatch } from 'minimatch';
 import { Readable } from 'stream';
 import { NotFoundError, NotModifiedError } from '@backstage/errors';
@@ -114,7 +114,8 @@ export class AzureUrlReader implements UrlReader {
       throw new Error(message);
     }
 
-    const commitSha = (await commitsAzureResponse.json()).value[0].commitId;
+    const commitSha = ((await commitsAzureResponse.json()) as any).value[0]
+      .commitId;
     if (etag && etag === commitSha) {
       throw new NotModifiedError();
     }

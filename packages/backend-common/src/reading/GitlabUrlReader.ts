@@ -20,7 +20,7 @@ import {
   GitLabIntegration,
   ScmIntegrations,
 } from '@backstage/integration';
-import fetch from 'cross-fetch';
+import fetch, { Response } from 'node-fetch';
 import parseGitUrl from 'git-url-parse';
 import { Minimatch } from 'minimatch';
 import { Readable } from 'stream';
@@ -125,7 +125,7 @@ export class GitlabUrlReader implements UrlReader {
       }
       throw new Error(msg);
     }
-    const projectGitlabResponseJson = await projectGitlabResponse.json();
+    const projectGitlabResponseJson: any = await projectGitlabResponse.json();
 
     // ref is an empty string if no branch is set in provided url to readTree.
     const branch = ref || projectGitlabResponseJson.default_branch;
@@ -156,7 +156,7 @@ export class GitlabUrlReader implements UrlReader {
       throw new Error(message);
     }
 
-    const commitSha = (await commitsGitlabResponse.json())[0].id;
+    const commitSha = ((await commitsGitlabResponse.json()) as any)[0].id;
 
     if (etag && etag === commitSha) {
       throw new NotModifiedError();

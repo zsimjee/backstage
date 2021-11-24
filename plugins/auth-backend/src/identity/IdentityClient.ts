@@ -127,8 +127,7 @@ export class IdentityClient {
       throw new Error(message);
     }
 
-    const publicKeys: { keys: JSONWebKey[] } = await response.json();
-
+    const publicKeys: any = await response.json();
     return publicKeys;
   }
 

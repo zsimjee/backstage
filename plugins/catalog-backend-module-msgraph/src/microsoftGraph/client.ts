@@ -104,7 +104,7 @@ export class MicrosoftGraphClient {
         await this.handleError(path, response);
       }
 
-      const result = await response.json();
+      const result: any = await response.json();
 
       // Graph API return array of collections
       const elements: T[] = result.value;
@@ -181,7 +181,8 @@ export class MicrosoftGraphClient {
       await this.handleError('user profile', response);
     }
 
-    return await response.json();
+    const result: any = await response.json();
+    return result;
   }
 
   /**
@@ -281,7 +282,8 @@ export class MicrosoftGraphClient {
       await this.handleError(`organization/${tenantId}`, response);
     }
 
-    return await response.json();
+    const result: any = await response.json();
+    return result;
   }
 
   /**
@@ -306,7 +308,7 @@ export class MicrosoftGraphClient {
       await this.handleError(`${entityName} photos`, response);
     }
 
-    const result = await response.json();
+    const result: any = await response.json();
     const photos = result.value as MicrosoftGraph.ProfilePhoto[];
     let selectedPhoto: MicrosoftGraph.ProfilePhoto | undefined = undefined;
 
@@ -349,7 +351,7 @@ export class MicrosoftGraphClient {
   }
 
   private async handleError(path: string, response: Response): Promise<void> {
-    const result = await response.json();
+    const result: any = await response.json();
     const error = result.error as MicrosoftGraph.PublicError;
 
     throw new Error(

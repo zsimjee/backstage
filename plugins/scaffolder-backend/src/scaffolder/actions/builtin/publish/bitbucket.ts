@@ -74,7 +74,7 @@ const createBitbucketCloudRepository = async (opts: {
     );
   }
 
-  const r = await response.json();
+  const r: any = await response.json();
   let remoteUrl = '';
   for (const link of r.links.clone) {
     if (link.name === 'https') {
@@ -135,7 +135,7 @@ const createBitbucketServerRepository = async (opts: {
     );
   }
 
-  const r = await response.json();
+  const r: any = await response.json();
   let remoteUrl = '';
   for (const link of r.links.clone) {
     if (link.name === 'http') {
