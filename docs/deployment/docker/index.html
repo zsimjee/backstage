@@ -64,9 +64,9 @@
             });
         </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/backstage/backstage/edit/master/docs/deployment/docker.md" target="_blank" rel="noreferrer noopener">Edit</a><h1 id="__docusaurus" class="postHeaderTitle">Building a Docker image</h1></header><article><div><span><p>This section describes how to build a Backstage App into a deployable Docker
 image. It is split into three sections, first covering the host build approach,
-which is recommended due its speed and more efficient and often simpler caching.
-The second section covers a full multi-stage Docker build, and the last section
-covers how to deploy the frontend and backend as separate images.</p>
+which is recommended due to its speed and more efficient and often simpler
+caching. The second section covers a full multi-stage Docker build, and the last
+section covers how to deploy the frontend and backend as separate images.</p>
 <p>Something that goes for all of these docker deployment strategies is that they
 are stateless, so for a production deployment you will want to set up and
 connect to an external PostgreSQL instance where the backend plugins can store
