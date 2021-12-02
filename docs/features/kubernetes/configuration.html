@@ -79,6 +79,7 @@
           <span class="hljs-attr">name:</span> <span class="hljs-string">minikube</span>
           <span class="hljs-attr">authProvider:</span> <span class="hljs-string">'serviceAccount'</span>
           <span class="hljs-attr">skipTLSVerify:</span> <span class="hljs-literal">false</span>
+          <span class="hljs-attr">skipMetricsLookup:</span> <span class="hljs-literal">true</span>
           <span class="hljs-attr">serviceAccountToken:</span> <span class="hljs-string">${K8S_MINIKUBE_TOKEN}</span>
           <span class="hljs-attr">dashboardUrl:</span> <span class="hljs-string">http://127.0.0.1:64713</span> <span class="hljs-comment"># url copied from running the command: minikube service kubernetes-dashboard -n kubernetes-dashboard</span>
           <span class="hljs-attr">dashboardApp:</span> <span class="hljs-string">standard</span>
@@ -90,6 +91,7 @@
       <span class="hljs-attr">projectId:</span> <span class="hljs-string">'gke-clusters'</span>
       <span class="hljs-attr">region:</span> <span class="hljs-string">'europe-west1'</span>
       <span class="hljs-attr">skipTLSVerify:</span> <span class="hljs-literal">true</span>
+      <span class="hljs-attr">skipMetricsLookup:</span> <span class="hljs-literal">true</span>
 </code></pre>
 <h3><a class="anchor" aria-hidden="true" id="servicelocatormethod"></a><a href="#servicelocatormethod" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>serviceLocatorMethod</code></h3>
 <p>This configures how to determine which clusters a component is running in.</p>
@@ -126,8 +128,11 @@ cluster. Valid values are:</p>
 </tbody>
 </table>
 <h5><a class="anchor" aria-hidden="true" id="clustersskiptlsverify"></a><a href="#clustersskiptlsverify" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>clusters.\*.skipTLSVerify</code></h5>
-<p>This determines whether or not the Kubernetes client verifies the TLS
-certificate presented by the API server. Defaults to <code>false</code>.</p>
+<p>This determines whether the Kubernetes client verifies the TLS certificate
+presented by the API server. Defaults to <code>false</code>.</p>
+<h5><a class="anchor" aria-hidden="true" id="clustersskipmetricslookup"></a><a href="#clustersskipmetricslookup" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>clusters.\*.skipMetricsLookup</code></h5>
+<p>This determines whether the Kubernetes client looks up resource metrics
+CPU/Memory for pods returned by the API server. Defaults to <code>false</code>.</p>
 <h5><a class="anchor" aria-hidden="true" id="clustersserviceaccounttoken-optional"></a><a href="#clustersserviceaccounttoken-optional" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>clusters.\*.serviceAccountToken</code> (optional)</h5>
 <p>The service account token to be used when using the <code>serviceAccount</code> auth
 provider. You could get the service account token with:</p>
@@ -191,8 +196,11 @@ project <code>gke-clusters</code> in the region <code>europe-west1</code>.</p>
 <p>The Google Cloud region to look for Kubernetes clusters in. Defaults to all
 regions.</p>
 <h5><a class="anchor" aria-hidden="true" id="skiptlsverify"></a><a href="#skiptlsverify" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>skipTLSVerify</code></h5>
-<p>This determines whether or not the Kubernetes client verifies the TLS
-certificate presented by the API server. Defaults to <code>false</code>.</p>
+<p>This determines whether the Kubernetes client verifies the TLS certificate
+presented by the API server. Defaults to <code>false</code>.</p>
+<h5><a class="anchor" aria-hidden="true" id="skipmetricslookup"></a><a href="#skipmetricslookup" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>skipMetricsLookup</code></h5>
+<p>This determines whether the Kubernetes client looks up resource metrics
+CPU/Memory for pods returned by the API server. Defaults to <code>false</code>.</p>
 <h3><a class="anchor" aria-hidden="true" id="customresources-optional"></a><a href="#customresources-optional" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>customResources</code> (optional)</h3>
 <p>Configures which <a href="https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/">custom resources</a> to look for when returning an entity's
 Kubernetes resources.</p>
