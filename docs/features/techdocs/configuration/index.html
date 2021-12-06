@@ -190,6 +190,22 @@ configuration options for TechDocs.</p>
   <span class="hljs-comment"># the old, case-sensitive entity triplet behavior.</span>
   <span class="hljs-attr">legacyUseCaseSensitiveTripletPaths:</span> <span class="hljs-literal">false</span>
 
+  <span class="hljs-comment"># techdocs.cache is optional, and is only recommended when you've configured</span>
+  <span class="hljs-comment"># an external techdocs.publisher.type above. Also requires backend.cache to</span>
+  <span class="hljs-comment"># be configured with a valid cache store.</span>
+  <span class="hljs-attr">cache:</span>
+    <span class="hljs-comment"># Represents the number of milliseconds a statically built asset should</span>
+    <span class="hljs-comment"># stay cached. Cache invalidation is handled automatically by the frontend,</span>
+    <span class="hljs-comment"># which compares the build times in cached metadata vs. canonical storage,</span>
+    <span class="hljs-comment"># allowing long TTLs (e.g. 1 month/year)</span>
+    <span class="hljs-attr">ttl:</span> <span class="hljs-number">3600000</span>
+
+    <span class="hljs-comment"># (Optional) The time (in milliseconds) that the TechDocs backend will wait</span>
+    <span class="hljs-comment"># for a cache service to respond before continuing on as though the cached</span>
+    <span class="hljs-comment"># object was not found (e.g. when the cache sercice is unavailable). The</span>
+    <span class="hljs-comment"># default value is 1000</span>
+    <span class="hljs-attr">readTimeout:</span> <span class="hljs-number">500</span>
+
   <span class="hljs-comment"># (Optional and Legacy) TechDocs makes API calls to techdocs-backend using this URL. e.g. get docs of an entity, get metadata, etc.</span>
   <span class="hljs-comment"># You don't have to specify this anymore.</span>
 
