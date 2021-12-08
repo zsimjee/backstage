@@ -66,13 +66,13 @@
 minimum that is needed to define a template is a <code>template.yaml</code> file, but it
 would be good to also have some files in there that can be templated in.</p>
 <p>A simple <code>template.yaml</code> definition might look something like this:</p>
-<pre><code class="hljs css language-yaml"><span class="hljs-attr">apiVersion:</span> <span class="hljs-string">backstage.io/v1beta2</span>
+<pre><code class="hljs css language-yaml"><span class="hljs-attr">apiVersion:</span> <span class="hljs-string">scaffolder.backstage.io/v1beta3</span>
 <span class="hljs-attr">kind:</span> <span class="hljs-string">Template</span>
 <span class="hljs-comment"># some metadata about the template itself</span>
 <span class="hljs-attr">metadata:</span>
-  <span class="hljs-attr">name:</span> <span class="hljs-string">v1beta2-demo</span>
+  <span class="hljs-attr">name:</span> <span class="hljs-string">v1beta3-demo</span>
   <span class="hljs-attr">title:</span> <span class="hljs-string">Test</span> <span class="hljs-string">Action</span> <span class="hljs-string">template</span>
-  <span class="hljs-attr">description:</span> <span class="hljs-string">scaffolder</span> <span class="hljs-string">v1beta2</span> <span class="hljs-string">template</span> <span class="hljs-string">demo</span>
+  <span class="hljs-attr">description:</span> <span class="hljs-string">scaffolder</span> <span class="hljs-string">v1beta3</span> <span class="hljs-string">template</span> <span class="hljs-string">demo</span>
 <span class="hljs-attr">spec:</span>
   <span class="hljs-attr">owner:</span> <span class="hljs-string">backstage/techdocs-core</span>
   <span class="hljs-attr">type:</span> <span class="hljs-string">service</span>
@@ -110,7 +110,7 @@ would be good to also have some files in there that can be templated in.</p>
       <span class="hljs-attr">input:</span>
         <span class="hljs-attr">url:</span> <span class="hljs-string">./template</span>
         <span class="hljs-attr">values:</span>
-          <span class="hljs-attr">name:</span> <span class="hljs-string">'<span class="hljs-template-variable">{{ parameters.name }}</span>'</span>
+          <span class="hljs-attr">name:</span> <span class="hljs-string">${{</span> <span class="hljs-string">parameters.name</span> <span class="hljs-string">}}</span>
 
     <span class="hljs-bullet">-</span> <span class="hljs-attr">id:</span> <span class="hljs-string">fetch-docs</span>
       <span class="hljs-attr">name:</span> <span class="hljs-string">Fetch</span> <span class="hljs-string">Docs</span>
@@ -124,14 +124,14 @@ would be good to also have some files in there that can be templated in.</p>
       <span class="hljs-attr">action:</span> <span class="hljs-string">publish:github</span>
       <span class="hljs-attr">input:</span>
         <span class="hljs-attr">allowedHosts:</span> <span class="hljs-string">['github.com']</span>
-        <span class="hljs-attr">description:</span> <span class="hljs-string">'This is <span class="hljs-template-variable">{{ parameters.name }}</span>'</span>
-        <span class="hljs-attr">repoUrl:</span> <span class="hljs-string">'<span class="hljs-template-variable">{{ parameters.repoUrl }}</span>'</span>
+        <span class="hljs-attr">description:</span> <span class="hljs-string">This</span> <span class="hljs-string">is</span> <span class="hljs-string">${{</span> <span class="hljs-string">parameters.name</span> <span class="hljs-string">}}</span>
+        <span class="hljs-attr">repoUrl:</span> <span class="hljs-string">${{</span> <span class="hljs-string">parameters.repoUrl</span> <span class="hljs-string">}}</span>
 
     <span class="hljs-bullet">-</span> <span class="hljs-attr">id:</span> <span class="hljs-string">register</span>
       <span class="hljs-attr">name:</span> <span class="hljs-string">Register</span>
       <span class="hljs-attr">action:</span> <span class="hljs-string">catalog:register</span>
       <span class="hljs-attr">input:</span>
-        <span class="hljs-attr">repoContentsUrl:</span> <span class="hljs-string">'<span class="hljs-template-variable">{{ steps.publish.output.repoContentsUrl }}</span>'</span>
+        <span class="hljs-attr">repoContentsUrl:</span> <span class="hljs-string">${{</span> <span class="hljs-string">steps.publish.output.repoContentsUrl</span> <span class="hljs-string">}}</span>
         <span class="hljs-attr">catalogInfoPath:</span> <span class="hljs-string">'/catalog-info.yaml'</span>
 </code></pre>
 <p><a href="/docs/features/software-catalog/descriptor-format#kind-template">Template Entity</a>
