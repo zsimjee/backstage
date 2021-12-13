@@ -108,7 +108,113 @@ breaking change to make <code>theme</code> optional. This means that if you curr
 construct the themes that you pass on to <code>createApp</code> using <code>AppTheme</code> as an
 intermediate type, you will need to work around this in some way, for example by
 passing the themes to <code>createApp</code> more directly.</p>
-</span></div></article></div><div class="docLastUpdate"><em>Last updated on 12/13/2021</em></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/reference/index"><span class="arrow-prev">← </span><span>Package Index</span></a><a class="docs-next button" href="/docs/tutorials/journey"><span>Future developer journey</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#introduction">Introduction</a><ul class="toc-headings"><li><a href="#app-theme">App Theme</a></li></ul></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><div class="footer-title"><a href="/"><h2 class="footerLogo"></h2></a></div><div><h5>Docs</h5><a href="/docs/overview/what-is-backstage">What is Backstage?</a><a href="/docs/getting-started/">Getting started</a><a href="/docs/features/software-catalog/software-catalog-overview">Software Catalog</a><a href="/docs/plugins/create-a-plugin">Create a Plugin</a><a href="/docs/dls/design">Designing for Backstage</a></div><div><h5>Community</h5><a href="https://discord.gg/MUpMjP2">Support chatroom</a><a href="https://github.com/backstage/backstage/blob/master/CONTRIBUTING.md">Contributing</a><a href="https://backstage.spotify.com">Adopting</a><a href="https://github.com/backstage/community">Community Sessions</a><a href="https://mailchi.mp/spotify/backstage-community">Subscribe to our newsletter</a><a href="https://www.cncf.io/sandbox-projects/">CNCF Sandbox</a></div><div><h5>More</h5><a href="https://spotify.github.io/">Open Source @ Spotify</a><a href="https://engineering.atspotify.com/">Spotify Engineering Blog</a><a href="https://developer.spotify.com/">Spotify for Developers</a><a href="https://github.com/backstage/backstage">GitHub</a><a class="github-button" href="https://github.com/backstage/backstage" data-icon="octicon-star" data-count-href="/backstage/backstage/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a><div class="social"><a href="https://twitter.com/SpotifyEng" class="twitter-follow-button">Follow @SpotifyEng</a></div></div></section><p style="text-align:center"><a href="https://spotify.github.io">Made with ❤️ at Spotify</a></p><p class="copyright">Copyright © 2021 Backstage Project Authors. All rights reserved. The Linux Foundation has registered trademarks and uses trademarks. For a list of trademarks of The Linux Foundation, please see our Trademark Usage page: https://www.linuxfoundation.org/trademark-usage</p></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script><script>
+<h3><a class="anchor" aria-hidden="true" id="generic-auth-api-refs"></a><a href="#generic-auth-api-refs" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Generic Auth API Refs</h3>
+<p><code>Released 2021-12-16 in @backstage/core-plugin-api v0.3.1</code></p>
+<p>There are four auth Utility API references in <code>@backstage/core-plugin-api</code> that
+were too generic to be useful. The APIs in question are <code>auth0AuthApiRef</code>,
+<code>oauth2ApiRef</code>, <code>oidcAuthApiRef</code>, and <code>samlAuthApiRef</code>. The issue with these
+APIs was that they had no actual contract of what the backing auth provider was.
+This made it more or less impossible to use these providers in open source
+plugins in any meaningful way. We also did not want to keep these Utility API
+references around just as helpers either, instead opting to remove them and let
+integrators define their own APIs that are more specific to their auth provider.
+This is also falls in line with a long-term goal to unify all auth providers to
+not have separate frontend implementations.</p>
+<p>If you're currently using one of these API references for either Sign-In or
+access delegation within an app, there are a couple of steps you need to take to
+migrate to your own custom API.</p>
+<p>First, you'll need to define a new Utility API reference. If you're only using
+the API for sign-in, you can put the definition in <code>packages/app/src/apis.ts</code>.
+However, if you need to access your auth API inside plugins you you'll need to
+export it from a common package. If you don't already have one we recommended
+creating <code>@internal/apis</code> and from there export the API reference.</p>
+<pre><code class="hljs css language-ts"><span class="hljs-comment">// `ProfileInfoApi &amp; BackstageIdentityApi &amp; SessionApi` are required for sign-in</span>
+<span class="hljs-comment">// Include `OAuthApi &amp; OpenIdConnectApi` only if applicable</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> acmeAuthApiRef: ApiRef&lt;
+  OAuthApi &amp;
+    OpenIdConnectApi &amp;
+    ProfileInfoApi &amp;
+    BackstageIdentityApi &amp;
+    SessionApi
+&gt; = createApiRef({
+  id: <span class="hljs-string">'internal.auth.acme'</span>,
+});
+</code></pre>
+<p>Next you'll want to wire up the API inside <code>packages/app/src/apis.ts</code>, which
+varies depending on which API you're replacing. If you for example are replacing
+the <code>oauth2ApiRef</code>, the factory might look like this:</p>
+<pre><code class="hljs css language-ts"><span class="hljs-comment">// oauth2</span>
+createApiFactory({
+  api: acmeAuthApiRef,
+  deps: {
+    discoveryApi: discoveryApiRef,
+    oauthRequestApi: oauthRequestApiRef,
+    configApi: configApiRef,
+  },
+  factory: <span class="hljs-function">(<span class="hljs-params">{ discoveryApi, oauthRequestApi, configApi }</span>) =&gt;</span>
+    OAuth2.create({
+      discoveryApi,
+      oauthRequestApi,
+      environment: configApi.getOptionalString(<span class="hljs-string">'auth.environment'</span>),
+    }),
+});
+</code></pre>
+<p>Provider specific factory implementations, copy the code you need into the
+factory method depending on which apiRef you previously used.</p>
+<pre><code class="hljs css language-ts"><span class="hljs-comment">// samlAuthApiRef</span>
+SamlAuth.create({
+  discoveryApi,
+  environment: configApi.getOptionalString(<span class="hljs-string">'auth.environment'</span>),
+});
+
+<span class="hljs-comment">// oidcAuthApiRef</span>
+OAuth2.create({
+  discoveryApi,
+  oauthRequestApi,
+  provider: {
+    id: <span class="hljs-string">'oidc'</span>,
+    title: <span class="hljs-string">'Your Identity Provider'</span>,
+    icon: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-literal">null</span>,
+  },
+  environment: configApi.getOptionalString(<span class="hljs-string">'auth.environment'</span>),
+});
+
+<span class="hljs-comment">// auth0AuthApiRef</span>
+OAuth2.create({
+  discoveryApi,
+  oauthRequestApi,
+  provider: {
+    id: <span class="hljs-string">'auth0'</span>,
+    title: <span class="hljs-string">'Auth0'</span>,
+    icon: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-literal">null</span>,
+  },
+  defaultScopes: [<span class="hljs-string">'openid'</span>, <span class="hljs-string">'email'</span>, <span class="hljs-string">'profile'</span>],
+  environment: configApi.getOptionalString(<span class="hljs-string">'auth.environment'</span>),
+});
+</code></pre>
+<p>Finally, for the provider to show up in your settings menu, you also need to
+update the settings route in <code>packages/app/src/App.tsx</code> to pass the
+<code>acmeAuthApiRef</code> to the <code>UserSettingsPage</code>. This replaces all existing provider
+items, so you might want to add back any of the default ones that you are using
+from the
+<a href="https://github.com/backstage/backstage/blob/a3ec122170e0205fd3f9c307b98b1c5e4f55bf5f/plugins/user-settings/src/components/AuthProviders/DefaultProviderSettings.tsx#L35">DefaultProviderSettings</a>.</p>
+<pre><code class="hljs css language-tsx"><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Route</span>
+  <span class="hljs-attr">path</span>=<span class="hljs-string">"/settings"</span>
+  <span class="hljs-attr">element</span>=<span class="hljs-string">{</span>
+    &lt;<span class="hljs-attr">UserSettingsPage</span>
+      <span class="hljs-attr">providerSettings</span>=<span class="hljs-string">{</span>
+        &lt;<span class="hljs-attr">ProviderSettingsItem</span>
+          <span class="hljs-attr">title</span>=<span class="hljs-string">"ACME"</span>
+          <span class="hljs-attr">description</span>=<span class="hljs-string">"Provides sign-in via ACME"</span>
+          <span class="hljs-attr">apiRef</span>=<span class="hljs-string">{acmeAuthApiRef}</span>
+          <span class="hljs-attr">icon</span>=<span class="hljs-string">{Star}</span>
+        /&gt;</span>
+      }
+    /&gt;
+  }
+/&gt;
+</span></code></pre>
+</span></div></article></div><div class="docLastUpdate"><em>Last updated on 12/13/2021</em></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/reference/index"><span class="arrow-prev">← </span><span>Package Index</span></a><a class="docs-next button" href="/docs/tutorials/journey"><span>Future developer journey</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#introduction">Introduction</a><ul class="toc-headings"><li><a href="#app-theme">App Theme</a></li><li><a href="#generic-auth-api-refs">Generic Auth API Refs</a></li></ul></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><div class="footer-title"><a href="/"><h2 class="footerLogo"></h2></a></div><div><h5>Docs</h5><a href="/docs/overview/what-is-backstage">What is Backstage?</a><a href="/docs/getting-started/">Getting started</a><a href="/docs/features/software-catalog/software-catalog-overview">Software Catalog</a><a href="/docs/plugins/create-a-plugin">Create a Plugin</a><a href="/docs/dls/design">Designing for Backstage</a></div><div><h5>Community</h5><a href="https://discord.gg/MUpMjP2">Support chatroom</a><a href="https://github.com/backstage/backstage/blob/master/CONTRIBUTING.md">Contributing</a><a href="https://backstage.spotify.com">Adopting</a><a href="https://github.com/backstage/community">Community Sessions</a><a href="https://mailchi.mp/spotify/backstage-community">Subscribe to our newsletter</a><a href="https://www.cncf.io/sandbox-projects/">CNCF Sandbox</a></div><div><h5>More</h5><a href="https://spotify.github.io/">Open Source @ Spotify</a><a href="https://engineering.atspotify.com/">Spotify Engineering Blog</a><a href="https://developer.spotify.com/">Spotify for Developers</a><a href="https://github.com/backstage/backstage">GitHub</a><a class="github-button" href="https://github.com/backstage/backstage" data-icon="octicon-star" data-count-href="/backstage/backstage/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a><div class="social"><a href="https://twitter.com/SpotifyEng" class="twitter-follow-button">Follow @SpotifyEng</a></div></div></section><p style="text-align:center"><a href="https://spotify.github.io">Made with ❤️ at Spotify</a></p><p class="copyright">Copyright © 2021 Backstage Project Authors. All rights reserved. The Linux Foundation has registered trademarks and uses trademarks. For a list of trademarks of The Linux Foundation, please see our Trademark Usage page: https://www.linuxfoundation.org/trademark-usage</p></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script><script>
                 document.addEventListener('keyup', function(e) {
                   if (e.target !== document.body) {
                     return;
