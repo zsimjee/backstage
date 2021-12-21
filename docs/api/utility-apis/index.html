@@ -164,8 +164,8 @@ the core APIs. The core APIs are the ones exported by
 <a href="/docs/reference/core-plugin-api.errorapiref">errorApiRef</a> and
 <a href="/docs/reference/core-plugin-api.configapiref">configApiRef</a>.</p>
 <p>The core APIs are loaded for any app created with
-<a href="/docs/reference/core-app-api.createapp">createApp</a> from
-<a href="/docs/reference/core-plugin-api">@backstage/core-plugin-api</a>, which means that
+<a href="/docs/reference/app-defaults.createapp">createApp</a> from
+<a href="/docs/reference/app-defaults">@backstage/core-plugin-api</a>, which means that
 there is no step that needs to be taken to include these APIs in an app.</p>
 <h3><a class="anchor" aria-hidden="true" id="plugin-apis"></a><a href="#plugin-apis" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Plugin APIs</h3>
 <p>In addition to the core APIs, plugins can define and export their own APIs.
@@ -197,7 +197,7 @@ will cause the app to refuse to start.</p>
 the final say in what APIs will be loaded at runtime. The app may override the
 factories for any of the core or plugin APIs, with the exception of the config,
 app theme, and identity APIs. These are static APIs that are tied into the
-<a href="/docs/reference/core-app-api.createapp">createApp</a> implementation, and
+<a href="/docs/reference/app-defaults.createapp">createApp</a> implementation, and
 therefore not possible to override.</p>
 <p>Overriding APIs is useful for apps that want to switch out behavior to tailor it
 to their environment. In some cases plugins may also export multiple
@@ -316,7 +316,7 @@ interaction with the API.</p>
 <a href="/docs/reference/dev-utils.createdevapp">createDevApp</a> function creates an
 application with implementations for all core APIs already present. Contrary to
 the method for wiring up Utility API implementations in an app created with
-<a href="/docs/reference/core-app-api.createapp">createApp</a>,
+<a href="/docs/reference/app-defaults.createapp">createApp</a>,
 <a href="/docs/reference/dev-utils.createdevapp">createDevApp</a> uses automatic dependency
 injection. This is to make it possible to replace any API implementation, and
 having that be reflected in dependents of that API.</p>

@@ -97,7 +97,6 @@ local development backend, and by adding a frontend <code>SpotifyAuth</code> Uti
 that implements the <code>OAuthApi</code> type, it's now working in the frontend too.</p>
 <pre><code class="hljs css language-ts"><span class="hljs-keyword">const</span> spotifyAuthApiRef = createApiRef&lt;OAuthApi&gt;({
   id: <span class="hljs-string">'core.auth.spotify'</span>,
-  description: <span class="hljs-string">'Provides authentication towards Spotify APIs'</span>,
 });
 </code></pre>
 <p>Sam realizes that Spotify auth might be useful to others, and that it would be
