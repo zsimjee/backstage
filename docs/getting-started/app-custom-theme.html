@@ -100,21 +100,21 @@ for more information about how that can be done.</p>
 <code>createApp</code>.</p>
 <p>For example, adding the theme that we created in the previous section can be
 done like this:</p>
-<pre><code class="hljs css language-ts">import { createApp } from '@backstage/app-defaults';
-import { ThemeProvider } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
+<pre><code class="hljs css language-tsx"><span class="hljs-keyword">import</span> { createApp } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/app-defaults'</span>;
+<span class="hljs-keyword">import</span> { ThemeProvider } <span class="hljs-keyword">from</span> <span class="hljs-string">'@material-ui/core/styles'</span>;
+<span class="hljs-keyword">import</span> CssBaseline <span class="hljs-keyword">from</span> <span class="hljs-string">'@material-ui/core/CssBaseline'</span>;
 
-const app = createApp({
-  apis: ...,
-  plugins: ...,
-  themes: [{
-    id: 'my-theme',
-    title: 'My Custom Theme',
-    variant: 'light',
-    Provider: ({ children }) =&gt; (
-      &lt;ThemeProvider theme={myTheme}&gt;
-        &lt;CssBaseline&gt;{children}&lt;/CssBaseline&gt;
-      &lt;/ThemeProvider&gt;
+<span class="hljs-keyword">const</span> app = createApp({
+  <span class="hljs-attr">apis</span>: ...,
+  <span class="hljs-attr">plugins</span>: ...,
+  <span class="hljs-attr">themes</span>: [{
+    <span class="hljs-attr">id</span>: <span class="hljs-string">'my-theme'</span>,
+    <span class="hljs-attr">title</span>: <span class="hljs-string">'My Custom Theme'</span>,
+    <span class="hljs-attr">variant</span>: <span class="hljs-string">'light'</span>,
+    <span class="hljs-attr">Provider</span>: <span class="hljs-function">(<span class="hljs-params">{ children }</span>) =&gt;</span> (
+      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">ThemeProvider</span> <span class="hljs-attr">theme</span>=<span class="hljs-string">{myTheme}</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">CssBaseline</span>&gt;</span>{children}<span class="hljs-tag">&lt;/<span class="hljs-name">CssBaseline</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">ThemeProvider</span>&gt;</span></span>
     ),
   }]
 })
@@ -211,51 +211,51 @@ reference any value from the theme, that means that creating a custom theme
 wouldn't be enough to alter the <code>box-shadow</code> property or to add css rules that
 aren't already defined like a margin. For these cases you should also create an
 override.</p>
-<pre><code class="hljs css language-ts">import { createApp } from '@backstage/core-app-api';
-import { BackstageTheme, lightTheme } from '@backstage/theme';
-/**
+<pre><code class="hljs css language-tsx"><span class="hljs-keyword">import</span> { createApp } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/core-app-api'</span>;
+<span class="hljs-keyword">import</span> { BackstageTheme, lightTheme } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/theme'</span>;
+<span class="hljs-comment">/**
  * The `@backstage/core-components` package exposes this type that
  * contains all Backstage and `material-ui` components that can be
  * overridden along with the classes key those components use.
- */
-import { BackstageOverrides } from '@backstage/core-components';
+ */</span>
+<span class="hljs-keyword">import</span> { BackstageOverrides } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/core-components'</span>;
 
-export const createCustomThemeOverrides = (
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> createCustomThemeOverrides = (
   theme: BackstageTheme,
-): BackstageOverrides =&gt; {
-  return {
-    BackstageHeader: {
-      header: {
-        width: 'auto',
-        margin: '20px',
-        boxShadow: 'none',
-        borderBottom: `4px solid ${theme.palette.primary.main}`,
+): <span class="hljs-function"><span class="hljs-params">BackstageOverrides</span> =&gt;</span> {
+  <span class="hljs-keyword">return</span> {
+    <span class="hljs-attr">BackstageHeader</span>: {
+      <span class="hljs-attr">header</span>: {
+        <span class="hljs-attr">width</span>: <span class="hljs-string">'auto'</span>,
+        <span class="hljs-attr">margin</span>: <span class="hljs-string">'20px'</span>,
+        <span class="hljs-attr">boxShadow</span>: <span class="hljs-string">'none'</span>,
+        <span class="hljs-attr">borderBottom</span>: <span class="hljs-string">`4px solid <span class="hljs-subst">${theme.palette.primary.main}</span>`</span>,
       },
     },
   };
 };
 
-const overriddenTheme = {
+<span class="hljs-keyword">const</span> customTheme: BackstageTheme = {
   ...lightTheme,
-  overrides: {
-    // These are the overrides that Backstage applies to `material-ui` components
+  <span class="hljs-attr">overrides</span>: {
+    <span class="hljs-comment">// These are the overrides that Backstage applies to `material-ui` components</span>
     ...lightTheme.overrides,
-    // These are your custom overrides, either to `material-ui` or Backstage components.
+    <span class="hljs-comment">// These are your custom overrides, either to `material-ui` or Backstage components.</span>
     ...createCustomThemeOverrides(lightTheme),
   },
 };
 
-const app = createApp({
-  apis: ...,
-  plugins: ...,
-  themes: [{
-    id: 'my-theme',
-    title: 'My Custom Theme',
-    variant: 'light',
-    Provider: ({ children }) =&gt; (
-      &lt;ThemeProvider theme={overriddenTheme}&gt;
-        &lt;CssBaseline&gt;{children}&lt;/CssBaseline&gt;
-      &lt;/ThemeProvider&gt;
+<span class="hljs-keyword">const</span> app = createApp({
+  <span class="hljs-attr">apis</span>: ...,
+  <span class="hljs-attr">plugins</span>: ...,
+  <span class="hljs-attr">themes</span>: [{
+    <span class="hljs-attr">id</span>: <span class="hljs-string">'my-theme'</span>,
+    <span class="hljs-attr">title</span>: <span class="hljs-string">'My Custom Theme'</span>,
+    <span class="hljs-attr">variant</span>: <span class="hljs-string">'light'</span>,
+    <span class="hljs-attr">Provider</span>: <span class="hljs-function">(<span class="hljs-params">{ children }</span>) =&gt;</span> (
+      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">ThemeProvider</span> <span class="hljs-attr">theme</span>=<span class="hljs-string">{customTheme}</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">CssBaseline</span>&gt;</span>{children}<span class="hljs-tag">&lt;/<span class="hljs-name">CssBaseline</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">ThemeProvider</span>&gt;</span></span>
     ),
   }]
 });
