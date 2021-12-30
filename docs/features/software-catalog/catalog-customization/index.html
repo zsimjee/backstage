@@ -66,8 +66,7 @@
 and find catalog entities. This is already set up by default by
 <code>@backstage/create-app</code>.</p>
 <p>If you want to change the default index page - such as to add a custom filter to
-the catalog - you can replace the routing in <code>App.tsx</code> to point to your own
-<code>CatalogIndexPage</code>.</p>
+the catalog - you can create your own <code>CatalogIndexPage</code>.</p>
 <blockquote>
 <p>Note: The catalog index page is designed to have a minimal code footprint to
 support easy customization, but creating a copy does introduce a possibility
@@ -77,10 +76,9 @@ periodically.</p>
 </blockquote>
 <p>For example, suppose that I want to allow filtering by a custom annotation added
 to entities, <code>company.com/security-tier</code>. To start, I'll copy the code for the
-default catalog page and create a component in a
-<a href="/docs/plugins/create-a-plugin">new plugin</a>:</p>
+default catalog page and create a component.</p>
 <pre><code class="hljs css language-tsx"><span class="hljs-comment">// imports, etc omitted for brevity. for full source see:</span>
-<span class="hljs-comment">// https://github.com/backstage/backstage/blob/master/plugins/catalog/src/components/CatalogPage/CatalogPage.tsx</span>
+<span class="hljs-comment">// https://github.com/backstage/backstage/blob/master/plugins/catalog/src/components/CatalogPage/DefaultCatalogPage.tsx</span>
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> CustomCatalogPage = ({
   columns,
   actions,
@@ -206,24 +204,15 @@ parameter:</p>
     ...
 };
 </code></pre>
-<p>This page itself can be exported as a routable extension in the plugin:</p>
-<pre><code class="hljs css language-ts"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> CustomCatalogIndexPage = myPlugin.provide(
-  createRoutableExtension({
-    name: <span class="hljs-string">'CustomCatalogIndexPage'</span>,
-    component: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span>
-      <span class="hljs-keyword">import</span>(<span class="hljs-string">'./components/CustomCatalogPage'</span>).then(<span class="hljs-function"><span class="hljs-params">m</span> =&gt;</span> m.CustomCatalogPage),
-    mountPoint: catalogRouteRef,
-  }),
-);
-</code></pre>
-<p>Finally, we can replace the catalog route in the Backstage application with our
-new <code>CustomCatalogIndexPage</code>.</p>
+<p>Finally, we can apply our new <code>CustomCatalogPage</code>.</p>
 <pre><code class="hljs css language-diff"># packages/app/src/App.tsx
 const routes = (
   &lt;FlatRoutes&gt;
     &lt;Navigate key="/" to="catalog" /&gt;
 <span class="hljs-deletion">-    &lt;Route path="/catalog" element={&lt;CatalogIndexPage /&gt;} /&gt;</span>
-<span class="hljs-addition">+    &lt;Route path="/catalog" element={&lt;CustomCatalogIndexPage /&gt;} /&gt;</span>
+<span class="hljs-addition">+    &lt;Route path="/catalog" element={&lt;CatalogIndexPage /&gt;}&gt;</span>
+<span class="hljs-addition">+      &lt;CustomCatalogPage /&gt;</span>
+<span class="hljs-addition">+    &lt;/Route&gt;</span>
 </code></pre>
 <p>The same method can be used to customize the <em>default</em> filters with a different
 interface - for such usage, the generic argument isn't needed since the filter
