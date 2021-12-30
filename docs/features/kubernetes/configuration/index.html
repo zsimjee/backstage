@@ -92,6 +92,7 @@
       <span class="hljs-attr">region:</span> <span class="hljs-string">'europe-west1'</span>
       <span class="hljs-attr">skipTLSVerify:</span> <span class="hljs-literal">true</span>
       <span class="hljs-attr">skipMetricsLookup:</span> <span class="hljs-literal">true</span>
+      <span class="hljs-attr">exposeDashboard:</span> <span class="hljs-literal">true</span>
 </code></pre>
 <h3><a class="anchor" aria-hidden="true" id="servicelocatormethod"></a><a href="#servicelocatormethod" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>serviceLocatorMethod</code></h3>
 <p>This configures how to determine which clusters a component is running in.</p>
@@ -144,16 +145,21 @@ provider. You could get the service account token with:</p>
 <h5><a class="anchor" aria-hidden="true" id="clustersdashboardurl-optional"></a><a href="#clustersdashboardurl-optional" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>clusters.\*.dashboardUrl</code> (optional)</h5>
 <p>Specifies the link to the Kubernetes dashboard managing this cluster.</p>
 <p>Note that you should specify the app used for the dashboard using the
-<strong>dashboardApp property</strong>, in order to properly format links to kubernetes
+<code>dashboardApp</code> property, in order to properly format links to kubernetes
 resources, otherwise it will assume that you're running the standard one.</p>
+<p>Note also that this attribute is optional for some kinds of dashboards, such as
+GKE, which requires additional parameters specified in the <code>dashboardParameters</code>
+option.</p>
 <h5><a class="anchor" aria-hidden="true" id="clustersdashboardapp-optional"></a><a href="#clustersdashboardapp-optional" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>clusters.\*.dashboardApp</code> (optional)</h5>
 <p>Specifies the app that provides the Kubernetes dashboard.</p>
 <p>This will be used for formatting links to kubernetes objects inside the
 dashboard.</p>
 <p>The supported dashboards are: <code>standard</code>, <code>rancher</code>, <code>openshift</code>, <code>gke</code>, <code>aks</code>,
-<code>eks</code> However, not all of them are implemented yet, so please contribute!</p>
+<code>eks</code>. However, not all of them are implemented yet, so please contribute!</p>
 <p>Note that it will default to the regular dashboard provided by the Kubernetes
 project (<code>standard</code>), that can run in any Kubernetes cluster.</p>
+<p>Note that for the <code>gke</code> app, you must provide additional information in the
+<code>dashboardParameters</code> option.</p>
 <p>Note that you can add your own formatter by registering it to the
 <code>clusterLinksFormatters</code> dictionary, in the app project.</p>
 <p>Example:</p>
@@ -163,6 +169,39 @@ clusterLinksFormatters.myDashboard = <span class="hljs-function">(<span class="h
 <p>See also
 <a href="https://github.com/backstage/backstage/tree/master/plugins/kubernetes/src/utils/clusterLinks/formatters">https://github.com/backstage/backstage/tree/master/plugins/kubernetes/src/utils/clusterLinks/formatters</a>
 for real examples.</p>
+<h5><a class="anchor" aria-hidden="true" id="clustersdashboardparameters-optional"></a><a href="#clustersdashboardparameters-optional" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>clusters.\*.dashboardParameters</code> (optional)</h5>
+<p>Specifies additional information for the selected <code>dashboardApp</code> formatter.</p>
+<p>Note that, even though <code>dashboardParameters</code> is optional, it might be mandatory
+for some dashboards, such as GKE.</p>
+<h6><a class="anchor" aria-hidden="true" id="required-parameters-for-gke"></a><a href="#required-parameters-for-gke" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>required parameters for GKE</h6>
+<table>
+<thead>
+<tr><th>Name</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>projectId</td><td>the ID of the GCP project containing your Kubernetes clusters</td></tr>
+<tr><td>region</td><td>the region of GCP containing your Kubernetes clusters</td></tr>
+<tr><td>clusterName</td><td>the name of your kubernetes cluster, within your <code>projectId</code> GCP project</td></tr>
+</tbody>
+</table>
+<p>Note that the GKE cluster locator can automatically provide the values for the
+<code>dashboardApp</code> and <code>dashboardParameters</code> options if you set the
+<code>exposeDashboard</code> property to <code>true</code>.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-yaml"><span class="hljs-attr">kubernetes:</span>
+  <span class="hljs-attr">serviceLocatorMethod:</span>
+    <span class="hljs-attr">type:</span> <span class="hljs-string">'multiTenant'</span>
+  <span class="hljs-attr">clusterLocatorMethods:</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-attr">type:</span> <span class="hljs-string">'config'</span>
+      <span class="hljs-attr">clusters:</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-attr">url:</span> <span class="hljs-string">http://127.0.0.1:9999</span>
+          <span class="hljs-attr">name:</span> <span class="hljs-string">my-cluster</span>
+          <span class="hljs-attr">dashboardApp:</span> <span class="hljs-string">gke</span>
+          <span class="hljs-attr">dashboardParameters:</span>
+            <span class="hljs-attr">projectId:</span> <span class="hljs-string">my-project</span>
+            <span class="hljs-attr">region:</span> <span class="hljs-string">us-east1</span>
+            <span class="hljs-attr">clusterName:</span> <span class="hljs-string">my-cluster</span>
+</code></pre>
 <h5><a class="anchor" aria-hidden="true" id="clusterscadata-optional"></a><a href="#clusterscadata-optional" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>clusters.\*.caData</code> (optional)</h5>
 <p>PEM-encoded certificate authority certificates.</p>
 <p>This values could be obtained via inspecting the Kubernetes config file (usually
@@ -190,6 +229,9 @@ docs</a> for more information.</p>
 </code></pre>
 <p>Will configure the Kubernetes plugin to connect to all GKE clusters in the
 project <code>gke-clusters</code> in the region <code>europe-west1</code>.</p>
+<p>Note that the GKE cluster locator can automatically provide the values for the
+<code>dashboardApp</code> and <code>dashboardParameters</code> options if you enable the
+<code>exposeDashboard</code> option.</p>
 <h5><a class="anchor" aria-hidden="true" id="projectid"></a><a href="#projectid" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>projectId</code></h5>
 <p>The Google Cloud project to look for Kubernetes clusters in.</p>
 <h5><a class="anchor" aria-hidden="true" id="region-optional"></a><a href="#region-optional" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>region</code> (optional)</h5>
@@ -201,6 +243,11 @@ presented by the API server. Defaults to <code>false</code>.</p>
 <h5><a class="anchor" aria-hidden="true" id="skipmetricslookup"></a><a href="#skipmetricslookup" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>skipMetricsLookup</code></h5>
 <p>This determines whether the Kubernetes client looks up resource metrics
 CPU/Memory for pods returned by the API server. Defaults to <code>false</code>.</p>
+<h5><a class="anchor" aria-hidden="true" id="exposedashboard"></a><a href="#exposedashboard" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>exposeDashboard</code></h5>
+<p>This determines wether the <code>dashboardApp</code> and <code>dashboardParameters</code> should be
+automatically configured in order to expose the GKE dashboard from the
+Kubernetes plugin.</p>
+<p>Defaults to <code>false</code>.</p>
 <h3><a class="anchor" aria-hidden="true" id="customresources-optional"></a><a href="#customresources-optional" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>customResources</code> (optional)</h3>
 <p>Configures which <a href="https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/">custom resources</a> to look for when returning an entity's
 Kubernetes resources.</p>
