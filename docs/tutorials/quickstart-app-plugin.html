@@ -173,7 +173,7 @@ changes, let's start by wiping this component clean.</p>
 <li>Replace everything in the file with the following:</li>
 </ol>
 <pre><code class="hljs css language-tsx"><span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
-<span class="hljs-keyword">import</span> { useAsync } <span class="hljs-keyword">from</span> <span class="hljs-string">'react-use'</span>;
+<span class="hljs-keyword">import</span> useAsync <span class="hljs-keyword">from</span> <span class="hljs-string">'react-use/lib/useAsync'</span>;
 <span class="hljs-keyword">import</span> Alert <span class="hljs-keyword">from</span> <span class="hljs-string">'@material-ui/lab/Alert'</span>;
 <span class="hljs-keyword">import</span> { Table, TableColumn, Progress } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/core-components'</span>;
 <span class="hljs-keyword">import</span> { githubAuthApiRef, useApi } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/core-plugin-api'</span>;
