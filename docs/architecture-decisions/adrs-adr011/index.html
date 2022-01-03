@@ -88,9 +88,11 @@ provides rules for naming plugin packages.</p>
 example <code>catalog</code> or <code>techdocs</code>):</p>
 <ul>
 <li><code>x</code>: Contains the main frontend code of the plugin.</li>
+<li><code>x-module-&lt;name&gt;</code>: Contains optional modules related to the frontend plugin
+package.</li>
 <li><code>x-backend</code>: Contains the main backend code of the plugin.</li>
 <li><code>x-backend-module-&lt;name&gt;</code>: Contains optional modules related to the backend
-plugin.</li>
+plugin package.</li>
 <li><code>x-react</code>: Contains shared widgets, hooks and similar that both the plugin
 itself (<code>x</code>) and third-party frontend plugins can depend on.</li>
 <li><code>x-node</code>: Contains utilities for backends that both the plugin backend itself
