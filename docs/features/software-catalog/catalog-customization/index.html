@@ -84,12 +84,15 @@ default catalog page and create a component.</p>
   actions,
   initiallySelectedFilter = <span class="hljs-string">'owned'</span>,
 }: CatalogPageProps) =&gt; {
+  <span class="hljs-keyword">const</span> createComponentLink = useRouteRef(
+    catalogPlugin.externalRoutes.createComponent,
+  );
   <span class="hljs-keyword">return</span> (
     <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">PageWithHeader</span> <span class="hljs-attr">title</span>=<span class="hljs-string">{</span>`${<span class="hljs-attr">orgName</span>} <span class="hljs-attr">Catalog</span>`} <span class="hljs-attr">themeId</span>=<span class="hljs-string">"home"</span>&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-name">EntityListProvider</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-name">Content</span>&gt;</span>
           <span class="hljs-tag">&lt;<span class="hljs-name">ContentHeader</span> <span class="hljs-attr">titleComponent</span>=<span class="hljs-string">{</span>&lt;<span class="hljs-attr">CatalogKindHeader</span> /&gt;</span>}&gt;
-            <span class="hljs-tag">&lt;<span class="hljs-name">CreateButton</span> <span class="hljs-attr">title</span>=<span class="hljs-string">"Create Component"</span> <span class="hljs-attr">to</span>=<span class="hljs-string">{link}</span> /&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">CreateButton</span> <span class="hljs-attr">title</span>=<span class="hljs-string">"Create Component"</span> <span class="hljs-attr">to</span>=<span class="hljs-string">{createComponentLink()}</span> /&gt;</span>
             <span class="hljs-tag">&lt;<span class="hljs-name">SupportButton</span>&gt;</span>All your software catalog entities<span class="hljs-tag">&lt;/<span class="hljs-name">SupportButton</span>&gt;</span>
           <span class="hljs-tag">&lt;/<span class="hljs-name">ContentHeader</span>&gt;</span>
           <span class="hljs-tag">&lt;<span class="hljs-name">FilteredEntityLayout</span>&gt;</span>
