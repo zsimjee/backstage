@@ -213,14 +213,14 @@ being split up into smaller deployment units that each serve their own purpose
 with a smaller collection of plugins.</p>
 <h3><a class="anchor" aria-hidden="true" id="plugin-packages"></a><a href="#plugin-packages" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Plugin Packages</h3>
 <p>A typical plugin consists of up to five packages, two frontend ones, two
-backend, and one isomorphic packages. All packages within the plugin must share
-a common prefix, typically of the form <code>@&lt;scope&gt;/plugin-&lt;plugin-id&gt;</code>, but
+backend, and one isomorphic package. All packages within the plugin must share a
+common prefix, typically of the form <code>@&lt;scope&gt;/plugin-&lt;plugin-id&gt;</code>, but
 alternatives like <code>backstage-plugin-&lt;plugin-id&gt;</code> or
 <code>@scope/backstage-plugin-&lt;plugin-id&gt;</code> are also valid. Along with this prefix,
 each of the packages have their own unique suffix that denotes their role. In
-addition to these five plugin packages it's also possible for to a plugin to
-have additional frontend and backend modules that can be installed to enable
-optional features. For a full list of suffixes and their roles, see the
+addition to these five plugin packages it's also possible for a plugin to have
+additional frontend and backend modules that can be installed to enable optional
+features. For a full list of suffixes and their roles, see the
 <a href="/docs/architecture-decisions/adrs-adr011">Plugin Package Structure ADR</a>.</p>
 <p>The <code>-react</code>, <code>-common</code>, and <code>-node</code> plugin packages together form the external
 library of a plugin. The plugin library enables other plugins to build on top of
@@ -237,7 +237,7 @@ the application itself.</p>
 <code>app</code> package itself. These packages help build up the core structure of the app
 as well as provide a foundation for the plugin libraries to rely upon.</p>
 <p>The second group is the rest of the shared packages, further divided into
-&quot;Frontend Plugin Core&quot; and &quot;Frontend Libraries&quot;. The core packages that are
+&quot;Frontend Plugin Core&quot; and &quot;Frontend Libraries&quot;. The core packages are
 considered particularly stable and form the core of the frontend framework.
 Their most important role is to form the boundary around each plugin and provide
 a set of tools that helps you combine a collection of plugins into a running
@@ -249,10 +249,10 @@ architecture as the frontend packages. They are instead simply a collection of
 building blocks and patterns that help you build backend services. This is
 however likely to change in the future.</p>
 <h3><a class="anchor" aria-hidden="true" id="common-packages"></a><a href="#common-packages" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Common Packages</h3>
-<p>The common packages are the packages are effectively depended on by all other
-pages. This is a much smaller set of packages but they are also very pervasive.
-Because the common packages are isomorphic and must execute both in the frontend
-and backend, they are never allowed to depend on any of the frontend of backend
+<p>The common packages are the packages effectively depended on by all other pages.
+This is a much smaller set of packages but they are also very pervasive. Because
+the common packages are isomorphic and must execute both in the frontend and
+backend, they are never allowed to depend on any of the frontend of backend
 packages.</p>
 <p>The Backstage CLI is in a category of its own and is depended on by virtually
 all other packages. It's not a library in itself though, and must always be a
