@@ -132,13 +132,13 @@ credentials fresh.</p>
 <p>When using the OAuth2-Proxy, the Backstage UI can only be accessed after the
 user has already been authenticated at the proxy. Instead of showing the user
 another login page when accessing Backstage, it will handle the login in the
-background. Backstage provides for this case a special <code>SignInPage</code> component
+background. Backstage provides for this case the <code>ProxiedSignInPage</code> component
 which has no UI.</p>
 <p>Update your <code>createApp</code> call in <code>packages/app/src/App.tsx</code>, as follows.</p>
 <pre><code class="hljs css language-diff"><span class="hljs-addition">+import { ProxiedSignInPage } from '@backstage/core-components';</span>
  const app = createApp({
    components: {
-<span class="hljs-addition">+    SignInPage: props =&gt; &lt;ProxiedSignInPage {...props} provider="oauth2-proxy" /&gt;,</span>
+<span class="hljs-addition">+    SignInPage: props =&gt; &lt;ProxiedSignInPage {...props} provider="oauth2proxy" /&gt;,</span>
 </code></pre>
 <p>After this, your app should be ready to leverage the OAuth2-Proxy for
 authentication!</p>
