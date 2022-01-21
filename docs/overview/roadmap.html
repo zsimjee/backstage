@@ -107,7 +107,7 @@ The list order doesn’t necessarily reflect priority, and the development/relea
 cycle will vary based on maintainer schedules.</p>
 <h3><a class="anchor" aria-hidden="true" id="backstage-10-and-following-versions"></a><a href="#backstage-10-and-following-versions" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Backstage 1.0 (and following versions)</h3>
 <p>During the first quarter of 2022, we plan to finalize and release version 1.0 of
-the Backstage platform (defined by the Core,
+the Backstage platform (which includes Core,
 <a href="https://backstage.io/docs/features/software-catalog/software-catalog-overview">Catalog</a>,
 <a href="https://backstage.io/docs/features/software-templates/software-templates-index">Scaffolder</a>
 and <a href="https://backstage.io/docs/features/techdocs/techdocs-overview">TechDocs</a>).
@@ -142,7 +142,16 @@ various modules (e.g. Catalog and Scaffolder) from the frontend experience.</li>
 <li><strong>Security Plan (and Strategy):</strong> The purpose of the Security Strategy is to
 move another step along the path to maturing the platform, setting the
 expectations of any adopters from a security standpoint.</li>
-<li><strong>Search GA:</strong>.</li>
+<li><strong>Search 1.0:</strong> Fix the few remaining issues to get Backstage Search platform
+up to 1.0 (<a href="https://github.com/backstage/backstage/milestone/27">here</a> and
+<a href="https://github.com/backstage/backstage/milestone/28">here</a>)</li>
+<li><strong>TechDocs Addon framework and Addons:</strong> Addons are TechDocs features that are
+added on top of the base docs like code experience. An example would be a
+feature that showed comments on the page. We plan to add an Addon framework
+and open source a selection of the Addons that we use internally at Spotify.
+Further Addons can then be added by the Community.</li>
+<li><strong>Composable Homepage 1.0:</strong> Driving this to 1.0 by adding some composable
+components.</li>
 <li><strong><a href="https://graphql.org/">GraphQL</a> support:</strong> Introduce the ability to query
 Backstage backend services with a standard query language for APIs.</li>
 <li><strong>Telemetry:</strong> To efficiently generate logging and metrics in such a way that
