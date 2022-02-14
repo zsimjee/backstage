@@ -393,20 +393,7 @@ location. The included configuration also supports test execution at the root of
 a yarn workspaces monorepo by automatically creating one grouped configuration
 that includes all packages that have <code>backstage-cli test</code> in their package
 <code>test</code> script.</p>
-<p>If needed, the configuration can be extended using a <code>&quot;jest&quot;</code> field in
-<code>package.json</code>, both within the target package and the monorepo root, with
-configuration in the target package taking precedence. Refer to the
-<a href="https://jestjs.io/docs/en/configuration">Jest configuration documentation</a> for
-a full list of configuration options.</p>
-<p>In addition to the Jest configuration there's an optional <code>transformModules</code>
-option, which is an array of module names to include in transformations.
-Normally modules inside <code>node_modules</code> are not transformed, but there are cases
-were published packages are not transpiled far enough to be usable by Jest, in
-which case you need to enable transform of them.</p>
-<p>Another way to override the Jest configuration is to place a <code>jest.config.js</code> or
-<code>jest.config.ts</code> file in the package root. As opposed to the <code>package.json</code> way
-of overriding config, this completely removes the base config, and so you need
-to set it up from scratch.</p>
+<p>For more information about configuration overrides and editor support, see the <a href="/docs/local-dev/cli-build-system#jest-configuration">Jest Configuration section</a> in the build system documentation.</p>
 <pre><code class="hljs css language-text">Usage: backstage-cli test [options]
 
 Options:
