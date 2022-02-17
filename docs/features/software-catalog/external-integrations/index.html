@@ -466,8 +466,8 @@ behavior for <code>system-x</code> that we implemented earlier.</p>
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> SystemXReaderProcessor <span class="hljs-keyword">implements</span> CatalogProcessor {
   <span class="hljs-keyword">constructor</span>(<span class="hljs-params"><span class="hljs-keyword">private</span> readonly reader: UrlReader</span>) {}
 
-  <span class="hljs-comment">// It's recommended to give the processor a unique name.</span>
   getProcessorName() {
+    <span class="hljs-comment">// The processor name must be unique.</span>
     <span class="hljs-keyword">return</span> <span class="hljs-string">'system-x-processor'</span>;
   }
 
