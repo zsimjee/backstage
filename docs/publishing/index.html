@@ -59,8 +59,8 @@ will in this case be <code>6.5.1</code> and <code>v1.18.1</code>. You will need 
 master branch as well. Create a PR that contains the following:</p>
 <ul>
 <li><p>[ ] The fix, which you can likely cherry-pick from your patch branch: <code>git cherry-pick origin/patch/v1.18.0^</code></p></li>
-<li><p>[ ] An updated <code>CHANGELOG.md</code> of all patched patches from the tip of the patch branch, which you can get using <code>git checkout origin/patch/v1.18.0 -- plugins/foo/CHANGELOG.md</code>.</p></li>
-<li><p>[ ] A changeset with the message &quot;Applied the fix from version <code>6.5.1</code> of this package, which is part of the <code>v1.18.1</code> release of Backstage.&quot;,</p></li>
+<li><p>[ ] An updated <code>CHANGELOG.md</code> of all patched packages from the tip of the patch branch, <code>git checkout origin/patch/v1.18.0 -- {packages,plugins}/*/CHANGELOG.md</code>.</p></li>
+<li><p>[ ] A changeset with the message &quot;Applied the fix from version <code>6.5.1</code> of this package, which is part of the <code>v1.18.1</code> release of Backstage.&quot;</p></li>
 <li><p>[ ] An entry in <code>.changeset/patched.json</code> that sets the current release version to <code>6.5.1</code>:</p>
 <pre><code class="hljs css language-json">{
   <span class="hljs-attr">"currentReleaseVersion"</span>: {
