@@ -370,11 +370,11 @@ putting all extensions like this in a backend plugin package of their own in the
 <code>plugins</code> folder of your Backstage repo.</p>
 <p>The class will have this basic structure:</p>
 <pre><code class="hljs css language-ts"><span class="hljs-keyword">import</span> { UrlReader } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/backend-common'</span>;
-<span class="hljs-keyword">import</span> { LocationSpec } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/catalog-model'</span>;
 <span class="hljs-keyword">import</span> {
   results,
   CatalogProcessor,
   CatalogProcessorEmit,
+  LocationSpec,
 } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/plugin-catalog-backend'</span>;
 
 <span class="hljs-comment">// A processor that reads from the fictional System-X</span>
@@ -442,13 +442,14 @@ internally and externally.</p>
 locations in GitHub. This example aims to demonstrate how to add the same
 behavior for <code>system-x</code> that we implemented earlier.</p>
 <pre><code class="hljs css language-ts"><span class="hljs-keyword">import</span> { UrlReader } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/backend-common'</span>;
-<span class="hljs-keyword">import</span> { Entity, LocationSpec } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/catalog-model'</span>;
+<span class="hljs-keyword">import</span> { Entity } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/catalog-model'</span>;
 <span class="hljs-keyword">import</span> {
   results,
   CatalogProcessor,
   CatalogProcessorEmit,
   CatalogProcessorCache,
   CatalogProcessorParser,
+  LocationSpec,
 } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/plugin-catalog-backend'</span>;
 
 <span class="hljs-comment">// It's recommended to always bump the CACHE_KEY version if you make</span>
