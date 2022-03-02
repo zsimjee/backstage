@@ -92,12 +92,22 @@ configuration options for TechDocs.</p>
 
     <span class="hljs-attr">pullImage:</span> <span class="hljs-literal">true</span>
 
+    <span class="hljs-attr">mkdocs:</span>
+      <span class="hljs-comment"># (Optional)  techdocs.generator.omitTechdocsCoreMkdocsPlugin can be used to disable automatic addition of techdocs-core plugin to the mkdocs.yaml files.</span>
+      <span class="hljs-comment"># Defaults to false, which means that the techdocs-core plugin is always added to the mkdocs file.</span>
+      <span class="hljs-attr">omitTechdocsCorePlugin:</span> <span class="hljs-literal">false</span>
+
   <span class="hljs-comment"># techdocs.builder can be either 'local' or 'external.</span>
-  <span class="hljs-comment"># If builder is set to 'local' and you open a TechDocs page, techdocs-backend will try to generate the docs, publish to storage</span>
-  <span class="hljs-comment"># and show the generated docs afterwords. This is the "Basic" setup of the TechDocs Architecture.</span>
-  <span class="hljs-comment"># If builder is set to 'external', techdocs-backend will only fetch the docs and will NOT try to generate and publish. In this case of 'external',</span>
-  <span class="hljs-comment"># we assume that docs are being built by an external process (e.g. in the CI/CD pipeline of the repository). This is the "Recommended" setup of</span>
-  <span class="hljs-comment"># the architecture. Read more here https://backstage.io/docs/features/techdocs/architecture</span>
+  <span class="hljs-comment"># Using the default build strategy, if builder is set to 'local' and you open a TechDocs page,</span>
+  <span class="hljs-comment"># techdocs-backend will try to generate the docs, publish to storage and show the generated docs afterwords.</span>
+  <span class="hljs-comment"># This is the "Basic" setup of the TechDocs Architecture.</span>
+  <span class="hljs-comment"># Using the default build strategy, if builder is set to 'external' (or anything other than 'local'), techdocs-backend</span>
+  <span class="hljs-comment"># will only fetch the docs and will NOT try to generate and publish.</span>
+  <span class="hljs-comment"># In this case, we assume that docs are being built by an external process (e.g. in the CI/CD pipeline of the repository).</span>
+  <span class="hljs-comment"># This is the "Recommended" setup of the architecture.</span>
+  <span class="hljs-comment"># Note that custom build strategies may alter this behaviour.</span>
+  <span class="hljs-comment"># Read more about the "Basic" and "Recommended" setups here https://backstage.io/docs/features/techdocs/architecture</span>
+  <span class="hljs-comment"># Read more about build strategies here: https://backstage.io/docs/features/techdocs/concepts#techdocs-build-strategy</span>
 
   <span class="hljs-attr">builder:</span> <span class="hljs-string">'local'</span>
 
