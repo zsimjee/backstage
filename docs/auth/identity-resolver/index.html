@@ -80,7 +80,9 @@ how the <code>ent</code> field inside <code>claims</code> can be set.</p>
 sign-in resolvers and set them for any of the Authentication providers inside
 <code>providerFactories</code> of the <code>createRouter</code> imported from the
 <code>@backstage/plugin-auth-backend</code> plugin.</p>
-<pre><code class="hljs css language-ts"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createPlugin</span>(<span class="hljs-params">{
+<pre><code class="hljs css language-ts"><span class="hljs-keyword">import</span> { DEFAULT_NAMESPACE, stringifyEntityRef } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/catalog-model'</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createPlugin</span>(<span class="hljs-params">{
   ...
 }: PluginEnvironment</span>): <span class="hljs-title">Promise</span>&lt;<span class="hljs-title">Router</span>&gt; </span>{
   <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> createRouter({
@@ -91,22 +93,31 @@ sign-in resolvers and set them for any of the Authentication providers inside
           resolver: <span class="hljs-keyword">async</span> ({ profile: { email } }, ctx) =&gt; {
             <span class="hljs-comment">// Call a custom validator function that checks that the email is</span>
             <span class="hljs-comment">// valid and on our own company's domain, and throws an Error if it</span>
-            <span class="hljs-comment">// isn't</span>
+            <span class="hljs-comment">// isn't.</span>
+            <span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> Implement this function</span>
             validateEmail(email);
 
             <span class="hljs-comment">// List of entity references that denote the identity and</span>
             <span class="hljs-comment">// membership of the user</span>
-            <span class="hljs-keyword">const</span> ent = [];
+            <span class="hljs-keyword">const</span> ent: <span class="hljs-built_in">string</span>[] = [];
 
             <span class="hljs-comment">// Let's use the username in the email ID as the user's default</span>
             <span class="hljs-comment">// unique identifier inside Backstage.</span>
             <span class="hljs-keyword">const</span> [id] = email.split(<span class="hljs-string">'@'</span>);
-            ent.push(<span class="hljs-string">`User:default/<span class="hljs-subst">${id}</span>`</span>)
+            ent.push(stringifyEntityRef({
+              kind: <span class="hljs-string">'User'</span>,
+              <span class="hljs-keyword">namespace</span>: DEFAULT_NAMESPACE,
+              name: id,
+            }));
 
             <span class="hljs-comment">// Let's call the internal LDAP provider to get a list of groups</span>
             <span class="hljs-comment">// that the user belongs to, and add those to the list as well</span>
             <span class="hljs-keyword">const</span> ldapGroups = <span class="hljs-keyword">await</span> getLdapGroups(email);
-            ldapGroups.forEach(<span class="hljs-function"><span class="hljs-params">group</span> =&gt;</span> ent.push(<span class="hljs-string">`Group:default/<span class="hljs-subst">${group}</span>`</span>))
+            ldapGroups.forEach(<span class="hljs-function"><span class="hljs-params">group</span> =&gt;</span> ent.push(stringifyEntityRef({
+              kind: <span class="hljs-string">'Group'</span>,
+              <span class="hljs-keyword">namespace</span>: DEFAULT_NAMESPACE,
+              name: group,
+            })));
 
             <span class="hljs-comment">// Issue the token containing the entity claims</span>
             <span class="hljs-keyword">const</span> token = <span class="hljs-keyword">await</span> ctx.tokenIssuer.issueToken({
