@@ -23,6 +23,7 @@
 <tr><td><a href="/docs/reference/plugin-catalog-backend.catalogbuilder">CatalogBuilder</a></td><td>A builder that helps wire up all of the component parts of the catalog.<!-- -->The touch points where you can replace or extend behavior are as follows:<!-- -->- Entity policies can be added or replaced. These are automatically run after the processors' pre-processing steps. All policies are given the chance to inspect the entity, and all of them have to pass in order for the entity to be considered valid from an overall point of view. - Placeholder resolvers can be replaced or added. These run on the raw structured data between the parsing and pre-processing steps, to replace dollar-prefixed entries with their actual values (like $file). - Field format validators can be replaced. These check the format of individual core fields such as metadata.name, to ensure that they adhere to certain rules. - Processors can be added or replaced. These implement the functionality of reading, parsing, validating, and processing the entity data before it is persisted in the catalog.</td></tr>
 <tr><td><a href="/docs/reference/plugin-catalog-backend.codeownersprocessor">CodeOwnersProcessor</a></td><td></td></tr>
 <tr><td><a href="/docs/reference/plugin-catalog-backend.defaultcatalogcollator">DefaultCatalogCollator</a></td><td></td></tr>
+<tr><td><a href="/docs/reference/plugin-catalog-backend.defaultcatalogcollatorfactory">DefaultCatalogCollatorFactory</a></td><td></td></tr>
 <tr><td><a href="/docs/reference/plugin-catalog-backend.defaultcatalogprocessingorchestrator">DefaultCatalogProcessingOrchestrator</a></td><td></td></tr>
 <tr><td><a href="/docs/reference/plugin-catalog-backend.defaultcatalogrulesenforcer">DefaultCatalogRulesEnforcer</a></td><td>Implements the default catalog rule set, consuming the config keys <code>catalog.rules</code> and <code>catalog.locations.[].rules</code>.</td></tr>
 <tr><td><a href="/docs/reference/plugin-catalog-backend.filereaderprocessor">FileReaderProcessor</a></td><td></td></tr>
@@ -110,6 +111,7 @@
 <tr><td><a href="/docs/reference/plugin-catalog-backend.catalogprocessorresult">CatalogProcessorResult</a></td><td></td></tr>
 <tr><td><a href="/docs/reference/plugin-catalog-backend.catalogrule">CatalogRule</a></td><td>Rules to apply to catalog entities.<!-- -->An undefined list of matchers means match all, an empty list of matchers means match none.</td></tr>
 <tr><td><a href="/docs/reference/plugin-catalog-backend.catalogrulesenforcer">CatalogRulesEnforcer</a></td><td>Decides whether an entity from a given location is allowed to enter the catalog, according to some rule set.</td></tr>
+<tr><td><a href="/docs/reference/plugin-catalog-backend.defaultcatalogcollatorfactoryoptions">DefaultCatalogCollatorFactoryOptions</a></td><td></td></tr>
 <tr><td><a href="/docs/reference/plugin-catalog-backend.deferredentity">DeferredEntity</a></td><td>Entities that are not yet processed.</td></tr>
 <tr><td><a href="/docs/reference/plugin-catalog-backend.entitiescatalog">EntitiesCatalog</a></td><td></td></tr>
 <tr><td><a href="/docs/reference/plugin-catalog-backend.entitiesrequest">EntitiesRequest</a></td><td></td></tr>
