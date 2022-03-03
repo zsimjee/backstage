@@ -56,7 +56,6 @@
 <tr><th>Interface</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><a href="/docs/reference/plugin-catalog-backend.catalogentitydocument">CatalogEntityDocument</a></td><td></td></tr>
 <tr><td><a href="/docs/reference/plugin-catalog-backend.catalogprocessingengine">CatalogProcessingEngine</a></td><td></td></tr>
 <tr><td><a href="/docs/reference/plugin-catalog-backend.catalogprocessingorchestrator">CatalogProcessingOrchestrator</a></td><td>Responsible for executing the individual processing steps in order to fully process an entity.</td></tr>
 <tr><td><a href="/docs/reference/plugin-catalog-backend.catalogprocessorcache">CatalogProcessorCache</a></td><td>A cache for storing data during processing.<!-- -->The values stored in the cache are always local to each processor, meaning no processor can see cache values from other processors.<!-- -->The cache instance provided to the CatalogProcessor is also scoped to the entity being processed, meaning that each processor run can't see cache values from processing runs for other entities.<!-- -->Values that are set during a processing run will only be visible in the directly following run. The cache will be overwritten every run unless no new cache items are written, in which case the existing values remain in the cache.</td></tr>
@@ -101,6 +100,7 @@
 <tr><td><a href="/docs/reference/plugin-catalog-backend.analyzelocationrequest">AnalyzeLocationRequest</a></td><td></td></tr>
 <tr><td><a href="/docs/reference/plugin-catalog-backend.analyzelocationresponse">AnalyzeLocationResponse</a></td><td></td></tr>
 <tr><td><a href="/docs/reference/plugin-catalog-backend.bitbucketrepositoryparser">BitbucketRepositoryParser</a></td><td></td></tr>
+<tr><td><a href="/docs/reference/plugin-catalog-backend.catalogentitydocument">CatalogEntityDocument</a></td><td></td></tr>
 <tr><td><a href="/docs/reference/plugin-catalog-backend.catalogenvironment">CatalogEnvironment</a></td><td></td></tr>
 <tr><td><a href="/docs/reference/plugin-catalog-backend.catalogprocessor">CatalogProcessor</a></td><td></td></tr>
 <tr><td><a href="/docs/reference/plugin-catalog-backend.catalogprocessoremit">CatalogProcessorEmit</a></td><td></td></tr>
