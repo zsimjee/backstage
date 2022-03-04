@@ -173,9 +173,10 @@ entities are indexed by the search engine.</p>
 <h2><a class="anchor" aria-hidden="true" id="how-to-migrate-from-search-alpha-to-beta"></a><a href="#how-to-migrate-from-search-alpha-to-beta" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>How to migrate from Search Alpha to Beta</h2>
 <p>For the purposes of this guide, Search Beta version is defined as:</p>
 <ul>
-<li><strong>Search Plugin</strong>: At least <code>v0.x.y</code></li>
-<li><strong>Search Backend Plugin</strong>: At least <code>v0.x.y</code></li>
-<li><strong>Search Backend Node</strong>: At least <code>v0.x.y</code></li>
+<li><strong>Search Plugin</strong>: At least <code>v0.7.2</code></li>
+<li><strong>Search Backend Plugin</strong>: At least <code>v0.4.6</code></li>
+<li><strong>Search Backend Node</strong>: At least <code>v0.5.0</code></li>
+<li><strong>Search Common</strong>: At least <code>v0.3.0</code></li>
 </ul>
 <p>In the Beta version, the Search Platform's indexing process has been rewritten
 as a stream pipeline in order to improve efficiency and performance on large
@@ -184,11 +185,14 @@ sets of documents.</p>
 instead taken advantage of default collators, decorators, and search engines
 provided by existing plugins, the migration process is fairly straightforward:</p>
 <ol>
-<li><p>Upgrade to at least version <code>0.x.y</code> of
+<li><p>Upgrade to at least version <code>0.5.0</code> of
 <code>@backstage/plugin-search-backend-node</code>, as well as any backend plugins whose
-collators you are using (e.g. at least version <code>0.x.y</code> of
-<code>@backstage/plugin-catalog-backend</code> and/or version <code>0.x.y</code> of
-<code>@backstage/plugin-techdocs-backend</code>).</p></li>
+collators you are using (e.g. at least version <code>0.23.0</code> of
+<code>@backstage/plugin-catalog-backend</code> and/or version <code>0.14.1</code> of
+<code>@backstage/plugin-techdocs-backend</code>), as well as any search-engine specific
+plugin you are using (e.g. at least version <code>0.3.0</code> of
+<code>@backstage/plugin-search-backend-module-pg</code> or version <code>0.1.0</code> of
+<code>@backstage/plugin-search-backend-module-elasticsearch</code>).</p></li>
 <li><p>Then, make the following changes to your
 <code>/packages/backend/src/plugins/search.ts</code> file:</p>
 <pre><code class="hljs css language-diff"><span class="hljs-deletion">-import { DefaultCatalogCollator } from '@backstage/plugin-catalog-backend';</span>
