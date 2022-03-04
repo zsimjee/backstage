@@ -372,7 +372,7 @@ on your behalf, all that's needed is to transfer your old <code>index</code> met
 into the base class' three methods (<code>initialize</code>, <code>index</code>, and <code>finalize</code>), and
 implement the factory method that instantiates the stream:</p>
 <pre><code class="hljs css language-ts"><span class="hljs-keyword">import</span> { BatchSearchEngineIndexer } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/plugin-search-backend-node'</span>;
-<span class="hljs-keyword">import</span> { SearchEngine } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/search-common'</span>;
+<span class="hljs-keyword">import</span> { SearchEngine } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/plugin-search-common'</span>;
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> YourSearchEngineIndexer <span class="hljs-keyword">extends</span> BatchSearchEngineIndexer {
   <span class="hljs-keyword">constructor</span>(<span class="hljs-params">{ <span class="hljs-keyword">type</span> }: { <span class="hljs-keyword">type</span>: <span class="hljs-built_in">string</span> }</span>) {
     <span class="hljs-comment">// Customize the number of documents passed to the index method per batch.</span>
