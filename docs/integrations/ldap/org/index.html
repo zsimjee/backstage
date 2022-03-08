@@ -82,54 +82,28 @@ need to add a <em>location</em> pointing to your LDAP server</p>
 </blockquote>
 <p>Update the catalog plugin initialization in your backend to add the provider and
 schedule it:</p>
-<pre><code class="hljs css language-ts"><span class="hljs-comment">// packages/backend/src/plugins/catalog.ts</span>
-<span class="hljs-keyword">import</span> { CatalogBuilder } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/plugin-catalog-backend'</span>;
-<span class="hljs-keyword">import</span> { Router } <span class="hljs-keyword">from</span> <span class="hljs-string">'express'</span>;
-<span class="hljs-keyword">import</span> { PluginEnvironment } <span class="hljs-keyword">from</span> <span class="hljs-string">'../types'</span>;
-<span class="hljs-keyword">import</span> { Duration } <span class="hljs-keyword">from</span> <span class="hljs-string">'luxon'</span>;
-<span class="hljs-keyword">import</span> { LdapOrgEntityProvider } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/plugin-catalog-backend-module-ldap'</span>;
+<pre><code class="hljs css language-diff"> // packages/backend/src/plugins/catalog.ts
+<span class="hljs-addition">+import { Duration } from 'luxon';</span>
+<span class="hljs-addition">+import { LdapOrgEntityProvider } from '@backstage/plugin-catalog-backend-module-ldap';</span>
 
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createPlugin</span>(<span class="hljs-params">
-  env: PluginEnvironment,
-</span>): <span class="hljs-title">Promise</span>&lt;<span class="hljs-title">Router</span>&gt; </span>{
-  <span class="hljs-comment">// The target parameter below needs to match the ldap.providers.target</span>
-  <span class="hljs-comment">// value specified in your app-config</span>
-  <span class="hljs-keyword">const</span> ldapEntityProvider = LdapOrgEntityProvider.fromConfig(env.config, {
-    id: <span class="hljs-string">'our-ldap-master'</span>,
-    target: <span class="hljs-string">'ldaps://ds.example.net'</span>,
-    logger: env.logger,
-  });
+ export default async function createPlugin(
+   env: PluginEnvironment,
+ ): Promise&lt;Router&gt; {
+   const builder = await CatalogBuilder.create(env);
 
-  <span class="hljs-keyword">const</span> builder = <span class="hljs-keyword">await</span> CatalogBuilder.create(env);
-  builder.addEntityProvider(ldapEntityProvider);
-
-  <span class="hljs-comment">// You can change the refresh interval for the other catalog entries</span>
-  <span class="hljs-comment">// independently, or just leave the line below out to use the default</span>
-  <span class="hljs-comment">// refresh interval. Note that this interval does NOT at all affect</span>
-  <span class="hljs-comment">// the LDAP refresh when using the provider method, which is good!</span>
-  builder.setRefreshIntervalSeconds(<span class="hljs-number">100</span>);
-
-  <span class="hljs-keyword">const</span> { processingEngine, router } = <span class="hljs-keyword">await</span> builder.build();
-  <span class="hljs-keyword">await</span> processingEngine.start();
-
-  <span class="hljs-comment">// Only perform this scheduling after starting the processing engine</span>
-  <span class="hljs-keyword">await</span> env.scheduler.scheduleTask({
-    id: <span class="hljs-string">'refresh_ldap'</span>,
-    <span class="hljs-comment">// frequency sets how often you want to ingest users and groups from</span>
-    <span class="hljs-comment">// LDAP, in this case every 60 minutes</span>
-    frequency: Duration.fromObject({ minutes: <span class="hljs-number">60</span> }),
-    timeout: Duration.fromObject({ minutes: <span class="hljs-number">15</span> }),
-    fn: <span class="hljs-keyword">async</span> () =&gt; {
-      <span class="hljs-keyword">try</span> {
-        <span class="hljs-keyword">await</span> ldapEntityProvider.read();
-      } <span class="hljs-keyword">catch</span> (error) {
-        env.logger.error(error);
-      }
-    },
-  });
-
-  <span class="hljs-keyword">return</span> router;
-}
+<span class="hljs-addition">+  // The target parameter below needs to match the ldap.providers.target</span>
+<span class="hljs-addition">+  // value specified in your app-config.</span>
+<span class="hljs-addition">+  builder.addEntityProvider(</span>
+<span class="hljs-addition">+    LdapOrgEntityProvider.fromConfig(env.config, {</span>
+<span class="hljs-addition">+      id: 'our-ldap-master',</span>
+<span class="hljs-addition">+      target: 'ldaps://ds.example.net',</span>
+<span class="hljs-addition">+      logger: env.logger,</span>
+<span class="hljs-addition">+      schedule: env.scheduler.createScheduledTaskRunner({</span>
+<span class="hljs-addition">+        frequency: Duration.fromObject({ minutes: 60 }),</span>
+<span class="hljs-addition">+        timeout: Duration.fromObject({ minutes: 15 }),</span>
+<span class="hljs-addition">+      }),</span>
+<span class="hljs-addition">+    }),</span>
+<span class="hljs-addition">+  );</span>
 </code></pre>
 <p>After this, you also have to add some configuration in your app-config that
 describes what you want to import for that target.</p>
