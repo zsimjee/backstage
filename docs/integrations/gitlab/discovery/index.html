@@ -89,7 +89,7 @@ wildcard, e.g.: <code>/blob/*/catalog-info.yaml</code></li>
 <p>Finally, you will have to add the processor in the catalog initialization code
 of your backend.</p>
 <pre><code class="hljs css language-diff">// In packages/backend/src/plugins/catalog.ts
-<span class="hljs-addition">+import { GitLabDiscoveryProcessor } from '@backstage/plugin-scaffolder-backend-module-gitlab';</span>
+<span class="hljs-addition">+import { GitLabDiscoveryProcessor } from '@backstage/plugin-catalog-backend-module-gitlab';</span>
 
  export default async function createPlugin(
    env: PluginEnvironment,
