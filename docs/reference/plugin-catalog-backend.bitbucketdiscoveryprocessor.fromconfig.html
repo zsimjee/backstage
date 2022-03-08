@@ -12,6 +12,7 @@
         parser?: (options: {
             integration: BitbucketIntegration;
             target: <span class="hljs-built_in">string</span>;
+            presence?: <span class="hljs-string">'optional'</span> | <span class="hljs-string">'required'</span>;
             logger: Logger;
         }) =&gt; AsyncIterable&lt;CatalogProcessorResult&gt;;
         logger: Logger;
@@ -24,7 +25,7 @@
 </thead>
 <tbody>
 <tr><td>config</td><td><a href="/docs/reference/config.config">Config</a></td><td></td></tr>
-<tr><td>options</td><td>{ parser?: (options: { integration: <a href="/docs/reference/integration.bitbucketintegration">BitbucketIntegration</a><!-- -->; target: string; logger: Logger; }) =&gt; AsyncIterable&lt;<a href="/docs/reference/plugin-catalog-backend.catalogprocessorresult">CatalogProcessorResult</a><!-- -->&gt;; logger: Logger; }</td><td></td></tr>
+<tr><td>options</td><td>{ parser?: (options: { integration: <a href="/docs/reference/integration.bitbucketintegration">BitbucketIntegration</a><!-- -->; target: string; presence?: 'optional' | 'required'; logger: Logger; }) =&gt; AsyncIterable&lt;<a href="/docs/reference/plugin-catalog-backend.catalogprocessorresult">CatalogProcessorResult</a><!-- -->&gt;; logger: Logger; }</td><td></td></tr>
 </tbody>
 </table>
 <p><b>Returns:</b></p>

@@ -125,6 +125,22 @@ filtering results via the API. This is the most flexible option and will
 reduce the amount of API calls if you have a large workspace.
 <a href="https://developer.atlassian.com/bitbucket/api/2/reference/meta/filtering">See here for the specification</a>
 for the query argument (will be passed as the <code>q</code> query parameter).</li>
+<li>(Optional) The <code>search=true</code> query argument to activate the mode utilizing code search.
+<ul>
+<li>Is mutually exclusive to the <code>q</code> query argument.</li>
+<li>Allows providing values at <code>catalogPath</code> for finding catalog files as allowed by the <code>path</code> filter/modifier
+<a href="https://confluence.atlassian.com/bitbucket/code-search-in-bitbucket-873876782.html#Search-Pathmodifier">at Bitbucket Cloud's code search</a>.
+<ul>
+<li><code>catalogPath=/catalog-info.yaml</code></li>
+<li><code>catalogPath=catalog-info.yaml</code> (anywhere in the repository)</li>
+<li><code>catalogPath=/path/catalog-info.yaml</code></li>
+<li><code>catalogPath=path/catalog-info.yaml</code></li>
+<li><code>catalogPath=/path/*/catalog-info.yaml</code></li>
+<li><code>catalogPath=path/*/catalog-info.yaml</code></li>
+</ul></li>
+<li>Supports multiple catalog files per repository depending on the <code>catalogPath</code> value.</li>
+<li>Registers <code>Location</code> entities for existing files only vs all matching repositories.</li>
+</ul></li>
 </ul>
 <p>Examples:</p>
 <ul>
@@ -140,6 +156,23 @@ will find all repositories in a project containing <code>my-project</code> in it
 <li><code>https://bitbucket.org/workspaces/my-workspace?catalogPath=my/nested/path/catalog.yaml</code>
 will find all repositories in the <code>my-workspace</code> workspace and use the catalog
 file at <code>my/nested/path/catalog.yaml</code>.</li>
+<li><code>https://bitbucket.org/workspaces/my-workspace?search=true&amp;catalogPath=/catalog.yaml</code>
+will find all <code>catalog.yaml</code> files located in the root of repositories in the workspace <code>my-workspace</code>.</li>
+<li><code>https://bitbucket.org/workspaces/my-workspace?search=true&amp;catalogPath=catalog.yaml</code>
+will find all <code>catalog.yaml</code> files located anywhere within repositories in the workspace <code>my-workspace</code>.</li>
+<li><code>https://bitbucket.org/workspaces/my-workspace?search=true&amp;catalogPath=/my/nested/path/catalog.yaml</code>
+will find all <code>catalog.yaml</code> files located within the directory <code>/my/nested/path/</code> within
+repositories in the workspace <code>my-workspace</code>.</li>
+<li><code>https://bitbucket.org/workspaces/my-workspace?search=true&amp;catalogPath=my/nested/path/catalog.yaml</code>
+will find all <code>catalog.yaml</code> files located within the directory <code>my/nested/path/</code> located anywhere within
+repositories in the workspace <code>my-workspace</code>.</li>
+<li><code>https://bitbucket.org/workspaces/my-workspace?search=true&amp;catalogPath=/my/*/path/catalog.yaml</code>
+will find all <code>catalog.yaml</code> files located within a directory <code>path/</code> located within any (recursive) directory
+within the directory <code>my/</code> in the root of repositories in the workspace <code>my-workspace</code>
+(<code>/my/nested/path/catalog.yaml</code>, <code>/my/very/nested/path/catalog.yaml</code>, ...).</li>
+<li><code>https://bitbucket.org/workspaces/my-workspace/projects/apis-*/repos/service-*?search=true&amp;catalogPath=catalog.yaml</code>
+will find all <code>catalog.yaml</code> files located anywhere within repositories starting with <code>service-</code>
+in projects starting with <code>api-</code> in the workspace <code>my-workspace</code>.</li>
 </ul>
 <h2><a class="anchor" aria-hidden="true" id="custom-repository-processing"></a><a href="#custom-repository-processing" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Custom repository processing</h2>
 <p>The Bitbucket Discovery Processor will by default emit a location for each

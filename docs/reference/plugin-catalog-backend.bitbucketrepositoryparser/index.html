@@ -15,6 +15,7 @@
 <pre><code class="hljs css language-typescript"><span class="hljs-keyword">type</span> BitbucketRepositoryParser = (options: {
     integration: BitbucketIntegration;
     target: <span class="hljs-built_in">string</span>;
+    presence?: <span class="hljs-string">'optional'</span> | <span class="hljs-string">'required'</span>;
     logger: Logger;
 }) =&gt; AsyncIterable&lt;CatalogProcessorResult&gt;;
 </code></pre>
