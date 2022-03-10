@@ -10,7 +10,7 @@
 <p>The amount of time that should pass between task invocation starts. Essentially, this equals roughly how often you want the task to run.</p>
 <p>This is a best effort value; under some circumstances there can be deviations. For example, if the task runtime is longer than the frequency and the timeout has not been given or not been exceeded yet, the next invocation of this task will be delayed until after the previous one finishes.</p>
 <p>The system does its best to avoid overlapping invocations.</p>
-<p>If no value is given for this field then the task will only be invoked once (on any worker) and then unscheduled automatically.</p>
+<p>This is a required field.</p>
 <p><b>Signature:</b></p>
 <pre><code class="hljs css language-typescript">frequency: Duration;
 </code></pre>
