@@ -78,8 +78,11 @@ configuration:</p>
       <span class="hljs-attr">target:</span> <span class="hljs-string">https://sample-bucket.s3.us-east-2.amazonaws.com/</span>
 </code></pre>
 <p>Note the <code>s3-discovery</code> type, as this is not a regular <code>url</code> processor.</p>
-<p>As this processor is not one of the default providers, you will also need to add
-the below to <code>packages/backend/src/plugins/catalog.ts</code>:</p>
+<p>As this processor is not one of the default providers, you will first need to install the AWS catalog plugin:</p>
+<pre><code class="hljs css language-shell">cd packages/backend
+yarn install @backstage/plugin-catalog-backend-module-aws
+</code></pre>
+<p>Once you've done that, you'll also need to add the segment below to <code>packages/backend/src/plugins/catalog.ts</code>:</p>
 <pre><code class="hljs css language-ts"><span class="hljs-comment">/* packages/backend/src/plugins/catalog.ts */</span>
 
 <span class="hljs-keyword">import</span> { AwsS3DiscoveryProcessor } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/plugin-catalog-backend-module-aws'</span>;
