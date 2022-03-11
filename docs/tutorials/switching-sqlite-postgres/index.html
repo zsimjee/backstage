@@ -80,7 +80,7 @@ yarn add pg
 configuration for the backend:</p>
 <pre><code class="hljs css language-diff">backend:
   database:
-<span class="hljs-deletion">-    client: sqlite3</span>
+<span class="hljs-deletion">-    client: better-sqlite3</span>
 <span class="hljs-deletion">-    connection: ':memory:'</span>
 <span class="hljs-addition">+    # config options: https://node-postgres.com/api/client</span>
 <span class="hljs-addition">+    client: pg</span>
