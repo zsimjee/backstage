@@ -371,7 +371,7 @@ putting all extensions like this in a backend plugin package of their own in the
 <p>The class will have this basic structure:</p>
 <pre><code class="hljs css language-ts"><span class="hljs-keyword">import</span> { UrlReader } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/backend-common'</span>;
 <span class="hljs-keyword">import</span> {
-  results,
+  processingResult,
   CatalogProcessor,
   CatalogProcessorEmit,
   LocationSpec,
@@ -399,10 +399,10 @@ putting all extensions like this in a backend plugin package of their own in the
       <span class="hljs-comment">// your choosing.</span>
       <span class="hljs-keyword">const</span> data = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.reader.read(location.target);
       <span class="hljs-keyword">const</span> json = <span class="hljs-built_in">JSON</span>.parse(data.toString());
-      <span class="hljs-comment">// Repeatedly call emit(results.entity(location, &lt;entity&gt;))</span>
+      <span class="hljs-comment">// Repeatedly call emit(processingResult.entity(location, &lt;entity&gt;))</span>
     } <span class="hljs-keyword">catch</span> (error) {
       <span class="hljs-keyword">const</span> message = <span class="hljs-string">`Unable to read <span class="hljs-subst">${location.<span class="hljs-keyword">type</span>}</span>, <span class="hljs-subst">${error}</span>`</span>;
-      emit(results.generalError(location, message));
+      emit(processingResult.generalError(location, message));
     }
 
     <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
@@ -444,7 +444,7 @@ behavior for <code>system-x</code> that we implemented earlier.</p>
 <pre><code class="hljs css language-ts"><span class="hljs-keyword">import</span> { UrlReader } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/backend-common'</span>;
 <span class="hljs-keyword">import</span> { Entity } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/catalog-model'</span>;
 <span class="hljs-keyword">import</span> {
-  results,
+  processingResult,
   CatalogProcessor,
   CatalogProcessorEmit,
   CatalogProcessorCache,
@@ -509,7 +509,7 @@ behavior for <code>system-x</code> that we implemented earlier.</p>
 
       <span class="hljs-comment">// For this example the JSON payload is a single entity.</span>
       <span class="hljs-keyword">const</span> entity: Entity = <span class="hljs-built_in">JSON</span>.parse(response.buffer.toString());
-      emit(results.entity(location, entity));
+      emit(processingResult.entity(location, entity));
 
       <span class="hljs-comment">// Update the cache with the new ETag and entity used for the next run.</span>
       <span class="hljs-keyword">await</span> cache.set&lt;CacheItem&gt;(CACHE_KEY, {
@@ -519,10 +519,10 @@ behavior for <code>system-x</code> that we implemented earlier.</p>
     } <span class="hljs-keyword">catch</span> (error) {
       <span class="hljs-keyword">if</span> (error.name === <span class="hljs-string">'NotModifiedError'</span> &amp;&amp; cacheItem) {
         <span class="hljs-comment">// The ETag matches and we have a cached value from the previous run.</span>
-        emit(results.entity(location, cacheItem.entity));
+        emit(processingResult.entity(location, cacheItem.entity));
       }
       <span class="hljs-keyword">const</span> message = <span class="hljs-string">`Unable to read <span class="hljs-subst">${location.<span class="hljs-keyword">type</span>}</span>, <span class="hljs-subst">${error}</span>`</span>;
-      emit(results.generalError(location, message));
+      emit(processingResult.generalError(location, message));
     }
 
     <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
