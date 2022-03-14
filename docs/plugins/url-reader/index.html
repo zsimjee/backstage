@@ -93,7 +93,7 @@ i.e.<code>packages/backend/src/index.ts</code>.
 
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">makeCreateEnv</span>(<span class="hljs-params">config: Config</span>) </span>{
   <span class="hljs-comment">// ....</span>
-  <span class="hljs-keyword">const</span> reader = UrlReaders.default({ logger, config });
+  <span class="hljs-keyword">const</span> reader = UrlReaders.default({ logger: root, config });
   <span class="hljs-comment">//</span>
 }
 </code></pre>

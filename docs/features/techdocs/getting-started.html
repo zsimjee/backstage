@@ -122,18 +122,16 @@ add the following</p>
   Publisher,
 } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/plugin-techdocs-backend'</span>;
 <span class="hljs-keyword">import</span> Docker <span class="hljs-keyword">from</span> <span class="hljs-string">'dockerode'</span>;
+<span class="hljs-keyword">import</span> { Router } <span class="hljs-keyword">from</span> <span class="hljs-string">'express'</span>;
 <span class="hljs-keyword">import</span> { PluginEnvironment } <span class="hljs-keyword">from</span> <span class="hljs-string">'../types'</span>;
 
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createPlugin</span>(<span class="hljs-params">{
-  logger,
-  config,
-  discovery,
-  reader,
-}: PluginEnvironment</span>) </span>{
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createPlugin</span>(<span class="hljs-params">
+  env: PluginEnvironment,
+</span>): <span class="hljs-title">Promise</span>&lt;<span class="hljs-title">Router</span>&gt; </span>{
   <span class="hljs-comment">// Preparers are responsible for fetching source files for documentation.</span>
-  <span class="hljs-keyword">const</span> preparers = <span class="hljs-keyword">await</span> Preparers.fromConfig(config, {
-    logger,
-    reader,
+  <span class="hljs-keyword">const</span> preparers = <span class="hljs-keyword">await</span> Preparers.fromConfig(env.config, {
+    logger: env.logger,
+    reader: env.reader,
   });
 
   <span class="hljs-comment">// Docker client (conditionally) used by the generators, based on techdocs.generators config.</span>
@@ -141,17 +139,17 @@ add the following</p>
   <span class="hljs-keyword">const</span> containerRunner = <span class="hljs-keyword">new</span> DockerContainerRunner({ dockerClient });
 
   <span class="hljs-comment">// Generators are used for generating documentation sites.</span>
-  <span class="hljs-keyword">const</span> generators = <span class="hljs-keyword">await</span> Generators.fromConfig(config, {
-    logger,
+  <span class="hljs-keyword">const</span> generators = <span class="hljs-keyword">await</span> Generators.fromConfig(env.config, {
+    logger: env.logger,
     containerRunner,
   });
 
   <span class="hljs-comment">// Publisher is used for</span>
   <span class="hljs-comment">// 1. Publishing generated files to storage</span>
   <span class="hljs-comment">// 2. Fetching files from storage and passing them to TechDocs frontend.</span>
-  <span class="hljs-keyword">const</span> publisher = <span class="hljs-keyword">await</span> Publisher.fromConfig(config, {
-    logger,
-    discovery,
+  <span class="hljs-keyword">const</span> publisher = <span class="hljs-keyword">await</span> Publisher.fromConfig(env.config, {
+    logger: env.logger,
+    discovery: env.discovery,
   });
 
   <span class="hljs-comment">// checks if the publisher is working and logs the result</span>
@@ -161,9 +159,9 @@ add the following</p>
     preparers,
     generators,
     publisher,
-    logger,
-    config,
-    discovery,
+    logger: env.logger,
+    config: env.config,
+    discovery: env.discovery,
   });
 }
 </code></pre>

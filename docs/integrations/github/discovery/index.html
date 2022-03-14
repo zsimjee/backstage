@@ -91,16 +91,16 @@ yarn add @backstage/plugin-catalog-backend-module-github
    env: PluginEnvironment,
  ): Promise&lt;Router&gt; {
    const builder = await CatalogBuilder.create(env);
-<span class="hljs-addition">+  const integrations = ScmIntegrations.fromConfig(config);</span>
+<span class="hljs-addition">+  const integrations = ScmIntegrations.fromConfig(env.config);</span>
 <span class="hljs-addition">+  const githubCredentialsProvider =</span>
 <span class="hljs-addition">+    DefaultGithubCredentialsProvider.fromIntegrations(integrations);</span>
 <span class="hljs-addition">+  builder.addProcessor(</span>
-<span class="hljs-addition">+    GithubDiscoveryProcessor.fromConfig(config, {</span>
-<span class="hljs-addition">+      logger,</span>
+<span class="hljs-addition">+    GithubDiscoveryProcessor.fromConfig(env.config, {</span>
+<span class="hljs-addition">+      logger: env.logger,</span>
 <span class="hljs-addition">+      githubCredentialsProvider,</span>
 <span class="hljs-addition">+    }),</span>
-<span class="hljs-addition">+    GithubOrgReaderProcessor.fromConfig(config, {</span>
-<span class="hljs-addition">+      logger,</span>
+<span class="hljs-addition">+    GithubOrgReaderProcessor.fromConfig(env.config, {</span>
+<span class="hljs-addition">+      logger: env.logger,</span>
 <span class="hljs-addition">+      githubCredentialsProvider,</span>
 <span class="hljs-addition">+    }),</span>
 <span class="hljs-addition">+  );</span>

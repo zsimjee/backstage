@@ -213,11 +213,11 @@ loading is broken, not that the loading indicator is broken.</p>
 <p>A utility function is a function with no side effects. It takes in arguments and
 returns a result or displays an error or console message, like so:</p>
 <p><strong><code>StringUtil ellipsis</code></strong></p>
-<pre><code class="hljs css language-js"><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ellipsis</span>(<span class="hljs-params">text, maxLength, midCharIx = <span class="hljs-number">0</span>, ellipsis = <span class="hljs-string">'...'</span></span>) </span>{
+<pre><code class="hljs css language-ts"><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ellipsis</span>(<span class="hljs-params">text, maxLength, midCharIx = 0, ellipsis = '...'</span>) </span>{
   <span class="hljs-comment">// Do something blackbox. We should not care about the internals,</span>
   <span class="hljs-comment">// only inputs and outputs.</span>
   ...
-  return someFinalValue;
+  <span class="hljs-keyword">return</span> someFinalValue;
 }
 </code></pre>
 <p>There are four things to test for in a utility function:</p>
@@ -230,7 +230,7 @@ returns a result or displays an error or console message, like so:</p>
 <blockquote>
 <p>Handle Invalid Input (handle thrown errors):</p>
 </blockquote>
-<pre><code class="hljs css language-js">it(<span class="hljs-string">'Throws an error on improper arguments'</span>, () =&gt; {
+<pre><code class="hljs css language-ts">it(<span class="hljs-string">'Throws an error on improper arguments'</span>, <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
   expect(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
     ellipsis();
   }).toThrowError(<span class="hljs-string">"Expected 'text' to be defined"</span>);
@@ -239,7 +239,7 @@ returns a result or displays an error or console message, like so:</p>
 <blockquote>
 <p>Verify default input arguments:</p>
 </blockquote>
-<pre><code class="hljs css language-js">it(<span class="hljs-string">'Works with defaults'</span>, () =&gt; {
+<pre><code class="hljs css language-ts">it(<span class="hljs-string">'Works with defaults'</span>, <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
   expect(ellipsis(<span class="hljs-string">'Hello world'</span>, <span class="hljs-number">3</span>)).toBe(<span class="hljs-string">'Hel...'</span>);
   expect(ellipsis(<span class="hljs-string">''</span>, <span class="hljs-number">3</span>)).toBe(<span class="hljs-string">''</span>);
   expect(ellipsis(<span class="hljs-string">'H'</span>, <span class="hljs-number">3</span>)).toBe(<span class="hljs-string">'H'</span>);
@@ -250,7 +250,7 @@ returns a result or displays an error or console message, like so:</p>
 <p>Verify output for expected input arguments:</p>
 </blockquote>
 <p>This is especially true for edge cases!</p>
-<pre><code class="hljs css language-js">it(<span class="hljs-string">'Works with midCharIx'</span>, () =&gt; {
+<pre><code class="hljs css language-ts">it(<span class="hljs-string">'Works with midCharIx'</span>, <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
   expect(ellipsis(<span class="hljs-string">'Hello world'</span>, <span class="hljs-number">3</span>, <span class="hljs-number">6</span>)).toBe(<span class="hljs-string">'...o w...'</span>);
   expect(ellipsis(<span class="hljs-string">''</span>, <span class="hljs-number">3</span>, <span class="hljs-number">6</span>)).toBe(<span class="hljs-string">''</span>);
   expect(ellipsis(<span class="hljs-string">'Backstage is amazing'</span>, <span class="hljs-number">4</span>, <span class="hljs-number">10</span>)).toBe(<span class="hljs-string">'...e is...'</span>);
@@ -273,29 +273,29 @@ involves wrapping existing functions (like an API call function) with an
 alternative.</p>
 <p>For example:</p>
 <p><strong><code>./MyApi.js</code></strong></p>
-<pre><code class="hljs css language-js"><span class="hljs-keyword">export</span> {
-  <span class="hljs-attr">fetchSomethingFromServer</span>: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+<pre><code class="hljs css language-ts"><span class="hljs-keyword">export</span> {
+  fetchSomethingFromServer: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
     <span class="hljs-comment">// Live production call to a URI. Must be avoided during testing!</span>
     <span class="hljs-keyword">return</span> fetch(<span class="hljs-string">'blah'</span>);
   }
 };
 </code></pre>
 <p><strong><code>./__mocks__/MyApi.js</code></strong></p>
-<pre><code class="hljs css language-js"><span class="hljs-keyword">export</span> {
-  <span class="hljs-attr">fetchSomethingFromServer</span>: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+<pre><code class="hljs css language-ts"><span class="hljs-keyword">export</span> {
+  fetchSomethingFromServer: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
     <span class="hljs-comment">// Simulate a production call, but avoid jest and just use a promise</span>
     <span class="hljs-keyword">return</span> <span class="hljs-built_in">Promise</span>.resolve(<span class="hljs-string">'some result object simulating server data here'</span>);
   }
 }
 </code></pre>
 <p><strong><code>./MyApi.test.js</code></strong></p>
-<pre><code class="hljs css language-js"><span class="hljs-comment">/* eslint-disable import/first */</span>
+<pre><code class="hljs css language-ts"><span class="hljs-comment">/* eslint-disable import/first */</span>
 
 jest.mock(<span class="hljs-string">'./MyApi'</span>); <span class="hljs-comment">// Instruct Jest to swap all future imports of './MyApi.js' to './__mocks__/MyApi.js'</span>
 
 <span class="hljs-keyword">import</span> MyApi <span class="hljs-keyword">from</span> <span class="hljs-string">'./MyApi'</span>; <span class="hljs-comment">// Will actually return the contents of the file in the __mocks__ folder now</span>
 
-it(<span class="hljs-string">'loads data'</span>, done =&gt; {
+it(<span class="hljs-string">'loads data'</span>, <span class="hljs-function"><span class="hljs-params">done</span> =&gt;</span> {
   MyApi.fetchSomethingFromServer().then(<span class="hljs-function"><span class="hljs-params">result</span> =&gt;</span> {
     expect(result).toBe(<span class="hljs-string">'some result object simulating server data here'</span>);
     done();

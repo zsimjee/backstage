@@ -119,10 +119,10 @@ getting started guide.</p>
 </ol>
 <pre><code class="hljs css language-typescript">indexBuilder.addCollator({
   defaultRefreshIntervalSeconds: <span class="hljs-number">600</span>,
-  factory: DefaultTechDocsCollatorFactory.fromConfig(config, {
-    discovery,
-    logger,
-    tokenManager,
+  factory: DefaultTechDocsCollatorFactory.fromConfig(env.config, {
+    discovery: env.discovery,
+    logger: env.logger,
+    tokenManager: env.tokenManager,
   }),
 });
 </code></pre>
@@ -159,9 +159,9 @@ provided by <code>@backstage/plugin-catalog-backend</code> offers some configura
 
 indexBuilder.addCollator({
   defaultRefreshIntervalSeconds: 600,
-  collator: DefaultCatalogCollator.fromConfig(config, {
-    discovery,
-    tokenManager,
+  collator: DefaultCatalogCollator.fromConfig(env.config, {
+    discovery: env.discovery,
+    tokenManager: env.tokenManager,
 <span class="hljs-addition">+   filter: {</span>
 <span class="hljs-addition">+      kind: ['API', 'Component', 'Domain', 'Group', 'System', 'User'],</span>
 <span class="hljs-addition">+   },</span>
@@ -200,18 +200,22 @@ plugin you are using (e.g. at least version <code>0.3.0</code> of
 <span class="hljs-addition">+import { DefaultCatalogCollatorFactory } from '@backstage/plugin-catalog-backend';</span>
 <span class="hljs-addition">+import { DefaultTechDocsCollatorFactory } from '@backstage/plugin-techdocs-backend';</span>
 // ...
-  const indexBuilder = new IndexBuilder({ logger, searchEngine });
+  const indexBuilder = new IndexBuilder({ logger: env.logger, searchEngine });
   indexBuilder.addCollator({
     defaultRefreshIntervalSeconds: 600,
-<span class="hljs-deletion">-    collator: DefaultCatalogCollator.fromConfig(config, { discovery }),</span>
-<span class="hljs-addition">+    factory: DefaultCatalogCollatorFactory.fromConfig(config, { discovery }),</span>
+<span class="hljs-deletion">-    collator: DefaultCatalogCollator.fromConfig(env.config, {</span>
+       discovery: env.discovery,
+     }),
+<span class="hljs-addition">+    factory: DefaultCatalogCollatorFactory.fromConfig(env.config, {</span>
+       discovery: env.discovery,
+     }),
   });
   indexBuilder.addCollator({
     defaultRefreshIntervalSeconds: 600,
-<span class="hljs-deletion">-    collator: DefaultTechDocsCollator.fromConfig(config, {</span>
-<span class="hljs-addition">+    factory: DefaultTechDocsCollatorFactory.fromConfig(config, {</span>
-      discovery,
-      logger,
+<span class="hljs-deletion">-     collator: DefaultTechDocsCollator.fromConfig(env.config, {</span>
+<span class="hljs-addition">+     factory: DefaultTechDocsCollatorFactory.fromConfig(env.config, {</span>
+        discovery: env.discovery,
+        logger: env.logger,
     }),
   });
 </code></pre></li>

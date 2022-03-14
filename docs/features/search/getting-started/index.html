@@ -187,20 +187,24 @@ code:</p>
 } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/plugin-search-backend-node'</span>;
 <span class="hljs-keyword">import</span> { PluginEnvironment } <span class="hljs-keyword">from</span> <span class="hljs-string">'../types'</span>;
 <span class="hljs-keyword">import</span> { DefaultCatalogCollator } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/plugin-catalog-backend'</span>;
+<span class="hljs-keyword">import</span> { Router } <span class="hljs-keyword">from</span> <span class="hljs-string">'express'</span>;
 
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createPlugin</span>(<span class="hljs-params">{
-  logger,
-  discovery,
-  tokenManager,
-}: PluginEnvironment</span>) </span>{
-  <span class="hljs-keyword">const</span> searchEngine = <span class="hljs-keyword">new</span> LunrSearchEngine({ logger });
-  <span class="hljs-keyword">const</span> indexBuilder = <span class="hljs-keyword">new</span> IndexBuilder({ logger, searchEngine });
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createPlugin</span>(<span class="hljs-params">
+  env: PluginEnvironment,
+</span>): <span class="hljs-title">Promise</span>&lt;<span class="hljs-title">Router</span>&gt; </span>{
+  <span class="hljs-keyword">const</span> searchEngine = <span class="hljs-keyword">new</span> LunrSearchEngine({
+    logger: env.logger,
+  });
+  <span class="hljs-keyword">const</span> indexBuilder = <span class="hljs-keyword">new</span> IndexBuilder({
+    logger: env.logger,
+    searchEngine,
+  });
 
   indexBuilder.addCollator({
     defaultRefreshIntervalSeconds: <span class="hljs-number">600</span>,
     collator: <span class="hljs-keyword">new</span> DefaultCatalogCollator({
-      discovery,
-      tokenManager,
+      discovery: env.discovery,
+      tokenManager: env.tokenManager,
     }),
   });
 
@@ -211,7 +215,7 @@ code:</p>
 
   return await createRouter({
     engine: indexBuilder.getSearchEngine(),
-    logger,
+    logger: env.logger,
   });
 }
 </code></pre>
@@ -296,13 +300,13 @@ Catalog offer default <a href="/docs/features/search/concepts#collators">collato
 which are responsible for providing documents
 <a href="/docs/features/search/concepts#documents-and-indices">to be indexed</a>. You can register any
 number of collators with the <code>IndexBuilder</code> like this:</p>
-<pre><code class="hljs css language-typescript"><span class="hljs-keyword">const</span> indexBuilder = <span class="hljs-keyword">new</span> IndexBuilder({ logger, searchEngine });
+<pre><code class="hljs css language-typescript"><span class="hljs-keyword">const</span> indexBuilder = <span class="hljs-keyword">new</span> IndexBuilder({ logger: env.logger, searchEngine });
 
 indexBuilder.addCollator({
   defaultRefreshIntervalSeconds: <span class="hljs-number">600</span>,
   collator: <span class="hljs-keyword">new</span> DefaultCatalogCollator({
-    discovery,
-    tokenManager,
+    discovery: env.discovery,
+    tokenManager: env.tokenManager,
   }),
 });
 
@@ -319,8 +323,8 @@ its <code>defaultRefreshIntervalSeconds</code> value, like this:</p>
 <pre><code class="hljs css language-typescript {3}">indexBuilder.addCollator({
   defaultRefreshIntervalSeconds: <span class="hljs-number">600</span>,
   collator: <span class="hljs-keyword">new</span> DefaultCatalogCollator({
-    discovery,
-    tokenManager,
+    discovery: env.discovery,
+    tokenManager: env.tokenManager,
   }),
 });
 </code></pre>

@@ -112,9 +112,12 @@ yarn add @internal/plugin-carmen-backend@^0.1.1 <span class="hljs-comment"># Cha
 <p>Create a new file named <code>packages/backend/src/plugins/carmen.ts</code>, and add the
 following to it</p>
 <pre><code class="hljs css language-ts"><span class="hljs-keyword">import</span> { createRouter } <span class="hljs-keyword">from</span> <span class="hljs-string">'@internal/plugin-carmen-backend'</span>;
+<span class="hljs-keyword">import</span> { Router } <span class="hljs-keyword">from</span> <span class="hljs-string">'express'</span>;
 <span class="hljs-keyword">import</span> { PluginEnvironment } <span class="hljs-keyword">from</span> <span class="hljs-string">'../types'</span>;
 
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createPlugin</span>(<span class="hljs-params">env: PluginEnvironment</span>) </span>{
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createPlugin</span>(<span class="hljs-params">
+  env: PluginEnvironment,
+</span>): <span class="hljs-title">Promise</span>&lt;<span class="hljs-title">Router</span>&gt; </span>{
   <span class="hljs-comment">// Here is where you will add all of the required initialization code that</span>
   <span class="hljs-comment">// your backend plugin needs to be able to start!</span>
 
@@ -148,7 +151,9 @@ facility, so that Backstage operators can manage database needs uniformly.</p>
 function, there is a <code>database</code> field. You can use that to get a
 <a href="http://knexjs.org/">Knex</a> connection object.</p>
 <pre><code class="hljs css language-ts"><span class="hljs-comment">// in packages/backend/src/plugins/carmen.ts</span>
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createPlugin</span>(<span class="hljs-params">env: PluginEnvironment</span>) </span>{
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createPlugin</span>(<span class="hljs-params">
+  env: PluginEnvironment,
+</span>): <span class="hljs-title">Promise</span>&lt;<span class="hljs-title">Router</span>&gt; </span>{
   <span class="hljs-keyword">const</span> db: Knex&lt;<span class="hljs-built_in">any</span>, unknown[]&gt; = <span class="hljs-keyword">await</span> env.database.getClient();
 
   <span class="hljs-comment">// You will then pass this client into your actual plugin implementation</span>
