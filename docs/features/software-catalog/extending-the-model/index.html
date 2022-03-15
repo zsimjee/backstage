@@ -472,7 +472,8 @@ can find inspiration in for example the existing
 <a href="https://github.com/backstage/backstage/tree/master/plugins/scaffolder-backend/src/processor/ScaffolderEntitiesProcessor.ts">ScaffolderEntitiesProcessor</a>.
 We also provide a high-level example of what a catalog process for a custom
 entity might look like:</p>
-<pre><code class="hljs css language-ts"><span class="hljs-keyword">import</span> { entityKindSchemaValidator } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/catalog-model'</span>;
+<pre><code class="hljs css language-ts"><span class="hljs-keyword">import</span> { CatalogProcessor, processingResult } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/catalog-backend'</span>;
+<span class="hljs-keyword">import</span> { entityKindSchemaValidator } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/catalog-model'</span>;
 
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> FoobarEntitiesProcessor <span class="hljs-keyword">implements</span> CatalogProcessor {
   <span class="hljs-comment">// You often end up wanting to support multiple versions of your kind as you</span>
@@ -507,7 +508,7 @@ entity might look like:</p>
 
       <span class="hljs-comment">// Here we can modify the entity or emit results related to the entity</span>
       <span class="hljs-comment">// Typically you will want to emit any relations associated with the entity here</span>
-      emit(results.relation({ ... }))
+      emit(processingResult.relation({ ... }))
     }
 
     <span class="hljs-keyword">return</span> entity;
