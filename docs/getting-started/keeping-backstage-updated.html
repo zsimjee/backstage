@@ -74,6 +74,9 @@ dependencies you're using to the latest versions:
 </code></pre>
 <p>The reason for bumping all <code>@backstage</code> packages at once is to maintain the
 dependencies that they have between each other.</p>
+<p>By default the bump command will upgrade <code>@backstage</code> packages to the latest <code>main</code> release line which is released monthly. For those in a hurry that want to track the <code>next</code> release line which releases weekly can do so using the <code>--release next</code> option.</p>
+<pre><code class="hljs css language-bash">yarn backstage-cli versions:bump --release next
+</code></pre>
 <p>If you are using other plugins you can pass in the <code>--pattern</code> option to update
 more than just the <code>@backstage/*</code> dependencies.</p>
 <pre><code class="hljs css language-bash">yarn backstage-cli versions:bump --pattern <span class="hljs-string">'@{backstage,roadiehq}/*'</span>
