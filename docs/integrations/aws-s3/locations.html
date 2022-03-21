@@ -85,6 +85,7 @@ instruct the AWS S3 reader to assume a role before accessing S3:</p>
     <span class="hljs-bullet">-</span> <span class="hljs-attr">accessKeyId:</span> <span class="hljs-string">${AWS_ACCESS_KEY_ID}</span>
       <span class="hljs-attr">secretAccessKey:</span> <span class="hljs-string">${AWS_SECRET_ACCESS_KEY}</span>
       <span class="hljs-attr">roleArn:</span> <span class="hljs-string">'arn:aws:iam::xxxxxxxxxxxx:role/example-role'</span>
+      <span class="hljs-attr">externalId:</span> <span class="hljs-string">'some-id'</span> <span class="hljs-comment"># optional</span>
 </code></pre>
 <p>Configuration allows specifying custom S3 endpoint, along with
 <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/VirtualHosting.html">path-style access</a>
