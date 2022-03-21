@@ -104,11 +104,12 @@ sign-in resolvers and set them for any of the Authentication providers inside
             <span class="hljs-comment">// Let's use the username in the email ID as the user's default</span>
             <span class="hljs-comment">// unique identifier inside Backstage.</span>
             <span class="hljs-keyword">const</span> [id] = email.split(<span class="hljs-string">'@'</span>);
-            ent.push(stringifyEntityRef({
+            <span class="hljs-keyword">const</span> userEntityRef = stringifyEntityRef({
               kind: <span class="hljs-string">'User'</span>,
               <span class="hljs-keyword">namespace</span>: DEFAULT_NAMESPACE,
               name: id,
-            }));
+            });
+            ent.push(userEntityRef);
 
             <span class="hljs-comment">// Let's call the internal LDAP provider to get a list of groups</span>
             <span class="hljs-comment">// that the user belongs to, and add those to the list as well</span>
@@ -121,7 +122,7 @@ sign-in resolvers and set them for any of the Authentication providers inside
 
             <span class="hljs-comment">// Issue the token containing the entity claims</span>
             <span class="hljs-keyword">const</span> token = <span class="hljs-keyword">await</span> ctx.tokenIssuer.issueToken({
-              claims: { sub: id, ent },
+              claims: { sub: userEntityRef, ent },
             });
             <span class="hljs-keyword">return</span> { id, token };
           },
@@ -173,7 +174,9 @@ matching <code>google.com/email</code> annotation.</p>
 have the software catalog handle group (and transitive group) membership, you
 can do this using the <code>CatalogIdentityClient</code> provided as context to Sign-In
 resolvers:</p>
-<pre><code class="hljs css language-ts"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createPlugin</span>(<span class="hljs-params">
+<pre><code class="hljs css language-ts"><span class="hljs-keyword">import</span> { DEFAULT_NAMESPACE, stringifyEntityRef } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/catalog-model'</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createPlugin</span>(<span class="hljs-params">
   env: PluginEnvironment,
 </span>): <span class="hljs-title">Promise</span>&lt;<span class="hljs-title">Router</span>&gt; </span>{
   <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> createRouter({
@@ -183,6 +186,11 @@ resolvers:</p>
         signIn: {
           resolver: <span class="hljs-keyword">async</span> ({ profile: { email } }, ctx) =&gt; {
             <span class="hljs-keyword">const</span> [id] = email?.split(<span class="hljs-string">'@'</span>) ?? <span class="hljs-string">''</span>;
+            <span class="hljs-keyword">const</span> userEntityRef = stringifyEntityRef({
+              kind: <span class="hljs-string">'User'</span>,
+              <span class="hljs-keyword">namespace</span>: DEFAULT_NAMESPACE,
+              name: id,
+            });
             <span class="hljs-comment">// Fetch from an external system that returns entity claims like:</span>
             <span class="hljs-comment">// ['user:default/breanna.davison', ...]</span>
             <span class="hljs-keyword">const</span> ent = <span class="hljs-keyword">await</span> externalSystemClient.getUsernames(email);
@@ -193,7 +201,7 @@ resolvers:</p>
               logger: ctx.logger,
             });
             <span class="hljs-keyword">const</span> token = <span class="hljs-keyword">await</span> ctx.tokenIssuer.issueToken({
-              claims: { sub: id, ent: fullEnt },
+              claims: { sub: userEntityRef, ent: fullEnt },
             });
             <span class="hljs-keyword">return</span> { id, token };
           },
