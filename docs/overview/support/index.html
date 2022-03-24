@@ -84,10 +84,10 @@ project, we would love a star! ❤️</li>
 <p>To add a new recording to the <a href="https://backstage.io/on-demand">meetup page</a>
 create a file in
 <a href="https://github.com/backstage/backstage/tree/master/microsite/data/on-demand"><code>microsite/data/on-demand</code></a>
-with your recording's information. Example:</p>
+with your recording's information. Filenames should be in the format <code>yyyymmdd-xx.yaml</code>. The page will sort using the filename. Example file content:</p>
 <pre><code class="hljs css language-yaml"><span class="hljs-meta">---</span>
 <span class="hljs-attr">title:</span> <span class="hljs-comment"># name of the meetup</span>
-<span class="hljs-attr">date:</span> <span class="hljs-string">February</span> <span class="hljs-number">23</span><span class="hljs-string">,</span> <span class="hljs-number">2022</span> <span class="hljs-comment"># date, format: Month day, year. This is the index field.</span>
+<span class="hljs-attr">date:</span> <span class="hljs-string">February</span> <span class="hljs-number">23</span><span class="hljs-string">,</span> <span class="hljs-number">2022</span> <span class="hljs-comment"># date, format: Month day, year.</span>
 <span class="hljs-attr">category:</span> <span class="hljs-string">Meetup</span> <span class="hljs-comment"># Can be Event, Meetup, Webinar</span>
 <span class="hljs-attr">description:</span> <span class="hljs-comment"># description, summary</span>
 <span class="hljs-attr">youtubeUrl:</span> <span class="hljs-comment"># Url to youtube video</span>
@@ -97,10 +97,10 @@ with your recording's information. Example:</p>
 <p>To add an upcoming meetup to the <a href="https://backstage.io/on-demand">meetup page</a>
 create a file in
 <a href="https://github.com/backstage/backstage/tree/master/microsite/data/on-demand"><code>microsite/data/on-demand</code></a>
-with your meetup's information. Example:</p>
+with your meetup's information. Filenames should be in the format <code>yyyymmdd-xx.yaml</code>, the page will sort using the filename. Example file content:</p>
 <pre><code class="hljs css language-yaml"><span class="hljs-meta">---</span>
 <span class="hljs-attr">title:</span> <span class="hljs-comment"># name of the meetup</span>
-<span class="hljs-attr">date:</span> <span class="hljs-string">February</span> <span class="hljs-number">23</span><span class="hljs-string">,</span> <span class="hljs-number">2022</span> <span class="hljs-comment"># date, format: Month day, year. This is the index field.</span>
+<span class="hljs-attr">date:</span> <span class="hljs-string">February</span> <span class="hljs-number">23</span><span class="hljs-string">,</span> <span class="hljs-number">2022</span> <span class="hljs-comment"># date, format: Month day, year.</span>
 <span class="hljs-attr">category:</span> <span class="hljs-string">Upcoming</span> <span class="hljs-comment"># Should be "Upcoming"</span>
 <span class="hljs-attr">description:</span> <span class="hljs-comment"># description, summary</span>
 <span class="hljs-attr">youtubeUrl:</span> <span class="hljs-comment"># Url to youtube video</span>
