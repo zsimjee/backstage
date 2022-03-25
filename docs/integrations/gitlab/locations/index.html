@@ -83,7 +83,7 @@ can list the GitLab providers you want to fetch data from. Each entry is a
 structure with up to four elements:</p>
 <ul>
 <li><code>host</code>: The host of the GitLab instance, e.g. <code>gitlab.company.com</code>.</li>
-<li><code>token</code> (optional): An authentication token as expected by GitLab. If this is
+<li><code>token</code> (optional): An authentication token as expected by GitLab. The token need at least <code>api</code>, <code>read_repository</code> and <code>write_repository</code> scopes. If this is
 not supplied, anonymous access will be used.</li>
 <li><code>apiBaseUrl</code> (optional): The URL of the GitLab API. For self-hosted
 installations, it is commonly at <code>https://&lt;host&gt;/api/v4</code>. For gitlab.com, this
