@@ -510,7 +510,9 @@ Usage of this configuration can be overridden either by passing a
 important one being a baseline transformer and module configuration that enables
 support for the listed <a href="#loaders">loaders</a> within tests. It will also
 automatically detect and use <code>src/setupTests.ts</code> if it exists, and provides a
-coverage configuration that works well with our selected transpilers.</p>
+coverage configuration that works well with our selected transpilers. The configuration
+will also detect the appropriate Jest environment for each package role, running
+<code>web-libraries</code> with the <code>&quot;jsdom&quot;</code> environment, <code>node-libraries</code> with <code>&quot;node&quot;</code>, and so on.</p>
 <p>The configuration also takes a project-wide approach, with the expectation most
 if not all packages within a monorepo will use the same base configuration. This
 allows for optimizations such as sharing the Jest transform cache across all
