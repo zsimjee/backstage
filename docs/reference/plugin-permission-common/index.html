@@ -58,20 +58,24 @@
 <tbody>
 <tr><td><a href="/docs/reference/plugin-permission-common.allofcriteria">AllOfCriteria</a></td><td>Represents a logical AND for the provided criteria.</td></tr>
 <tr><td><a href="/docs/reference/plugin-permission-common.anyofcriteria">AnyOfCriteria</a></td><td>Represents a logical OR for the provided criteria.</td></tr>
-<tr><td><a href="/docs/reference/plugin-permission-common.authorizedecision">AuthorizeDecision</a></td><td>An individual authorization response from .</td></tr>
-<tr><td><a href="/docs/reference/plugin-permission-common.authorizequery">AuthorizeQuery</a></td><td>An individual authorization request for .</td></tr>
-<tr><td><a href="/docs/reference/plugin-permission-common.authorizerequest">AuthorizeRequest</a></td><td>A batch of authorization requests from .</td></tr>
 <tr><td><a href="/docs/reference/plugin-permission-common.authorizerequestoptions">AuthorizeRequestOptions</a></td><td>Options for authorization requests.</td></tr>
-<tr><td><a href="/docs/reference/plugin-permission-common.authorizeresponse">AuthorizeResponse</a></td><td>A batch of authorization responses from .</td></tr>
 <tr><td><a href="/docs/reference/plugin-permission-common.basicpermission">BasicPermission</a></td><td>A standard <a href="/docs/reference/plugin-permission-common.permission">Permission</a> with no additional capabilities or restrictions.</td></tr>
+<tr><td><a href="/docs/reference/plugin-permission-common.conditionalpolicydecision">ConditionalPolicyDecision</a></td><td>A conditional decision returned by the <a href="/docs/reference/plugin-permission-node.permissionpolicy">PermissionPolicy</a><!-- -->.</td></tr>
+<tr><td><a href="/docs/reference/plugin-permission-common.definitivepolicydecision">DefinitivePolicyDecision</a></td><td>A definitive decision returned by the <a href="/docs/reference/plugin-permission-node.permissionpolicy">PermissionPolicy</a><!-- -->.</td></tr>
 <tr><td><a href="/docs/reference/plugin-permission-common.discoveryapi">DiscoveryApi</a></td><td>This is a copy of the core DiscoveryApi, to avoid importing core.</td></tr>
-<tr><td><a href="/docs/reference/plugin-permission-common.identified">Identified</a></td><td>A request with a UUID identifier, so that batched responses can be matched up with the original requests.</td></tr>
+<tr><td><a href="/docs/reference/plugin-permission-common.evaluatepermissionrequest">EvaluatePermissionRequest</a></td><td>An individual request sent to the permission backend.</td></tr>
+<tr><td><a href="/docs/reference/plugin-permission-common.evaluatepermissionrequestbatch">EvaluatePermissionRequestBatch</a></td><td>A batch of requests sent to the permission backend.</td></tr>
+<tr><td><a href="/docs/reference/plugin-permission-common.evaluatepermissionresponse">EvaluatePermissionResponse</a></td><td>An individual response from the permission backend.</td></tr>
+<tr><td><a href="/docs/reference/plugin-permission-common.evaluatepermissionresponsebatch">EvaluatePermissionResponseBatch</a></td><td>A batch of responses from the permission backend.</td></tr>
+<tr><td><a href="/docs/reference/plugin-permission-common.identifiedpermissionmessage">IdentifiedPermissionMessage</a></td><td>A request with a UUID identifier, so that batched responses can be matched up with the original requests.</td></tr>
 <tr><td><a href="/docs/reference/plugin-permission-common.notcriteria">NotCriteria</a></td><td>Represents a negation of the provided criteria.</td></tr>
 <tr><td><a href="/docs/reference/plugin-permission-common.permission">Permission</a></td><td>A permission that can be checked through authorization.</td></tr>
 <tr><td><a href="/docs/reference/plugin-permission-common.permissionattributes">PermissionAttributes</a></td><td>The attributes related to a given permission; these should be generic and widely applicable to all permissions in the system.</td></tr>
 <tr><td><a href="/docs/reference/plugin-permission-common.permissionbase">PermissionBase</a></td><td>Generic type for building <a href="/docs/reference/plugin-permission-common.permission">Permission</a> types.</td></tr>
 <tr><td><a href="/docs/reference/plugin-permission-common.permissioncondition">PermissionCondition</a></td><td>A condition returned with a CONDITIONAL authorization response.<!-- -->Conditions are a reference to a rule defined by a plugin, and parameters to apply the rule. For example, a rule might be <code>isOwner</code> from the catalog-backend, and params may be a list of entity claims from a identity token.</td></tr>
 <tr><td><a href="/docs/reference/plugin-permission-common.permissioncriteria">PermissionCriteria</a></td><td>Composes several <a href="/docs/reference/plugin-permission-common.permissioncondition">PermissionCondition</a><!-- -->s as criteria with a nested AND/OR structure.</td></tr>
+<tr><td><a href="/docs/reference/plugin-permission-common.permissionmessagebatch">PermissionMessageBatch</a></td><td>A batch of request or response items.</td></tr>
+<tr><td><a href="/docs/reference/plugin-permission-common.policydecision">PolicyDecision</a></td><td>A decision returned by the <a href="/docs/reference/plugin-permission-node.permissionpolicy">PermissionPolicy</a><!-- -->.</td></tr>
 <tr><td><a href="/docs/reference/plugin-permission-common.resourcepermission">ResourcePermission</a></td><td>ResourcePermissions are <a href="/docs/reference/plugin-permission-common.permission">Permission</a><!-- -->s that can be authorized based on characteristics of a resource such a catalog entity.</td></tr>
 </tbody>
 </table>
