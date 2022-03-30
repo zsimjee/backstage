@@ -79,8 +79,8 @@ configuration:</p>
 </code></pre>
 <p>Note the <code>s3-discovery</code> type, as this is not a regular <code>url</code> processor.</p>
 <p>As this processor is not one of the default providers, you will first need to install the AWS catalog plugin:</p>
-<pre><code class="hljs css language-shell">cd packages/backend
-yarn install @backstage/plugin-catalog-backend-module-aws
+<pre><code class="hljs css language-bash"><span class="hljs-comment"># From the Backstage root directory</span>
+yarn install --cwd packages/backend @backstage/plugin-catalog-backend-module-aws
 </code></pre>
 <p>Once you've done that, you'll also need to add the segment below to <code>packages/backend/src/plugins/catalog.ts</code>:</p>
 <pre><code class="hljs css language-ts"><span class="hljs-comment">/* packages/backend/src/plugins/catalog.ts */</span>

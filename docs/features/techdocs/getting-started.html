@@ -76,8 +76,7 @@ below.</p>
 Navigate to your new Backstage application directory. And then to your
 <code>packages/app</code> directory, and install the <code>@backstage/plugin-techdocs</code> package.</p>
 <pre><code class="hljs css language-bash"><span class="hljs-comment"># From your Backstage root directory</span>
-<span class="hljs-built_in">cd</span> packages/app
-yarn add @backstage/plugin-techdocs
+yarn add --cwd packages/app @backstage/plugin-techdocs
 </code></pre>
 <p>Once the package has been installed, you need to import the plugin in your app.</p>
 <p>In <code>packages/app/src/App.tsx</code>, import <code>TechDocsPage</code> and add the following to
@@ -109,8 +108,7 @@ work.</p>
 <p>Navigate to <code>packages/backend</code> of your Backstage app, and install the
 <code>@backstage/plugin-techdocs-backend</code> package.</p>
 <pre><code class="hljs css language-bash"><span class="hljs-comment"># From your Backstage root directory</span>
-<span class="hljs-built_in">cd</span> packages/backend
-yarn add @backstage/plugin-techdocs-backend
+yarn add --cwd packages/backend @backstage/plugin-techdocs-backend
 </code></pre>
 <p>Create a file called <code>techdocs.ts</code> inside <code>packages/backend/src/plugins/</code> and
 add the following</p>

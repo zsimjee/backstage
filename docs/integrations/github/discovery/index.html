@@ -73,8 +73,7 @@ backend. They are not installed by default, therefore you have to add a
 dependency to <code>@backstage/plugin-catalog-backend-module-github</code> to your backend
 package.</p>
 <pre><code class="hljs css language-bash"><span class="hljs-comment"># From your Backstage root directory</span>
-<span class="hljs-built_in">cd</span> packages/backend
-yarn add @backstage/plugin-catalog-backend-module-github
+yarn add --cwd packages/backend @backstage/plugin-catalog-backend-module-github
 </code></pre>
 <p>And then add the processors to your catalog builder:</p>
 <pre><code class="hljs css language-diff">// In packages/backend/src/plugins/catalog.ts

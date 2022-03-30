@@ -73,8 +73,7 @@ the Processor method (not recommended), it is described separately below.</p>
 <p>The provider is not installed by default, therefore you have to add a dependency
 to <code>@backstage/plugin-catalog-backend-module-ldap</code> to your backend package.</p>
 <pre><code class="hljs css language-bash"><span class="hljs-comment"># From your Backstage root directory</span>
-<span class="hljs-built_in">cd</span> packages/backend
-yarn add @backstage/plugin-catalog-backend-module-ldap
+yarn add --cwd packages/backend @backstage/plugin-catalog-backend-module-ldap
 </code></pre>
 <blockquote>
 <p>Note: When configuring to use a Provider instead of a Processor you do not

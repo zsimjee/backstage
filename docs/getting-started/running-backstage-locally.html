@@ -113,8 +113,8 @@ source contributions into.</p>
 example Backstage backend that the frontend talks to. You are going to need two
 terminal windows, both starting from the Backstage project root.</p>
 <p>In the first window, run</p>
-<pre><code class="hljs css language-bash"><span class="hljs-built_in">cd</span> packages/backend
-yarn start
+<pre><code class="hljs css language-bash"><span class="hljs-comment"># From your Backstage root directory</span>
+yarn start --cwd packages/backend
 </code></pre>
 <p>That starts up a backend instance on port 7007.</p>
 <p>In the other window, we will then launch the frontend. This command is run from
