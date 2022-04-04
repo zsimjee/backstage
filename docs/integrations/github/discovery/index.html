@@ -147,7 +147,7 @@ the catalog in your <code>packages/backend/src/plugins/catalog.ts</code> file:</
 <pre><code class="hljs css language-typescript"><span class="hljs-keyword">const</span> builder = <span class="hljs-keyword">await</span> CatalogBuilder.create(env);
 
 <span class="hljs-comment">// For example, to refresh every 5 minutes (300 seconds).</span>
-builder.setRefreshIntervalSeconds(<span class="hljs-number">300</span>);
+builder.setProcessingIntervalSeconds(<span class="hljs-number">300</span>);
 </code></pre>
 <p>Alternatively, or additionally, you can configure <a href="/docs/plugins/github-apps">github-apps</a> authentication
 which carries a much higher rate limit at GitHub.</p>
