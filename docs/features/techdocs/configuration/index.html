@@ -97,6 +97,13 @@ configuration options for TechDocs.</p>
       <span class="hljs-comment"># Defaults to false, which means that the techdocs-core plugin is always added to the mkdocs file.</span>
       <span class="hljs-attr">omitTechdocsCorePlugin:</span> <span class="hljs-literal">false</span>
 
+      <span class="hljs-comment"># (Optional and not recommended) Configures the techdocs generator to</span>
+      <span class="hljs-comment"># attempt to ensure an index.md exists falling back to using &lt;docs-dir&gt;/README.md</span>
+      <span class="hljs-comment"># or README.md in case a default &lt;docs-dir&gt;/index.md is not provided.</span>
+      <span class="hljs-comment"># Note that https://www.mkdocs.org/user-guide/configuration/#edit_uri behavior</span>
+      <span class="hljs-comment"># will be broken in these scenarios.</span>
+      <span class="hljs-attr">legacyCopyReadmeMdToIndexMd:</span> <span class="hljs-literal">false</span>
+
   <span class="hljs-comment"># techdocs.builder can be either 'local' or 'external.</span>
   <span class="hljs-comment"># Using the default build strategy, if builder is set to 'local' and you open a TechDocs page,</span>
   <span class="hljs-comment"># techdocs-backend will try to generate the docs, publish to storage and show the generated docs afterwords.</span>
