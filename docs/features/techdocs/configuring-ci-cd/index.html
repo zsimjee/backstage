@@ -82,7 +82,7 @@ git <span class="hljs-built_in">clone</span> <span class="hljs-variable">$REPOSI
 
 <span class="hljs-comment"># Install @techdocs/cli, mkdocs and mkdocs plugins</span>
 npm install -g @techdocs/cli
-pip install mkdocs-techdocs-core==0.*
+pip install mkdocs-techdocs-core==1.*
 
 <span class="hljs-comment"># Generate</span>
 techdocs-cli generate --no-docker
@@ -193,7 +193,7 @@ use any CI and any other
         <span class="hljs-attr">run:</span> <span class="hljs-string">sudo</span> <span class="hljs-string">npm</span> <span class="hljs-string">install</span> <span class="hljs-string">-g</span> <span class="hljs-string">@techdocs/cli</span>
 
       <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Install</span> <span class="hljs-string">mkdocs</span> <span class="hljs-string">and</span> <span class="hljs-string">mkdocs</span> <span class="hljs-string">plugins</span>
-        <span class="hljs-attr">run:</span> <span class="hljs-string">python</span> <span class="hljs-string">-m</span> <span class="hljs-string">pip</span> <span class="hljs-string">install</span> <span class="hljs-string">mkdocs-techdocs-core==0.*</span>
+        <span class="hljs-attr">run:</span> <span class="hljs-string">python</span> <span class="hljs-string">-m</span> <span class="hljs-string">pip</span> <span class="hljs-string">install</span> <span class="hljs-string">mkdocs-techdocs-core==1.*</span>
 
       <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Generate</span> <span class="hljs-string">docs</span> <span class="hljs-string">site</span>
         <span class="hljs-attr">run:</span> <span class="hljs-string">techdocs-cli</span> <span class="hljs-string">generate</span> <span class="hljs-string">--no-docker</span> <span class="hljs-string">--verbose</span>
