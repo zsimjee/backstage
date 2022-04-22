@@ -72,19 +72,22 @@ plugin.</p>
 <pre><code class="hljs css language-yaml"><span class="hljs-attr">integrations:</span>
   <span class="hljs-attr">gerrit:</span>
     <span class="hljs-bullet">-</span> <span class="hljs-attr">host:</span> <span class="hljs-string">gerrit.company.com</span>
-      <span class="hljs-attr">apiBaseUrl:</span> <span class="hljs-string">https://gerrit.company.com/gerrit</span>
+      <span class="hljs-attr">baseUrl:</span> <span class="hljs-string">https://gerrit.company.com/gerrit</span>
+      <span class="hljs-attr">cloneUrl:</span> <span class="hljs-string">https://gerrit.company.com/clone</span>
       <span class="hljs-attr">gitilesBaseUrl:</span> <span class="hljs-string">https://gerrit.company.com/gitiles</span>
       <span class="hljs-attr">username:</span> <span class="hljs-string">${GERRIT_USERNAME}</span>
       <span class="hljs-attr">password:</span> <span class="hljs-string">${GERRIT_PASSWORD}</span>
 </code></pre>
 <p>Directly under the <code>gerrit</code> key is a list of provider configurations, where
 you can list the Gerrit instances you want to fetch data from. Each entry is
-a structure with up to four elements:</p>
+a structure with up to six elements:</p>
 <ul>
 <li><code>host</code>: The host of the Gerrit instance, e.g. <code>gerrit.company.com</code>.</li>
-<li><code>apiBaseUrl</code> (optional): Needed if the Gerrit instance is not reachable at
+<li><code>baseUrl</code> (optional): Needed if the Gerrit instance is not reachable at
 the base of the <code>host</code> option (e.g. <code>https://gerrit.company.com</code>) set the
 address here. This is the address that you would open in a browser.</li>
+<li><code>cloneUrl</code> (optional): The base url for HTTP clones. Will default to <code>baseUrl</code> if
+not set. The address used to clone a repo is the <code>cloneUrl</code> plus the repo name.</li>
 <li><code>gitilesBaseUrl</code> (optional): This is needed for creating a valid user-friendly url
 that can be used for browsing the content of the provider. If not set a default
 value will be created in the same way as the &quot;baseUrl&quot; option. There is no
