@@ -123,17 +123,17 @@ the <code>Scaffolder</code> frontend plugin in your own <code>App.tsx</code>.</p
   This is where the magic happens and creates the custom field extension.
 
   Note that if you're writing extensions part of a separate plugin,
-  then please use `plugin.provide` from there instead and export it part of your `plugin.ts` rather than re-using the `scaffolder.plugin`.
+  then please use `scaffolderPlugin.provide` from there instead and export it part of your `plugin.ts` rather than re-using the `scaffolder.plugin`.
 */</span>
 
 <span class="hljs-keyword">import</span> {
-  plugin,
+  scaffolderPlugin,
   createScaffolderFieldExtension,
 } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/plugin-scaffolder'</span>;
 <span class="hljs-keyword">import</span> { MyCustomExtension } <span class="hljs-keyword">from</span> <span class="hljs-string">'./MyCustomExtension'</span>;
 <span class="hljs-keyword">import</span> { myCustomValidation } <span class="hljs-keyword">from</span> <span class="hljs-string">'./validation'</span>;
 
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> MyCustomFieldExtension = plugin.provide(
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> MyCustomFieldExtension = scaffolderPlugin.provide(
   createScaffolderFieldExtension({
     <span class="hljs-attr">name</span>: <span class="hljs-string">'MyCustomExtension'</span>,
     <span class="hljs-attr">component</span>: MyCustomExtension,
