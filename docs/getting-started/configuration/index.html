@@ -217,7 +217,7 @@ could read:</p>
 <p>The GitHub integration supports loading catalog entities from GitHub or GitHub
 Enterprise. Entities can be added to static catalog configuration, registered
 with the catalog-import plugin, or discovered from a GitHub organization. Users
-and Groups can also be loaded from an organization. While using GitHub Apps
+and Groups can also be loaded from an organization. While using <a href="/docs/integrations/github/github-apps">GitHub Apps</a>
 might be the best way to set up integrations, for this tutorial you'll use a
 Personal Access Token.</p>
 <p>Create your Personal Access Token by opening
@@ -228,16 +228,22 @@ for 7 days, it's a lucky number.</p>
 <p align='center'>
   <img src='../assets/getting-started/gh-pat.png' alt='Screenshot of the GitHub Personal Access Token creation page' />
 </p>
-<p>Set the scope to your likings. For this tutorial, selecting &quot;repo&quot; and &quot;workflow&quot; is required as the scaffolding job in this guide configures a GitHub actions workflow for the newly created project.
-enough.</p>
-<p>In the <code>app-config.yaml</code>, search for <code>integrations:</code> and add your token, like we
-did in below example:</p>
+<p>Set the scope to your likings. For this tutorial, selecting <code>repo</code> and <code>workflow</code> is required as the scaffolding job in this guide configures a GitHub actions workflow for the newly created project.</p>
+<p>For this tutorial, we will be writing the token to <code>app-config.local.yaml</code>. This file might not exist for you, so if it doesn't go ahead and create it alongside the <code>app-config.yaml</code> at the root of the project.
+This file should also be excluded in <code>.gitignore</code>, to avoid accidental committing of this file.</p>
+<p>In your <code>app-config.local.yaml</code> go ahead and add the following:</p>
 <pre><code class="hljs css language-yaml"><span class="hljs-attr">integrations:</span>
   <span class="hljs-attr">github:</span>
     <span class="hljs-bullet">-</span> <span class="hljs-attr">host:</span> <span class="hljs-string">github.com</span>
-      <span class="hljs-attr">token:</span> <span class="hljs-string">ghp_urtokendeinfewinfiwebfweb</span>
+      <span class="hljs-attr">token:</span> <span class="hljs-string">ghp_urtokendeinfewinfiwebfweb</span> <span class="hljs-comment"># this should be the token from GitHub</span>
 </code></pre>
 <p>That's settled. This information will be leveraged by other plugins.</p>
+<p>If you're looking for a more production way to manage this secret, then you can do the following with the token being stored in an environment variable called <code>GITHUB_TOKEN</code>.</p>
+<pre><code class="hljs css language-yaml"><span class="hljs-attr">integrations:</span>
+  <span class="hljs-attr">github:</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-attr">host:</span> <span class="hljs-string">github.com</span>
+      <span class="hljs-attr">token:</span> <span class="hljs-string">${GITHUB_TOKEN}</span> <span class="hljs-comment"># this will use the environment variable GITHUB_TOKEN</span>
+</code></pre>
 <p>Some helpful links, for if you want to learn more about:</p>
 <ul>
 <li><a href="../integrations/">Other available integrations</a></li>
