@@ -98,8 +98,8 @@ schedule it:</p>
 <span class="hljs-addition">+      target: 'ldaps://ds.example.net',</span>
 <span class="hljs-addition">+      logger: env.logger,</span>
 <span class="hljs-addition">+      schedule: env.scheduler.createScheduledTaskRunner({</span>
-<span class="hljs-addition">+        frequency: Duration.fromObject({ minutes: 60 }),</span>
-<span class="hljs-addition">+        timeout: Duration.fromObject({ minutes: 15 }),</span>
+<span class="hljs-addition">+        frequency: { minutes: 60 },</span>
+<span class="hljs-addition">+        timeout: { minutes: 15 },</span>
 <span class="hljs-addition">+      }),</span>
 <span class="hljs-addition">+    }),</span>
 <span class="hljs-addition">+  );</span>

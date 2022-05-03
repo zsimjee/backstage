@@ -82,8 +82,8 @@ builder.addEntityProvider(
   ...GerritEntityProvider.fromConfig(env.config, {
     logger: env.logger,
     schedule: env.scheduler.createScheduledTaskRunner({
-      frequency: Duration.fromObject({ minutes: <span class="hljs-number">30</span> }),
-      timeout: Duration.fromObject({ minutes: <span class="hljs-number">3</span> }),
+      frequency: { minutes: <span class="hljs-number">30</span> },
+      timeout: { minutes: <span class="hljs-number">3</span> },
     }),
   }),
 );

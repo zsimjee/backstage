@@ -186,7 +186,6 @@ code:</p>
 <span class="hljs-keyword">import</span> { PluginEnvironment } <span class="hljs-keyword">from</span> <span class="hljs-string">'../types'</span>;
 <span class="hljs-keyword">import</span> { DefaultCatalogCollator } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/plugin-catalog-backend'</span>;
 <span class="hljs-keyword">import</span> { Router } <span class="hljs-keyword">from</span> <span class="hljs-string">'express'</span>;
-<span class="hljs-keyword">import</span> { Duration } <span class="hljs-keyword">from</span> <span class="hljs-string">'luxon'</span>;
 
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createPlugin</span>(<span class="hljs-params">
   env: PluginEnvironment,
@@ -200,9 +199,9 @@ code:</p>
   });
 
   <span class="hljs-keyword">const</span> every10MinutesSchedule = env.scheduler.createScheduledTaskRunner({
-    frequency: Duration.fromObject({ minutes: <span class="hljs-number">10</span> }),
-    timeout: Duration.fromObject({ minutes: <span class="hljs-number">15</span> }),
-    initialDelay: Duration.fromObject({ seconds: <span class="hljs-number">3</span> }),
+    frequency: { minutes: <span class="hljs-number">10</span> },
+    timeout: { minutes: <span class="hljs-number">15</span> },
+    initialDelay: { seconds: <span class="hljs-number">3</span> },
   });
 
   indexBuilder.addCollator({
@@ -305,20 +304,18 @@ Catalog offer default <a href="/docs/features/search/concepts#collators">collato
 which are responsible for providing documents
 <a href="/docs/features/search/concepts#documents-and-indices">to be indexed</a>. You can register any
 number of collators with the <code>IndexBuilder</code> like this:</p>
-<pre><code class="hljs css language-typescript"><span class="hljs-keyword">import</span> { Duration } <span class="hljs-keyword">from</span> <span class="hljs-string">'luxon'</span>;
-
-<span class="hljs-keyword">const</span> indexBuilder = <span class="hljs-keyword">new</span> IndexBuilder({ logger: env.logger, searchEngine });
+<pre><code class="hljs css language-typescript"><span class="hljs-keyword">const</span> indexBuilder = <span class="hljs-keyword">new</span> IndexBuilder({ logger: env.logger, searchEngine });
 
 <span class="hljs-keyword">const</span> every10MinutesSchedule = env.scheduler.createScheduledTaskRunner({
-  frequency: Duration.fromObject({ minutes: <span class="hljs-number">10</span> }),
-  timeout: Duration.fromObject({ minutes: <span class="hljs-number">15</span> }),
-  initialDelay: Duration.fromObject({ seconds: <span class="hljs-number">3</span> }),
+  frequency: { minutes: <span class="hljs-number">10</span> },
+  timeout: { minutes: <span class="hljs-number">15</span> },
+  initialDelay: { seconds: <span class="hljs-number">3</span> },
 });
 
 <span class="hljs-keyword">const</span> everyHourSchedule = env.scheduler.createScheduledTaskRunner({
-  frequency: Duration.fromObject({ hours: <span class="hljs-number">1</span> }),
-  timeout: Duration.fromObject({ minutes: <span class="hljs-number">90</span> }),
-  initialDelay: Duration.fromObject({ seconds: <span class="hljs-number">3</span> }),
+  frequency: { hours: <span class="hljs-number">1</span> },
+  timeout: { minutes: <span class="hljs-number">90</span> },
+  initialDelay: { seconds: <span class="hljs-number">3</span> },
 });
 
 indexBuilder.addCollator({
@@ -340,9 +337,9 @@ indexes are rebuilt for a given type of document. You may want to do this if
 your documents are updated more or less frequently. You can do so by configuring
 a scheduled <code>TaskRunner</code> to pass into the <code>schedule</code> value, like this:</p>
 <pre><code class="hljs css language-typescript {3}"><span class="hljs-keyword">const</span> every10MinutesSchedule = env.scheduler.createScheduledTaskRunner({
-  frequency: Duration.fromObject({ minutes: <span class="hljs-number">10</span> }),
-  timeout: Duration.fromObject({ minutes: <span class="hljs-number">15</span> }),
-  initialDelay: Duration.fromObject({ seconds: <span class="hljs-number">3</span> }),
+  frequency: { minutes: <span class="hljs-number">10</span> },
+  timeout: { minutes: <span class="hljs-number">15</span> },
+  initialDelay: { seconds: <span class="hljs-number">3</span> },
 });
 
 indexBuilder.addCollator({
