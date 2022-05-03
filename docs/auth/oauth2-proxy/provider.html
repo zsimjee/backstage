@@ -73,56 +73,33 @@ for more details check this
 <p>The provider configuration can be added to your <code>app-config.yaml</code> under the root
 <code>auth</code> configuration:</p>
 <pre><code class="hljs css language-yaml"><span class="hljs-attr">auth:</span>
-  <span class="hljs-attr">environment:</span> <span class="hljs-string">development</span>
   <span class="hljs-attr">providers:</span>
     <span class="hljs-attr">oauth2proxy:</span> <span class="hljs-string">{}</span>
 </code></pre>
-<p>Right now no configuration options are supported. To make use of the provider,
-make sure that your <code>oauth2-proxy</code> is configured correctly and provides a custom
-<code>X-OAUTH2-PROXY-ID-TOKEN</code> header. To do so, enable the
-<code>--set-authorization-header=true</code> of your <code>oauth2-proxy</code> and forward the
-<code>Authorization</code> header as <code>X-OAUTH2-PROXY-ID-TOKEN</code>. For more details check the
-<a href="https://oauth2-proxy.github.io/oauth2-proxy/configuration">configuration docs</a>.</p>
-<p><em>Example for kubernetes ingress:</em></p>
-<pre><code class="hljs css language-bash"><span class="hljs-comment"># forward the authorization header from the auth request in the X-OAUTH2-PROXY-ID-TOKEN header</span>
-auth_request_set <span class="hljs-variable">$name_upstream_authorization</span> <span class="hljs-variable">$upstream_http_authorization</span>;
-proxy_set_header X-OAUTH2-PROXY-ID-TOKEN <span class="hljs-variable">$name_upstream_authorization</span>;
-</code></pre>
-<h2><a class="anchor" aria-hidden="true" id="adding-the-provider-to-the-backstage-backend"></a><a href="#adding-the-provider-to-the-backstage-backend" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Adding the provider to the Backstage backend</h2>
-<p>When using <code>oauth2proxy</code> auth you can configure it as described
-<a href="https://backstage.io/docs/auth/identity-resolver">here</a>.</p>
-<ul>
-<li>use the following code below to introduce changes to
-<code>packages/backend/plugin/auth.ts</code>:</li>
-</ul>
-<pre><code class="hljs css language-ts">  providerFactories: {
-    oauth2proxy: createOauth2ProxyProvider&lt;{
-      id: <span class="hljs-built_in">string</span>;
-      email: <span class="hljs-built_in">string</span>;
-    }&gt;({
-      authHandler: <span class="hljs-keyword">async</span> input =&gt; {
-        <span class="hljs-keyword">const</span> { email } = input.fullProfile;
-
-        <span class="hljs-keyword">return</span> {
-          profile: {
-            email,
-          },
-        };
-      },
-      signIn: {
-        resolver: <span class="hljs-keyword">async</span> (signInInfo, ctx) =&gt; {
-          <span class="hljs-keyword">const</span> { preferred_username: id } = signInInfo.result.fullProfile;
-          <span class="hljs-keyword">const</span> sub = <span class="hljs-string">`user:default/<span class="hljs-subst">${id}</span>`</span>;
-
-          <span class="hljs-keyword">const</span> token = <span class="hljs-keyword">await</span> ctx.tokenIssuer.issueToken({
-            claims: { sub, ent: [<span class="hljs-string">`group:default/optional-user-group`</span>] },
-          });
-
-          <span class="hljs-keyword">return</span> { id, token };
-        },
-      },
-    }),
-  }
+<p>Right now no configuration options are supported, but the empty object is needed
+to enable the provider in the auth backend.</p>
+<p>To use the <code>oauth2proxy</code> provider you must also configure it with a sign-in resolver.
+For more information about the sign-in process in general, see the
+<a href="/docs/auth/identity-resolver">Sign-in Identities and Resolvers</a> documentation.</p>
+<p>For the <code>oauth2proxy</code> provider, the sign-in result is quite different than other providers.
+Because it's a proxy provider that can be configured to forward information through
+arbitrary headers, the auth result simply just gives you access to the HTTP headers
+of the incoming request. Using these you can either extract the information directly,
+or grab ID or access tokens to look up additional information and/or validate the request.</p>
+<p>A simple sign-in resolver might for example look like this:</p>
+<pre><code class="hljs css language-ts">providers.oauth2Proxy.create({
+  signIn: {
+    <span class="hljs-keyword">async</span> resolver({ result }, ctx) {
+      <span class="hljs-keyword">const</span> name = result.getHeader(<span class="hljs-string">'x-forwarded-user'</span>);
+      <span class="hljs-keyword">if</span> (!name) {
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Request did not contain a user'</span>)
+      }
+      <span class="hljs-keyword">return</span> ctx.signInWithCatalogUser({
+        entityRef: { name },
+      });
+    },
+  },
+}),
 </code></pre>
 <h2><a class="anchor" aria-hidden="true" id="adding-the-provider-to-the-backstage-frontend"></a><a href="#adding-the-provider-to-the-backstage-frontend" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Adding the provider to the Backstage frontend</h2>
 <p>All Backstage apps need a <code>SignInPage</code> to be configured. Its purpose is to
@@ -142,7 +119,7 @@ which has no UI.</p>
 </code></pre>
 <p>After this, your app should be ready to leverage the OAuth2-Proxy for
 authentication!</p>
-</span></div></article></div><div class="docLastUpdate"><em>Last updated on 5/3/2022</em></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/auth/onelogin/provider"><span class="arrow-prev">← </span><span class="function-name-prevnext">OneLogin</span></a><a class="docs-next button" href="/docs/auth/add-auth-provider"><span>Adding authentication providers</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#configuration">Configuration</a></li><li><a href="#adding-the-provider-to-the-backstage-backend">Adding the provider to the Backstage backend</a></li><li><a href="#adding-the-provider-to-the-backstage-frontend">Adding the provider to the Backstage frontend</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><div class="footer-title"><a href="/"><h2 class="footerLogo"></h2></a></div><div><h5>Docs</h5><a href="/docs/overview/what-is-backstage">What is Backstage?</a><a href="/docs/getting-started/">Getting started</a><a href="/docs/features/software-catalog/software-catalog-overview">Software Catalog</a><a href="/docs/plugins/create-a-plugin">Create a Plugin</a><a href="/docs/dls/design">Designing for Backstage</a></div><div><h5>Community</h5><a href="https://discord.gg/MUpMjP2">Support chatroom</a><a href="https://github.com/backstage/backstage/blob/master/CONTRIBUTING.md">Contributing</a><a href="https://backstage.spotify.com">Adopting</a><a href="https://github.com/backstage/community">Community Sessions</a><a href="https://mailchi.mp/spotify/backstage-community">Subscribe to our newsletter</a><a href="https://www.cncf.io/projects/">CNCF Incubation</a></div><div><h5>More</h5><a href="https://spotify.github.io/">Open Source @ Spotify</a><a href="https://engineering.atspotify.com/">Spotify Engineering Blog</a><a href="https://developer.spotify.com/">Spotify for Developers</a><a href="https://github.com/backstage/backstage">GitHub</a><a class="github-button" href="https://github.com/backstage/backstage" data-icon="octicon-star" data-count-href="/backstage/backstage/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a><div class="social"><a href="https://twitter.com/SpotifyEng" class="twitter-follow-button">Follow @SpotifyEng</a></div></div></section><p style="text-align:center"><a href="https://spotify.github.io">Made with ❤️ at Spotify</a></p><p class="copyright">Copyright © 2022 Backstage Project Authors. All rights reserved. The Linux Foundation has registered trademarks and uses trademarks. For a list of trademarks of The Linux Foundation, please see our Trademark Usage page: https://www.linuxfoundation.org/trademark-usage</p></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script><script>
+</span></div></article></div><div class="docLastUpdate"><em>Last updated on 5/3/2022</em></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/auth/onelogin/provider"><span class="arrow-prev">← </span><span class="function-name-prevnext">OneLogin</span></a><a class="docs-next button" href="/docs/auth/add-auth-provider"><span>Adding authentication providers</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#configuration">Configuration</a></li><li><a href="#adding-the-provider-to-the-backstage-frontend">Adding the provider to the Backstage frontend</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><div class="footer-title"><a href="/"><h2 class="footerLogo"></h2></a></div><div><h5>Docs</h5><a href="/docs/overview/what-is-backstage">What is Backstage?</a><a href="/docs/getting-started/">Getting started</a><a href="/docs/features/software-catalog/software-catalog-overview">Software Catalog</a><a href="/docs/plugins/create-a-plugin">Create a Plugin</a><a href="/docs/dls/design">Designing for Backstage</a></div><div><h5>Community</h5><a href="https://discord.gg/MUpMjP2">Support chatroom</a><a href="https://github.com/backstage/backstage/blob/master/CONTRIBUTING.md">Contributing</a><a href="https://backstage.spotify.com">Adopting</a><a href="https://github.com/backstage/community">Community Sessions</a><a href="https://mailchi.mp/spotify/backstage-community">Subscribe to our newsletter</a><a href="https://www.cncf.io/projects/">CNCF Incubation</a></div><div><h5>More</h5><a href="https://spotify.github.io/">Open Source @ Spotify</a><a href="https://engineering.atspotify.com/">Spotify Engineering Blog</a><a href="https://developer.spotify.com/">Spotify for Developers</a><a href="https://github.com/backstage/backstage">GitHub</a><a class="github-button" href="https://github.com/backstage/backstage" data-icon="octicon-star" data-count-href="/backstage/backstage/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a><div class="social"><a href="https://twitter.com/SpotifyEng" class="twitter-follow-button">Follow @SpotifyEng</a></div></div></section><p style="text-align:center"><a href="https://spotify.github.io">Made with ❤️ at Spotify</a></p><p class="copyright">Copyright © 2022 Backstage Project Authors. All rights reserved. The Linux Foundation has registered trademarks and uses trademarks. For a list of trademarks of The Linux Foundation, please see our Trademark Usage page: https://www.linuxfoundation.org/trademark-usage</p></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script><script>
                 document.addEventListener('keyup', function(e) {
                   if (e.target !== document.body) {
                     return;
