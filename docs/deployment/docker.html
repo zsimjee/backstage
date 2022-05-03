@@ -138,8 +138,8 @@ might be needed, such as <code>.npmrc</code>.</p>
 root of the repo to speed up the build by reducing build context size:</p>
 <pre><code class="hljs css language-text">.git
 node_modules
-packages
-!packages/backend/dist
+packages/*/src
+packages/*/node_modules
 plugins
 </code></pre>
 <p>With the project built and the <code>.dockerignore</code> and <code>Dockerfile</code> in place, we are
