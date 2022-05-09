@@ -123,6 +123,7 @@ Backstage app with the following contents:</p>
                         <span class="hljs-tag">&lt;<span class="hljs-name">CatalogResultListItem</span>
                           <span class="hljs-attr">key</span>=<span class="hljs-string">{result.document.location}</span>
                           <span class="hljs-attr">result</span>=<span class="hljs-string">{result.document}</span>
+                          <span class="hljs-attr">highlight</span>=<span class="hljs-string">{result.highlight}</span>
                         /&gt;</span>
                       );
                     default:
@@ -130,6 +131,7 @@ Backstage app with the following contents:</p>
                         <span class="hljs-tag">&lt;<span class="hljs-name">DefaultResultListItem</span>
                           <span class="hljs-attr">key</span>=<span class="hljs-string">{result.document.location}</span>
                           <span class="hljs-attr">result</span>=<span class="hljs-string">{result.document}</span>
+                          <span class="hljs-attr">highlight</span>=<span class="hljs-string">{result.highlight}</span>
                         /&gt;</span>
                       );
                   }
@@ -282,6 +284,7 @@ an example:</p>
               &lt;CatalogResultListItem
                 key={result.<span class="hljs-built_in">document</span>.location}
                 result={result.<span class="hljs-built_in">document</span>}
+                highlight={result.highlight}
               /&gt;
             );
           <span class="hljs-comment">// ...</span>
