@@ -181,7 +181,6 @@ different configurations, one for each environment, which looks like this;</p>
 
     <span class="hljs-comment">// Wrap the OAuthProviderHandlers with OAuthProvider, which implements AuthProviderRouteHandlers</span>
     <span class="hljs-keyword">return</span> OAuthProvider.fromConfig(globalConfig, provider, {
-      disableRefresh: <span class="hljs-literal">false</span>,
       providerId,
       tokenIssuer,
     });
