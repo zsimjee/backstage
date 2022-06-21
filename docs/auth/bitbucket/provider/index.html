@@ -102,7 +102,7 @@ root <code>auth</code> configuration:</p>
 <code>signIn.resolver</code>. See the
 <a href="/docs/auth/identity-resolver">Sign-In Resolver documentation</a> for more details on
 how this is done. Note that for the Bitbucket provider, you'll want to use
-<code>bitbucket</code> as the provider ID, and <code>createBitbucketProvider</code> for the provider
+<code>bitbucket</code> as the provider ID, and <code>providers.bitbucket.create</code> for the provider
 factory.</p>
 <p>The <code>@backstage/plugin-auth-backend</code> plugin also comes with two built-in
 resolves that can be used if desired. The first one is the
@@ -114,16 +114,14 @@ users will not be able to sign in.</p>
 same way, but uses the Bitbucket user ID instead, and matches on the
 <code>bitbucket.org/user-id</code> annotation.</p>
 <p>The following is an example of how to use one of the built-in resolvers:</p>
-<pre><code class="hljs css language-ts"><span class="hljs-keyword">import</span> {
-  createBitbucketProvider,
-  bitbucketUsernameSignInResolver,
-} <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/plugin-auth-backend'</span>;
+<pre><code class="hljs css language-ts"><span class="hljs-keyword">import</span> { providers } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/plugin-auth-backend'</span>;
 
 <span class="hljs-comment">// ...</span>
   providerFactories: {
-    bitbucket: createBitbucketProvider({
+    bitbucket: providers.bitbucket.create({
       signIn: {
-        resolver: bitbucketUsernameSignInResolver,
+        resolver:
+          providers.bitbucket.resolvers.usernameMatchingUserEntityAnnotation(),
       },
     }),
   },

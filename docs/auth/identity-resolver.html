@@ -347,7 +347,7 @@ and throw errors if the user should not be allowed access in Backstage.</p>
   <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> createRouter({
     ...
     providerFactories: {
-      google: createGoogleProvider({
+      google: providers.google.create({
         authHandler: <span class="hljs-keyword">async</span> ({
           fullProfile  <span class="hljs-comment">// Type: passport.Profile,</span>
           idToken      <span class="hljs-comment">// Type: (Optional) string,</span>
