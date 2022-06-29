@@ -138,14 +138,6 @@ would be good to also have some files in there that can be templated in.</p>
 contains more information about the required fields.</p>
 <p>Once we have a <code>template.yaml</code> ready, we can then add it to the software catalog
 for use by the scaffolder.</p>
-<blockquote>
-<p>Note: When you add or modify a template, you will need to refresh the location entity.
-Otherwise, Backstage won't display the template in the available templates,
-or it will keep showing the old template. You can refresh the location instance by
-going into <code>Catalog</code> web page, choosing <code>Locations</code> instead of <code>Components</code>, and selecting the correct location entity.
-From there, you can click on the refresh icon representing &quot;Scheduled entity refresh&quot; action.
-Afterwards, you should see your template updated.</p>
-</blockquote>
 <p>You can add the template files to the catalog through
 <a href="/docs/features/software-catalog/configuration#static-location-configuration">static location configuration</a>,
 for example:</p>
@@ -155,8 +147,6 @@ for example:</p>
       <span class="hljs-attr">target:</span> <span class="hljs-string">https://github.com/backstage/software-templates/blob/main/scaffolder-templates/react-ssr-template/template.yaml</span>
       <span class="hljs-attr">rules:</span>
         <span class="hljs-bullet">-</span> <span class="hljs-attr">allow:</span> <span class="hljs-string">[Template]</span>
-    <span class="hljs-bullet">-</span> <span class="hljs-attr">type:</span> <span class="hljs-string">file</span>
-      <span class="hljs-attr">target:</span> <span class="hljs-string">template.yaml</span> <span class="hljs-comment"># Backstage will expect the file to be in packages/backend/template.yaml</span>
 </code></pre>
 <p>Or you can add the template using the <code>catalog-import</code> plugin, which unless
 configured differently should be running on <code>/catalog-import</code>.</p>
