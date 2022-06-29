@@ -480,6 +480,58 @@ using this template syntax (for example, <code>${{ parameters.firstName }}</code
 the value of <code>firstName</code> from the parameters). This is great for passing the
 values from the form into different steps and reusing these input variables.
 These template strings preserve the type of the parameter.</p>
+<p>The <code>${{ parameters.firstName }}</code> pattern will work only in the template file.
+If you want to start using values provided from the UI in your code, you will have to use
+the <code>${{ values.firstName }}</code> pattern. Additionally, you have to pass
+the parameters from the UI to the input of the <code>fetch:template</code> step.</p>
+<pre><code class="hljs css language-yaml"><span class="hljs-attr">apiVersion:</span> <span class="hljs-string">scaffolder.backstage.io/v1beta3</span>
+<span class="hljs-attr">kind:</span> <span class="hljs-string">Template</span>
+<span class="hljs-attr">metadata:</span>
+  <span class="hljs-attr">name:</span> <span class="hljs-string">v1beta3-demo</span>
+  <span class="hljs-attr">title:</span> <span class="hljs-string">Test</span> <span class="hljs-string">Action</span>
+  <span class="hljs-attr">description:</span> <span class="hljs-string">scaffolder</span> <span class="hljs-string">v1beta3</span> <span class="hljs-string">template</span> <span class="hljs-string">demo</span>
+<span class="hljs-attr">spec:</span>
+  <span class="hljs-attr">owner:</span> <span class="hljs-string">backstage/techdocs-core</span>
+  <span class="hljs-attr">type:</span> <span class="hljs-string">service</span>
+  <span class="hljs-attr">parameters:</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-attr">title:</span> <span class="hljs-string">Fill</span> <span class="hljs-string">in</span> <span class="hljs-string">some</span> <span class="hljs-string">steps</span>
+      <span class="hljs-attr">required:</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-string">name</span>
+      <span class="hljs-attr">properties:</span>
+        <span class="hljs-attr">name:</span>
+          <span class="hljs-attr">title:</span> <span class="hljs-string">Name</span>
+          <span class="hljs-attr">type:</span> <span class="hljs-string">string</span>
+          <span class="hljs-attr">description:</span> <span class="hljs-string">Unique</span> <span class="hljs-string">name</span> <span class="hljs-string">of</span> <span class="hljs-string">your</span> <span class="hljs-string">project</span>
+        <span class="hljs-attr">urlParameter:</span>
+          <span class="hljs-attr">title:</span> <span class="hljs-string">URL</span> <span class="hljs-string">endpoint</span>
+          <span class="hljs-attr">type:</span> <span class="hljs-string">string</span>
+          <span class="hljs-attr">description:</span> <span class="hljs-string">URL</span> <span class="hljs-string">endpoint</span> <span class="hljs-string">at</span> <span class="hljs-string">which</span> <span class="hljs-string">the</span> <span class="hljs-string">component</span> <span class="hljs-string">can</span> <span class="hljs-string">be</span> <span class="hljs-string">reached</span>
+          <span class="hljs-attr">default:</span> <span class="hljs-string">'https://www.example.com'</span>
+        <span class="hljs-attr">enabledDB:</span>
+          <span class="hljs-attr">title:</span> <span class="hljs-string">Enable</span> <span class="hljs-string">Database</span>
+          <span class="hljs-attr">type:</span> <span class="hljs-string">boolean</span>
+          <span class="hljs-attr">default:</span> <span class="hljs-literal">false</span>
+  <span class="hljs-string">...</span>
+  <span class="hljs-attr">steps:</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-attr">id:</span> <span class="hljs-string">fetch-base</span>
+      <span class="hljs-attr">name:</span> <span class="hljs-string">Fetch</span> <span class="hljs-string">Base</span>
+      <span class="hljs-attr">action:</span> <span class="hljs-string">fetch:template</span>
+      <span class="hljs-attr">input:</span>
+        <span class="hljs-attr">url:</span> <span class="hljs-string">./template</span>
+        <span class="hljs-attr">values:</span>
+          <span class="hljs-attr">name:</span> <span class="hljs-string">${{</span> <span class="hljs-string">parameters.name</span> <span class="hljs-string">}}</span>
+          <span class="hljs-attr">url:</span> <span class="hljs-string">${{</span> <span class="hljs-string">parameters.urlParameter</span> <span class="hljs-string">}}</span>
+          <span class="hljs-attr">enabledDB:</span> <span class="hljs-string">${{</span> <span class="hljs-string">parameters.enabledDB</span> <span class="hljs-string">}}</span>
+</code></pre>
+<p>Afterwards, if you are using the builtin templating action, you can start using
+the variables in your code. You can use also any other templating functions from
+<a href="https://mozilla.github.io/nunjucks/templating.html#tags">Nunjucks</a> as well.</p>
+<pre><code class="hljs css language-bash"><span class="hljs-meta">#!/bin/bash</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Hi my name is <span class="hljs-variable">${{ values.name }</span>}, and you can fine me at <span class="hljs-variable">${{ values.url }</span>}!"</span>
+{% <span class="hljs-keyword">if</span> values.enabledDB %}
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"You have enabled your database!"</span>
+{% endif %}
+</code></pre>
 <p>As you can see above in the <code>Outputs</code> section, <code>actions</code> and <code>steps</code> can also
 output things. You can grab that output using <code>steps.$stepId.output.$property</code>.</p>
 <p>You can read more about all the <code>inputs</code> and <code>outputs</code> defined in the actions in
