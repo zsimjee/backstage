@@ -348,6 +348,27 @@ little like this:</p>
 <p>The <code>allowedHosts</code> part should be set to where you wish to enable this template
 to publish to. And it can be any host that is listed in your <code>integrations</code>
 config in <code>app-config.yaml</code>.</p>
+<p>Besides specifying <code>allowedHosts</code> you can also restrict the template to publish to
+repositories owned by specific users/groups/namespaces by setting the <code>allowedOwners</code>
+option. With the <code>allowedRepos</code> option you are able to narrow it down further to a
+specific set of repository names. A full example could look like this:</p>
+<pre><code class="hljs css language-yaml"><span class="hljs-bullet">-</span> <span class="hljs-attr">title:</span> <span class="hljs-string">Choose</span> <span class="hljs-string">a</span> <span class="hljs-string">location</span>
+  <span class="hljs-attr">required:</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-string">repoUrl</span>
+  <span class="hljs-attr">properties:</span>
+    <span class="hljs-attr">repoUrl:</span>
+      <span class="hljs-attr">title:</span> <span class="hljs-string">Repository</span> <span class="hljs-string">Location</span>
+      <span class="hljs-attr">type:</span> <span class="hljs-string">string</span>
+      <span class="hljs-attr">ui:field:</span> <span class="hljs-string">RepoUrlPicker</span>
+      <span class="hljs-attr">ui:options:</span>
+        <span class="hljs-attr">allowedHosts:</span>
+          <span class="hljs-bullet">-</span> <span class="hljs-string">github.com</span>
+        <span class="hljs-attr">allowedOwners:</span>
+          <span class="hljs-bullet">-</span> <span class="hljs-string">backstage</span>
+          <span class="hljs-bullet">-</span> <span class="hljs-string">someGithubUser</span>
+        <span class="hljs-attr">allowedRepos:</span>
+          <span class="hljs-bullet">-</span> <span class="hljs-string">backstage</span>
+</code></pre>
 <p>The <code>RepoUrlPicker</code> is a custom field that we provide part of the
 <code>plugin-scaffolder</code>. You can provide your own custom fields by
 <a href="/docs/features/software-templates/writing-custom-field-extensions">writing your own Custom Field Extensions</a></p>
