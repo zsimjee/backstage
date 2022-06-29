@@ -137,8 +137,7 @@ with <a href="#static-location-configuration">Static Location Configuration</a> 
 discovery processor like
 <a href="/docs/integrations/github/discovery">GitHub Discovery</a>. To enforce usage of
 processors to locate entities we can configure the catalog into <code>readonly</code> mode.
-This configuration disables the mutating backend catalog APIs and disallows
-users from registering new entities at run-time.</p>
+This configuration disables registering and deleting locations with the catalog APIs.</p>
 <pre><code class="hljs css language-yaml"><span class="hljs-attr">catalog:</span>
   <span class="hljs-attr">readonly:</span> <span class="hljs-literal">true</span>
 </code></pre>
@@ -146,6 +145,7 @@ users from registering new entities at run-time.</p>
 <p><strong>Note that any plugin relying on the catalog API for creating, updating and
 deleting entities will not work in this mode.</strong></p>
 </blockquote>
+<p>Deleting an entity by UUID, <code>DELETE /entities/by-uid/:uid</code>, is allowed when using this mode. It may be rediscovered as noted in <a href="/docs/features/software-catalog/life-of-an-entity#explicit-deletion">explicit deletion</a>.</p>
 <p>A common use case for this configuration is when organizations have a remote
 source that should be mirrored into Backstage. To make Backstage a mirror of
 this remote source, users cannot also register new entities with e.g. the
