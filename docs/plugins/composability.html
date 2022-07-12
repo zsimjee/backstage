@@ -115,7 +115,7 @@ are created using <code>create*Extension</code> functions, and wrapped with
 <code>plugin.provide()</code> in order to create the actual exported extension.</p>
 <p>The extension type is a simple one:</p>
 <pre><code class="hljs css language-ts"><span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> Extension&lt;T&gt; = {
-  expose(plugin: BackstagePlugin&lt;<span class="hljs-built_in">any</span>, <span class="hljs-built_in">any</span>&gt;): T;
+  expose(plugin: BackstagePlugin): T;
 };
 </code></pre>
 <p>The power of extensions comes from the ability of various actors to hook into
