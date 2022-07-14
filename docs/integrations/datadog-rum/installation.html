@@ -76,6 +76,7 @@ your <code>app-config.yaml</code>:</p>
   <span class="hljs-comment">#   site: datadoghq.eu</span>
   <span class="hljs-comment">#   env: 'staging'</span>
 </code></pre>
+<p>If your <a href="https://github.com/backstage/backstage/blob/master/app-config.yaml#L5"><code>app-config.yaml</code></a> file does not have this configuration, you may have to adjust your <a href="https://github.com/backstage/backstage/blob/master/packages/app/public/index.html#L64"><code>packages/app/public/index.html</code></a> to include the Datadog RUM <code>init()</code> section manually.</p>
 <p>The <code>clientToken</code> and <code>applicationId</code> are generated from the Datadog RUM page
 following
 <a href="https://docs.datadoghq.com/real_user_monitoring/browser/">these instructions</a>.</p>
