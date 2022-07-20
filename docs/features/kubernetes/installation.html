@@ -101,13 +101,16 @@ add the following:</p>
 <span class="hljs-keyword">import</span> { KubernetesBuilder } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/plugin-kubernetes-backend'</span>;
 <span class="hljs-keyword">import</span> { Router } <span class="hljs-keyword">from</span> <span class="hljs-string">'express'</span>;
 <span class="hljs-keyword">import</span> { PluginEnvironment } <span class="hljs-keyword">from</span> <span class="hljs-string">'../types'</span>;
+<span class="hljs-keyword">import</span> { CatalogClient } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/catalog-client'</span>;
 
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createPlugin</span>(<span class="hljs-params">
   env: PluginEnvironment,
 </span>): <span class="hljs-title">Promise</span>&lt;<span class="hljs-title">Router</span>&gt; </span>{
+  <span class="hljs-keyword">const</span> catalogApi = <span class="hljs-keyword">new</span> CatalogClient({ discoveryApi: env.discovery });
   <span class="hljs-keyword">const</span> { router } = <span class="hljs-keyword">await</span> KubernetesBuilder.createBuilder({
     logger: env.logger,
     config: env.config,
+    catalogApi,
   }).build();
   <span class="hljs-keyword">return</span> router;
 }
