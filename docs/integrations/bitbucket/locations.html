@@ -73,6 +73,13 @@ plugin.</p>
     <span class="hljs-bullet">-</span> <span class="hljs-attr">host:</span> <span class="hljs-string">bitbucket.company.com</span>
       <span class="hljs-attr">token:</span> <span class="hljs-string">${BITBUCKET_SERVER_TOKEN}</span>
 </code></pre>
+<p>or with Basic Auth</p>
+<pre><code class="hljs css language-yaml"><span class="hljs-attr">integrations:</span>
+  <span class="hljs-attr">bitbucketServer:</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-attr">host:</span> <span class="hljs-string">bitbucket.company.com</span>
+      <span class="hljs-attr">username:</span> <span class="hljs-string">${BITBUCKET_SERVER_USERNAME}</span>
+      <span class="hljs-attr">password:</span> <span class="hljs-string">${BITBUCKET_SERVER_PASSWORD}</span>
+</code></pre>
 <p>Directly under the <code>bitbucketServer</code> key is a list of provider configurations, where
 you can list the Bitbucket Server providers you want to fetch data from. Each entry is
 a structure with the following elements:</p>
@@ -81,6 +88,10 @@ a structure with the following elements:</p>
 <li><code>token</code> (optional):
 An <a href="https://confluence.atlassian.com/bitbucketserver/personal-access-tokens-939515499.html">personal access token</a>
 as expected by Bitbucket Server.</li>
+<li><code>username</code> (optional):
+use for <a href="https://developer.atlassian.com/server/bitbucket/how-tos/command-line-rest/#authentication">Basic Auth</a> for Bitbucket Server.</li>
+<li><code>password</code> (optional):
+use for <a href="https://developer.atlassian.com/server/bitbucket/how-tos/command-line-rest/#authentication">Basic Auth</a> for Bitbucket Server.</li>
 <li><code>apiBaseUrl</code> (optional): The URL of the Bitbucket Server API. For self-hosted
 installations, it is commonly at <code>https://&lt;host&gt;/rest/api/1.0</code>.</li>
 </ul>
