@@ -175,15 +175,27 @@ want to use the default themes, they are exported as <code>lightTheme</code> and
   fontFamily: <span class="hljs-string">'Comic Sans MS'</span>,
   <span class="hljs-comment">/* below drives the header colors */</span>
   pageTheme: {
-    home: genPageTheme([<span class="hljs-string">'#8c4351'</span>, <span class="hljs-string">'#343b58'</span>], shapes.wave),
-    documentation: genPageTheme([<span class="hljs-string">'#8c4351'</span>, <span class="hljs-string">'#343b58'</span>], shapes.wave2),
-    tool: genPageTheme([<span class="hljs-string">'#8c4351'</span>, <span class="hljs-string">'#343b58'</span>], shapes.round),
-    service: genPageTheme([<span class="hljs-string">'#8c4351'</span>, <span class="hljs-string">'#343b58'</span>], shapes.wave),
-    website: genPageTheme([<span class="hljs-string">'#8c4351'</span>, <span class="hljs-string">'#343b58'</span>], shapes.wave),
-    library: genPageTheme([<span class="hljs-string">'#8c4351'</span>, <span class="hljs-string">'#343b58'</span>], shapes.wave),
-    other: genPageTheme([<span class="hljs-string">'#8c4351'</span>, <span class="hljs-string">'#343b58'</span>], shapes.wave),
-    app: genPageTheme([<span class="hljs-string">'#8c4351'</span>, <span class="hljs-string">'#343b58'</span>], shapes.wave),
-    apis: genPageTheme([<span class="hljs-string">'#8c4351'</span>, <span class="hljs-string">'#343b58'</span>], shapes.wave),
+    home: genPageTheme({ colors: [<span class="hljs-string">'#8c4351'</span>, <span class="hljs-string">'#343b58'</span>], shape: shapes.wave }),
+    documentation: genPageTheme({
+      colors: [<span class="hljs-string">'#8c4351'</span>, <span class="hljs-string">'#343b58'</span>],
+      shape: shapes.wave2,
+    }),
+    tool: genPageTheme({ colors: [<span class="hljs-string">'#8c4351'</span>, <span class="hljs-string">'#343b58'</span>], shape: shapes.round }),
+    service: genPageTheme({
+      colors: [<span class="hljs-string">'#8c4351'</span>, <span class="hljs-string">'#343b58'</span>],
+      shape: shapes.wave,
+    }),
+    website: genPageTheme({
+      colors: [<span class="hljs-string">'#8c4351'</span>, <span class="hljs-string">'#343b58'</span>],
+      shape: shapes.wave,
+    }),
+    library: genPageTheme({
+      colors: [<span class="hljs-string">'#8c4351'</span>, <span class="hljs-string">'#343b58'</span>],
+      shape: shapes.wave,
+    }),
+    other: genPageTheme({ colors: [<span class="hljs-string">'#8c4351'</span>, <span class="hljs-string">'#343b58'</span>], shape: shapes.wave }),
+    app: genPageTheme({ colors: [<span class="hljs-string">'#8c4351'</span>, <span class="hljs-string">'#343b58'</span>], shape: shapes.wave }),
+    apis: genPageTheme({ colors: [<span class="hljs-string">'#8c4351'</span>, <span class="hljs-string">'#343b58'</span>], shape: shapes.wave }),
   },
 });
 </code></pre>
