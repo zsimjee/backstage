@@ -116,6 +116,8 @@ Serve a documentation project locally <span class="hljs-keyword">in</span> a Bac
 Options:
   -i, --docker-image &lt;DOCKER_IMAGE&gt;        The mkdocs docker container to use (default: <span class="hljs-string">"spotify/techdocs"</span>)
   --docker-entrypoint &lt;DOCKER_ENTRYPOINT&gt;  Override the image entrypoint
+  --docker-option &lt;DOCKER_OPTION...&gt;       Extra options to pass to the docker run <span class="hljs-built_in">command</span>, e.g. <span class="hljs-string">"--add-host=internal.host:192.168.11.12"</span>
+                                           (can be added multiple <span class="hljs-built_in">times</span>).
   --no-docker                              Do not use Docker, use MkDocs executable <span class="hljs-keyword">in</span> current user environment.
   --mkdocs-port &lt;PORT&gt;                     Port <span class="hljs-keyword">for</span> MkDocs server to use (default: <span class="hljs-string">"8000"</span>)
   -v --verbose                             Enable verbose output. (default: <span class="hljs-literal">false</span>)
