@@ -114,6 +114,12 @@ yarn add --cwd packages/backend @backstage/plugin-catalog-backend-module-github
         <span class="hljs-attr">filters:</span> <span class="hljs-comment"># optional filters</span>
           <span class="hljs-attr">branch:</span> <span class="hljs-string">'develop'</span> <span class="hljs-comment"># optional string</span>
           <span class="hljs-attr">repository:</span> <span class="hljs-string">'.*'</span> <span class="hljs-comment"># optional Regex</span>
+      <span class="hljs-attr">wildcardProviderId:</span>
+        <span class="hljs-attr">organization:</span> <span class="hljs-string">'new-org'</span> <span class="hljs-comment"># string</span>
+        <span class="hljs-attr">catalogPath:</span> <span class="hljs-string">'/groups/**/*.yaml'</span> <span class="hljs-comment"># this will search all folders for files that end in .yaml</span>
+        <span class="hljs-attr">filters:</span> <span class="hljs-comment"># optional filters</span>
+          <span class="hljs-attr">branch:</span> <span class="hljs-string">'develop'</span> <span class="hljs-comment"># optional string</span>
+          <span class="hljs-attr">repository:</span> <span class="hljs-string">'.*'</span> <span class="hljs-comment"># optional Regex</span>
 </code></pre>
 <p>This provider supports multiple organizations via unique provider IDs.</p>
 <blockquote>
@@ -124,7 +130,7 @@ If you do so, <code>default</code> will be used as provider ID.</p>
 <li><strong><code>catalogPath</code></strong> <em>(optional)</em>:
 Default: <code>/catalog-info.yaml</code>.
 Path where to look for <code>catalog-info.yaml</code> files.
-When started with <code>/</code>, it is an absolute path from the repo root.</li>
+You can use wildcards - <code>*</code> or <code>**</code> - to search the path and/or the filename</li>
 <li><strong>filters</strong> <em>(optional)</em>:
 <ul>
 <li><strong>branch</strong> <em>(optional)</em>:
