@@ -102,8 +102,6 @@ yarn build
 <code>Dockerfile</code> is included when creating a new app with <code>@backstage/create-app</code>:</p>
 <pre><code class="hljs css language-Dockerfile"><span class="hljs-keyword">FROM</span> node:<span class="hljs-number">16</span>-bullseye-slim
 
-<span class="hljs-keyword">WORKDIR</span><span class="bash"> /app</span>
-
 <span class="hljs-comment"># Install sqlite3 dependencies. You can skip this if you don't use sqlite3 in the image,</span>
 <span class="hljs-comment"># in which case you should also move better-sqlite3 to "devDependencies" in package.json.</span>
 <span class="hljs-keyword">RUN</span><span class="bash"> apt-get update &amp;&amp; \
@@ -111,16 +109,23 @@ yarn build
     rm -rf /var/lib/apt/lists/* &amp;&amp; \
     yarn config <span class="hljs-built_in">set</span> python /usr/bin/python3</span>
 
+<span class="hljs-comment"># From here on we use the least-privileged `node` user to run the backend.</span>
+<span class="hljs-keyword">USER</span> node
+<span class="hljs-keyword">WORKDIR</span><span class="bash"> /app</span>
+
+<span class="hljs-comment"># This switches many Node.js dependencies to production mode.</span>
+<span class="hljs-keyword">ENV</span> NODE_ENV production
+
 <span class="hljs-comment"># Copy repo skeleton first, to avoid unnecessary docker cache invalidation.</span>
 <span class="hljs-comment"># The skeleton contains the package.json of each package in the monorepo,</span>
 <span class="hljs-comment"># and along with yarn.lock and the root package.json, that's enough to run yarn install.</span>
-<span class="hljs-keyword">COPY</span><span class="bash"> yarn.lock package.json packages/backend/dist/skeleton.tar.gz ./</span>
+<span class="hljs-keyword">COPY</span><span class="bash"> --chown=node:node yarn.lock package.json packages/backend/dist/skeleton.tar.gz ./</span>
 <span class="hljs-keyword">RUN</span><span class="bash"> tar xzf skeleton.tar.gz &amp;&amp; rm skeleton.tar.gz</span>
 
 <span class="hljs-keyword">RUN</span><span class="bash"> yarn install --frozen-lockfile --production --network-timeout 300000 &amp;&amp; rm -rf <span class="hljs-string">"<span class="hljs-variable">$(yarn cache dir)</span>"</span></span>
 
 <span class="hljs-comment"># Then copy the rest of the backend bundle, along with any other files we might want.</span>
-<span class="hljs-keyword">COPY</span><span class="bash"> packages/backend/dist/bundle.tar.gz app-config.yaml ./</span>
+<span class="hljs-keyword">COPY</span><span class="bash"> --chown=node:node packages/backend/dist/bundle.tar.gz app-config*.yaml ./</span>
 <span class="hljs-keyword">RUN</span><span class="bash"> tar xzf bundle.tar.gz &amp;&amp; rm bundle.tar.gz</span>
 
 <span class="hljs-keyword">CMD</span><span class="bash"> [<span class="hljs-string">"node"</span>, <span class="hljs-string">"packages/backend"</span>, <span class="hljs-string">"--config"</span>, <span class="hljs-string">"app-config.yaml"</span>]</span>
@@ -204,8 +209,6 @@ the repo root:</p>
 <span class="hljs-comment"># Stage 3 - Build the actual backend image and install production dependencies</span>
 <span class="hljs-keyword">FROM</span> node:<span class="hljs-number">16</span>-bullseye-slim
 
-<span class="hljs-keyword">WORKDIR</span><span class="bash"> /app</span>
-
 <span class="hljs-comment"># Install sqlite3 dependencies. You can skip this if you don't use sqlite3 in the image,</span>
 <span class="hljs-comment"># in which case you should also move better-sqlite3 to "devDependencies" in package.json.</span>
 <span class="hljs-keyword">RUN</span><span class="bash"> apt-get update &amp;&amp; \
@@ -213,18 +216,25 @@ the repo root:</p>
     rm -rf /var/lib/apt/lists/* &amp;&amp; \
     yarn config <span class="hljs-built_in">set</span> python /usr/bin/python3</span>
 
+<span class="hljs-comment"># From here on we use the least-privileged `node` user to run the backend.</span>
+<span class="hljs-keyword">USER</span> node
+<span class="hljs-keyword">WORKDIR</span><span class="bash"> /app</span>
+
+<span class="hljs-comment"># This switches many Node.js dependencies to production mode.</span>
+<span class="hljs-keyword">ENV</span> NODE_ENV production
+
 <span class="hljs-comment"># Copy the install dependencies from the build stage and context</span>
-<span class="hljs-keyword">COPY</span><span class="bash"> --from=build /app/yarn.lock /app/package.json /app/packages/backend/dist/skeleton.tar.gz ./</span>
+<span class="hljs-keyword">COPY</span><span class="bash"> --from=build --chown=node:node /app/yarn.lock /app/package.json /app/packages/backend/dist/skeleton.tar.gz ./</span>
 <span class="hljs-keyword">RUN</span><span class="bash"> tar xzf skeleton.tar.gz &amp;&amp; rm skeleton.tar.gz</span>
 
 <span class="hljs-keyword">RUN</span><span class="bash"> yarn install --frozen-lockfile --production --network-timeout 600000 &amp;&amp; rm -rf <span class="hljs-string">"<span class="hljs-variable">$(yarn cache dir)</span>"</span></span>
 
 <span class="hljs-comment"># Copy the built packages from the build stage</span>
-<span class="hljs-keyword">COPY</span><span class="bash"> --from=build /app/packages/backend/dist/bundle.tar.gz .</span>
+<span class="hljs-keyword">COPY</span><span class="bash"> --from=build --chown=node:node /app/packages/backend/dist/bundle.tar.gz .</span>
 <span class="hljs-keyword">RUN</span><span class="bash"> tar xzf bundle.tar.gz &amp;&amp; rm bundle.tar.gz</span>
 
 <span class="hljs-comment"># Copy any other files that we need at runtime</span>
-<span class="hljs-keyword">COPY</span><span class="bash"> app-config.yaml ./</span>
+<span class="hljs-keyword">COPY</span><span class="bash"> --chown=node:node app-config.yaml ./</span>
 
 <span class="hljs-keyword">CMD</span><span class="bash"> [<span class="hljs-string">"node"</span>, <span class="hljs-string">"packages/backend"</span>, <span class="hljs-string">"--config"</span>, <span class="hljs-string">"app-config.yaml"</span>]</span>
 </code></pre>
