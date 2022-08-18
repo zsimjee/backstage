@@ -7,7 +7,7 @@
 <p>Stores fact containers as rows into data store. Individual items in array correspond to a fact schema based on reference and entity based on entity identifier.</p>
 <p>Each row may contain multiple individual facts and values</p>
 <p><b>Signature:</b></p>
-<pre><code class="hljs css language-typescript">insertFacts({ id, facts, lifecycle, }: {
+<pre><code class="hljs css language-typescript">insertFacts(options: {
         id: <span class="hljs-built_in">string</span>;
         facts: TechInsightFact[];
         lifecycle?: FactLifecycle;
@@ -19,7 +19,7 @@
 <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td>{ id, facts, lifecycle, }</td><td>{ id: string; facts: <a href="/docs/reference/plugin-tech-insights-node.techinsightfact">TechInsightFact</a><!-- -->[]; lifecycle?: <a href="/docs/reference/plugin-tech-insights-node.factlifecycle">FactLifecycle</a><!-- -->; }</td><td></td></tr>
+<tr><td>options</td><td>{ id: string; facts: <a href="/docs/reference/plugin-tech-insights-node.techinsightfact">TechInsightFact</a><!-- -->[]; lifecycle?: <a href="/docs/reference/plugin-tech-insights-node.factlifecycle">FactLifecycle</a><!-- -->; }</td><td></td></tr>
 </tbody>
 </table>
 <p><b>Returns:</b></p>
