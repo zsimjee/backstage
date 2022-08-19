@@ -7,7 +7,7 @@
 <p>Query the sonarqube instance corresponding to the instanceName to get all measures for the component of key componentKey.</p>
 <p>If instanceName is omitted, default sonarqube instance is queried in config</p>
 <p><b>Signature:</b></p>
-<pre><code class="hljs css language-typescript">getFindings({ componentKey, instanceName, }: {
+<pre><code class="hljs css language-typescript">getFindings(options: {
         componentKey: <span class="hljs-built_in">string</span>;
         instanceName?: <span class="hljs-built_in">string</span>;
     }): <span class="hljs-built_in">Promise</span>&lt;SonarqubeFindings | <span class="hljs-literal">undefined</span>&gt;;
@@ -18,7 +18,7 @@
 <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td>{ componentKey, instanceName, }</td><td>{ componentKey: string; instanceName?: string; }</td><td></td></tr>
+<tr><td>options</td><td>{ componentKey: string; instanceName?: string; }</td><td></td></tr>
 </tbody>
 </table>
 <p><b>Returns:</b></p>

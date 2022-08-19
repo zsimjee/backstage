@@ -7,7 +7,7 @@
 <p>Get the sonarqube URL in configuration from a provided instanceName.</p>
 <p>If instanceName is omitted, default sonarqube instance is queried in config</p>
 <p><b>Signature:</b></p>
-<pre><code class="hljs css language-typescript">getBaseUrl({ instanceName }?: {
+<pre><code class="hljs css language-typescript">getBaseUrl(options?: {
         instanceName?: <span class="hljs-built_in">string</span>;
     }): {
         baseUrl: <span class="hljs-built_in">string</span>;
@@ -19,7 +19,7 @@
 <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td>{ instanceName }</td><td>{ instanceName?: string; }</td><td><i>(Optional)</i></td></tr>
+<tr><td>options</td><td>{ instanceName?: string; }</td><td><i>(Optional)</i></td></tr>
 </tbody>
 </table>
 <p><b>Returns:</b></p>

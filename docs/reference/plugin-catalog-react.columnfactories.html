@@ -9,13 +9,13 @@
     createEntityRefColumn&lt;T <span class="hljs-keyword">extends</span> Entity&gt;(options: {
         defaultKind?: <span class="hljs-built_in">string</span>;
     }): TableColumn&lt;T&gt;;
-    createEntityRelationColumn&lt;T_1 <span class="hljs-keyword">extends</span> Entity&gt;({ title, relation, defaultKind, filter: entityFilter, }: {
+    createEntityRelationColumn&lt;T_1 <span class="hljs-keyword">extends</span> Entity&gt;(options: {
         title: <span class="hljs-built_in">string</span>;
         relation: <span class="hljs-built_in">string</span>;
-        defaultKind?: <span class="hljs-built_in">string</span> | <span class="hljs-literal">undefined</span>;
+        defaultKind?: <span class="hljs-built_in">string</span>;
         filter?: {
             kind: <span class="hljs-built_in">string</span>;
-        } | <span class="hljs-literal">undefined</span>;
+        };
     }): TableColumn&lt;T_1&gt;;
     createOwnerColumn&lt;T_2 <span class="hljs-keyword">extends</span> Entity&gt;(): TableColumn&lt;T_2&gt;;
     createDomainColumn&lt;T_3 <span class="hljs-keyword">extends</span> Entity&gt;(): TableColumn&lt;T_3&gt;;
