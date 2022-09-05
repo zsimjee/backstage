@@ -120,6 +120,22 @@ yarn add --cwd packages/backend @backstage/plugin-catalog-backend-module-github
         <span class="hljs-attr">filters:</span> <span class="hljs-comment"># optional filters</span>
           <span class="hljs-attr">branch:</span> <span class="hljs-string">'develop'</span> <span class="hljs-comment"># optional string</span>
           <span class="hljs-attr">repository:</span> <span class="hljs-string">'.*'</span> <span class="hljs-comment"># optional Regex</span>
+      <span class="hljs-attr">topicProviderId:</span>
+        <span class="hljs-attr">organization:</span> <span class="hljs-string">'backstage'</span> <span class="hljs-comment"># string</span>
+        <span class="hljs-attr">catalogPath:</span> <span class="hljs-string">'/catalog-info.yaml'</span> <span class="hljs-comment"># string</span>
+        <span class="hljs-attr">filters:</span>
+          <span class="hljs-attr">branch:</span> <span class="hljs-string">'main'</span> <span class="hljs-comment"># string</span>
+          <span class="hljs-attr">repository:</span> <span class="hljs-string">'.*'</span> <span class="hljs-comment"># Regex</span>
+          <span class="hljs-attr">topic:</span> <span class="hljs-string">'backstage-exclude'</span> <span class="hljs-comment"># optional string</span>
+      <span class="hljs-attr">topicFilterProviderId:</span>
+        <span class="hljs-attr">organization:</span> <span class="hljs-string">'backstage'</span> <span class="hljs-comment"># string</span>
+        <span class="hljs-attr">catalogPath:</span> <span class="hljs-string">'/catalog-info.yaml'</span> <span class="hljs-comment"># string</span>
+        <span class="hljs-attr">filters:</span>
+          <span class="hljs-attr">branch:</span> <span class="hljs-string">'main'</span> <span class="hljs-comment"># string</span>
+          <span class="hljs-attr">repository:</span> <span class="hljs-string">'.*'</span> <span class="hljs-comment"># Regex</span>
+          <span class="hljs-attr">topic:</span>
+            <span class="hljs-attr">include:</span> <span class="hljs-string">['backstage-include']</span> <span class="hljs-comment"># optional array of strings</span>
+            <span class="hljs-attr">exclude:</span> <span class="hljs-string">['experiments']</span> <span class="hljs-comment"># optional array of strings</span>
 </code></pre>
 <p>This provider supports multiple organizations via unique provider IDs.</p>
 <blockquote>
@@ -137,6 +153,18 @@ You can use wildcards - <code>*</code> or <code>**</code> - to search the path a
 String used to filter results based on the branch name.</li>
 <li><strong>repository</strong> <em>(optional)</em>:
 Regular expression used to filter results based on the repository name.</li>
+<li><strong>topic</strong> <em>(optional)</em>:
+Both of the filters below may be used at the same time but the exclusion filter has the highest priority.
+In the example above, a repository with the <code>backstage-include</code> topic would still be excluded
+if it were also carrying the <code>experiments</code> topic.
+<ul>
+<li><strong>include</strong> <em>(optional)</em>:
+An array of strings used to filter in results based on their associated Github topics.
+If configured, only repositories with one (or more) topic(s) present in the inclusion filter will be ingested</li>
+<li><strong>exclude</strong> <em>(optional)</em>:
+An array of strings used to filter out results based on their associated Github topics.
+If configured, all repositories <em>except</em> those with one (or more) topics(s) present in the exclusion filter will be ingested.</li>
+</ul></li>
 </ul></li>
 <li><strong>organization</strong>:
 Name of your organization account/workspace.
