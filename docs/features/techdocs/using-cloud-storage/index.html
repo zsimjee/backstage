@@ -83,12 +83,15 @@ techdocs-backend will publish documentation to this bucket. TechDocs will fetch
 files from here to serve documentation in Backstage. Note that the bucket names
 are globally unique.</p>
 <p>Set the config <code>techdocs.publisher.googleGcs.bucketName</code> in your
-<code>app-config.yaml</code> to the name of the bucket you just created.</p>
+<code>app-config.yaml</code> to the name of the bucket you just created. Set
+<code>techdocs.publisher.googleGcs.projectId</code> to the ID of the Google Cloud project
+that contains your bucket.</p>
 <pre><code class="hljs css language-yaml"><span class="hljs-attr">techdocs:</span>
   <span class="hljs-attr">publisher:</span>
     <span class="hljs-attr">type:</span> <span class="hljs-string">'googleGcs'</span>
     <span class="hljs-attr">googleGcs:</span>
       <span class="hljs-attr">bucketName:</span> <span class="hljs-string">'name-of-techdocs-storage-bucket'</span>
+      <span class="hljs-attr">projectId:</span> <span class="hljs-string">'name-of-project'</span>
 </code></pre>
 <p><strong>3a. (Recommended) Authentication using environment variable</strong></p>
 <p>The GCS Node.js client will automatically use the environment variable
@@ -126,6 +129,17 @@ file's content and set as an environment variable. And then use</p>
     <span class="hljs-attr">googleGcs:</span>
       <span class="hljs-attr">bucketName:</span> <span class="hljs-string">'name-of-techdocs-storage-bucket'</span>
       <span class="hljs-attr">credentials:</span> <span class="hljs-string">${GOOGLE_APPLICATION_CREDENTIALS}</span>
+</code></pre>
+<p>Assuming the service account you are using was created in the same project as
+the bucket, you do not need to set the <code>projectId</code> field. If not, you will
+have to override it as with default credentials:</p>
+<pre><code class="hljs css language-yaml"><span class="hljs-attr">techdocs:</span>
+  <span class="hljs-attr">publisher:</span>
+    <span class="hljs-attr">type:</span> <span class="hljs-string">'googleGcs'</span>
+    <span class="hljs-attr">googleGcs:</span>
+      <span class="hljs-attr">bucketName:</span> <span class="hljs-string">'name-of-techdocs-storage-bucket'</span>
+      <span class="hljs-attr">credentials:</span> <span class="hljs-string">${GOOGLE_APPLICATION_CREDENTIALS}</span>
+      <span class="hljs-attr">projectId:</span> <span class="hljs-string">'name-of-project'</span>
 </code></pre>
 <p><strong>4. That's it!</strong></p>
 <p>Your Backstage app is now ready to use Google Cloud Storage for TechDocs, to
