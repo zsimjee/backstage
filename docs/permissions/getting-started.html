@@ -113,10 +113,7 @@
     logger: env.logger,
     discovery: env.discovery,
     policy: <span class="hljs-keyword">new</span> TestPermissionPolicy(),
-    identity: IdentityClient.create({
-      discovery: env.discovery,
-      issuer: <span class="hljs-keyword">await</span> env.discovery.getExternalBaseUrl(<span class="hljs-string">'auth'</span>),
-    }),
+    identity: env.identity,
   });
 }
 </code></pre>
