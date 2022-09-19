@@ -68,7 +68,8 @@ section covers how to deploy the frontend and backend as separate images.</p>
 are stateless, so for a production deployment you will want to set up and
 connect to an external PostgreSQL instance where the backend plugins can store
 their state, rather than using SQLite.</p>
-<p>By default, in an app created with <code>@backstage/create-app</code>, the frontend is
+<p>This section assumes that an <a href="https://backstage.io/docs/getting-started/create-an-app">app</a>
+has already been created with <code>@backstage/create-app</code>, in which the frontend is
 bundled and served from the backend. This is done using the
 <code>@backstage/plugin-app-backend</code> plugin, which also injects the frontend
 configuration into the app. This means that you only need to build and deploy a
