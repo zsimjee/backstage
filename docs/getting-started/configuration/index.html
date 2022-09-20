@@ -181,7 +181,7 @@ can continue with the last part of the configuration. The next step is needed to
 change the sign-in page, this you actually need to add in the source code.</p>
 <p>Open <code>packages/app/src/App.tsx</code> and below the last <code>import</code> line, add:</p>
 <pre><code class="hljs css language-typescript"><span class="hljs-keyword">import</span> { githubAuthApiRef } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/core-plugin-api'</span>;
-<span class="hljs-keyword">import</span> { SignInProviderConfig, SignInPage } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/core-components'</span>;
+<span class="hljs-keyword">import</span> { SignInPage } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/core-components'</span>;
 </code></pre>
 <p>Search for <code>const app = createApp({</code> in this file, and below <code>apis,</code> add:</p>
 <pre><code class="hljs css language-typescript">components: {
