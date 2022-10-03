@@ -136,6 +136,10 @@ yarn add --cwd packages/backend @backstage/plugin-catalog-backend-module-github
           <span class="hljs-attr">topic:</span>
             <span class="hljs-attr">include:</span> <span class="hljs-string">['backstage-include']</span> <span class="hljs-comment"># optional array of strings</span>
             <span class="hljs-attr">exclude:</span> <span class="hljs-string">['experiments']</span> <span class="hljs-comment"># optional array of strings</span>
+      <span class="hljs-attr">enterpriseProviderId:</span>
+        <span class="hljs-attr">host:</span> <span class="hljs-string">ghe.example.net</span>
+        <span class="hljs-attr">organization:</span> <span class="hljs-string">'backstage'</span> <span class="hljs-comment"># string</span>
+        <span class="hljs-attr">catalogPath:</span> <span class="hljs-string">'/catalog-info.yaml'</span> <span class="hljs-comment"># string</span>
 </code></pre>
 <p>This provider supports multiple organizations via unique provider IDs.</p>
 <blockquote>
@@ -169,6 +173,8 @@ If configured, all repositories <em>except</em> those with one (or more) topics(
 <li><strong>organization</strong>:
 Name of your organization account/workspace.
 If you want to add multiple organizations, you need to add one provider config each.</li>
+<li><strong>host</strong> <em>(optional)</em>:
+The hostname of your GitHub Enterprise instance. It must match a host defined in <a href="/docs/integrations/github/locations">integrations.github</a>.</li>
 </ul>
 <h2><a class="anchor" aria-hidden="true" id="github-api-rate-limits"></a><a href="#github-api-rate-limits" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>GitHub API Rate Limits</h2>
 <p>GitHub <a href="https://docs.github.com/en/rest/overview/resources-in-the-rest-api#rate-limiting">rate limits</a> API requests to 5,000 per hour (or more for Enterprise
