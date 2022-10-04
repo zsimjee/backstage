@@ -132,7 +132,7 @@ querying out of the box. Available configuration options enable usage of either
 AWS or Elastic.co hosted solutions, or a custom self-hosted solution.</p>
 <p>Similarly to Lunr above, ElasticSearch can be set up like this:</p>
 <pre><code class="hljs css language-typescript"><span class="hljs-comment">// app/backend/src/plugins/search.ts</span>
-<span class="hljs-keyword">const</span> searchEngine = <span class="hljs-keyword">await</span> ElasticSearchSearchEngine.initialize({
+<span class="hljs-keyword">const</span> searchEngine = <span class="hljs-keyword">await</span> ElasticSearchSearchEngine.fromConfig({
   logger: env.logger,
   config: env.config,
 });
