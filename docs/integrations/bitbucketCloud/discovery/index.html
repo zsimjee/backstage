@@ -83,6 +83,7 @@ yarn add --cwd packages/backend @backstage/plugin-catalog-backend-module-bitbuck
 <span class="hljs-addition">+   builder.addEntityProvider(</span>
 <span class="hljs-addition">+     BitbucketCloudEntityProvider.fromConfig(env.config, {</span>
 <span class="hljs-addition">+       logger: env.logger,</span>
+<span class="hljs-addition">+       // optional: alternatively, configure via app-config.yaml</span>
 <span class="hljs-addition">+       schedule: env.scheduler.createScheduledTaskRunner({</span>
 <span class="hljs-addition">+         frequency: { minutes: 30 },</span>
 <span class="hljs-addition">+         timeout: { minutes: 3 },</span>
@@ -108,6 +109,11 @@ Very likely a <code>username</code> and <code>appPassword</code> will be require
         <span class="hljs-attr">filters:</span> <span class="hljs-comment"># optional</span>
           <span class="hljs-attr">projectKey:</span> <span class="hljs-string">'^apis-.*$'</span> <span class="hljs-comment"># optional; RegExp</span>
           <span class="hljs-attr">repoSlug:</span> <span class="hljs-string">'^service-.*$'</span> <span class="hljs-comment"># optional; RegExp</span>
+        <span class="hljs-attr">schedule:</span> <span class="hljs-comment"># optional; same options as in TaskScheduleDefinition</span>
+          <span class="hljs-comment"># supports cron, ISO duration, "human duration" as used in code</span>
+          <span class="hljs-attr">frequency:</span> <span class="hljs-string">{</span> <span class="hljs-attr">minutes:</span> <span class="hljs-number">30</span> <span class="hljs-string">}</span>
+          <span class="hljs-comment"># supports ISO duration, "human duration" as used in code</span>
+          <span class="hljs-attr">timeout:</span> <span class="hljs-string">{</span> <span class="hljs-attr">minutes:</span> <span class="hljs-number">3</span> <span class="hljs-string">}</span>
         <span class="hljs-attr">workspace:</span> <span class="hljs-string">workspace-name</span>
 </code></pre>
 <blockquote>
@@ -115,20 +121,31 @@ Very likely a <code>username</code> and <code>appPassword</code> will be require
 If you do so, <code>default</code> will be used as provider ID.</p>
 </blockquote>
 <ul>
-<li><strong>catalogPath</strong> <em>(optional)</em>:
+<li><strong><code>catalogPath</code></strong> <em>(optional)</em>:
 Default: <code>/catalog-info.yaml</code>.
 Path where to look for <code>catalog-info.yaml</code> files.
 When started with <code>/</code>, it is an absolute path from the repo root.
 It supports values as allowed by the <code>path</code> filter/modifier
 <a href="https://confluence.atlassian.com/bitbucket/code-search-in-bitbucket-873876782.html#Search-Pathmodifier">at Bitbucket Cloud's code search</a>.</li>
-<li><strong>filters</strong> <em>(optional)</em>:
+<li><strong><code>filters</code></strong> <em>(optional)</em>:
 <ul>
-<li><strong>projectKey</strong> <em>(optional)</em>:
+<li><strong><code>projectKey</code></strong> <em>(optional)</em>:
 Regular expression used to filter results based on the project key.</li>
-<li><strong>repoSlug</strong> <em>(optional)</em>:
+<li><strong><code>repoSlug</code></strong> <em>(optional)</em>:
 Regular expression used to filter results based on the repo slug.</li>
 </ul></li>
-<li><strong>workspace</strong>:
+<li><strong><code>schedule</code></strong> <em>(optional)</em>:
+<ul>
+<li><strong><code>frequency</code></strong>:
+How often you want the task to run. The system does its best to avoid overlapping invocations.</li>
+<li><strong><code>timeout</code></strong>:
+The maximum amount of time that a single task invocation can take.</li>
+<li><strong><code>initialDelay</code></strong> <em>(optional)</em>:
+The amount of time that should pass before the first invocation happens.</li>
+<li><strong><code>scope</code></strong> <em>(optional)</em>:
+<code>'global'</code> or <code>'local'</code>. Sets the scope of concurrency control.</li>
+</ul></li>
+<li><strong><code>workspace</code></strong>:
 Name of your organization account/workspace.
 If you want to add multiple workspaces, you need to add one provider config each.</li>
 </ul>
