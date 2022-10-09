@@ -163,7 +163,7 @@ should have something similar to the below in
 will set the available actions that the scaffolder has access to.</p>
 <pre><code class="hljs css language-ts"><span class="hljs-keyword">import</span> { createBuiltinActions } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/plugin-scaffolder-backend'</span>;
 <span class="hljs-keyword">import</span> { ScmIntegrations } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/integration'</span>;
-<span class="hljs-keyword">import</span> { createNewFileAction } <span class="hljs-keyword">from</span> <span class="hljs-string">'./scaffolder/actions/custom'</span>;
+<span class="hljs-keyword">import</span> { createNewFileAction } <span class="hljs-keyword">from</span> <span class="hljs-string">'./actions/custom'</span>;
 
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createPlugin</span>(<span class="hljs-params">
   env: PluginEnvironment,
