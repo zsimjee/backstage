@@ -98,6 +98,10 @@ still work, as they recognize both lockfile formats.</p>
 <pre><code class="hljs css language-Dockerfile"><span class="hljs-keyword">COPY</span><span class="bash"> .yarn ./.yarn</span>
 <span class="hljs-keyword">COPY</span><span class="bash"> .yarnrc.yml ./</span>
 </code></pre>
+<p>In a multi-stage <code>Dockerfile</code>, each stage that runs a <code>yarn</code> command will also need the Yarn 3 installation. For example, in the final stage you may need to add the following:</p>
+<pre><code class="hljs css language-Dockerfile"><span class="hljs-keyword">COPY</span><span class="bash"> --from=build --chown=node:node /app/.yarn ./.yarn</span>
+<span class="hljs-keyword">COPY</span><span class="bash"> --from=build --chown=node:node /app/.yarnrc.yml  ./</span>
+</code></pre>
 <p>The <code>--production</code> flag to <code>yarn install</code> has been removed in Yarn 3, instead you need to use <code>yarn workspaces focus --all --production</code> to avoid installing development dependencies in your production deployment. A tradeoff of this is that <code>yarn workspaces focus</code> does not support the <code>--immutable</code> flag.</p>
 <pre><code class="hljs css language-Dockerfile"><span class="hljs-keyword">RUN</span><span class="bash"> yarn workspaces focus --all --production &amp;&amp; rm -rf <span class="hljs-string">"<span class="hljs-variable">$(yarn cache clean)</span>"</span></span>
 </code></pre>
