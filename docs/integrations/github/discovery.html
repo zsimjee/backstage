@@ -84,10 +84,13 @@ yarn add --cwd packages/backend @backstage/plugin-catalog-backend-module-github
 <span class="hljs-addition">+   builder.addEntityProvider(</span>
 <span class="hljs-addition">+     GitHubEntityProvider.fromConfig(env.config, {</span>
 <span class="hljs-addition">+       logger: env.logger,</span>
+<span class="hljs-addition">+       // optional: alternatively, use scheduler with schedule defined in app-config.yaml</span>
 <span class="hljs-addition">+       schedule: env.scheduler.createScheduledTaskRunner({</span>
 <span class="hljs-addition">+         frequency: { minutes: 30 },</span>
 <span class="hljs-addition">+         timeout: { minutes: 3 },</span>
 <span class="hljs-addition">+       }),</span>
+<span class="hljs-addition">+       // optional: alternatively, use schedule</span>
+<span class="hljs-addition">+       scheduler: env.scheduler,</span>
 <span class="hljs-addition">+     }),</span>
 <span class="hljs-addition">+   );</span>
 
@@ -108,6 +111,11 @@ yarn add --cwd packages/backend @backstage/plugin-catalog-backend-module-github
         <span class="hljs-attr">filters:</span>
           <span class="hljs-attr">branch:</span> <span class="hljs-string">'main'</span> <span class="hljs-comment"># string</span>
           <span class="hljs-attr">repository:</span> <span class="hljs-string">'.*'</span> <span class="hljs-comment"># Regex</span>
+        <span class="hljs-attr">schedule:</span> <span class="hljs-comment"># optional; same options as in TaskScheduleDefinition</span>
+          <span class="hljs-comment"># supports cron, ISO duration, "human duration" as used in code</span>
+          <span class="hljs-attr">frequency:</span> <span class="hljs-string">{</span> <span class="hljs-attr">minutes:</span> <span class="hljs-number">30</span> <span class="hljs-string">}</span>
+          <span class="hljs-comment"># supports ISO duration, "human duration" as used in code</span>
+          <span class="hljs-attr">timeout:</span> <span class="hljs-string">{</span> <span class="hljs-attr">minutes:</span> <span class="hljs-number">3</span> <span class="hljs-string">}</span>
       <span class="hljs-attr">customProviderId:</span>
         <span class="hljs-attr">organization:</span> <span class="hljs-string">'new-org'</span> <span class="hljs-comment"># string</span>
         <span class="hljs-attr">catalogPath:</span> <span class="hljs-string">'/custom/path/catalog-info.yaml'</span> <span class="hljs-comment"># string</span>
@@ -151,30 +159,41 @@ If you do so, <code>default</code> will be used as provider ID.</p>
 Default: <code>/catalog-info.yaml</code>.
 Path where to look for <code>catalog-info.yaml</code> files.
 You can use wildcards - <code>*</code> or <code>**</code> - to search the path and/or the filename</li>
-<li><strong>filters</strong> <em>(optional)</em>:
+<li><strong><code>filters</code></strong> <em>(optional)</em>:
 <ul>
-<li><strong>branch</strong> <em>(optional)</em>:
+<li><strong><code>branch</code></strong> <em>(optional)</em>:
 String used to filter results based on the branch name.</li>
-<li><strong>repository</strong> <em>(optional)</em>:
+<li><strong><code>repository</code></strong> <em>(optional)</em>:
 Regular expression used to filter results based on the repository name.</li>
-<li><strong>topic</strong> <em>(optional)</em>:
+<li><strong><code>topic</code></strong> <em>(optional)</em>:
 Both of the filters below may be used at the same time but the exclusion filter has the highest priority.
 In the example above, a repository with the <code>backstage-include</code> topic would still be excluded
 if it were also carrying the <code>experiments</code> topic.
 <ul>
-<li><strong>include</strong> <em>(optional)</em>:
+<li><strong><code>include</code></strong> <em>(optional)</em>:
 An array of strings used to filter in results based on their associated GitHub topics.
 If configured, only repositories with one (or more) topic(s) present in the inclusion filter will be ingested</li>
-<li><strong>exclude</strong> <em>(optional)</em>:
+<li><strong><code>exclude</code></strong> <em>(optional)</em>:
 An array of strings used to filter out results based on their associated GitHub topics.
 If configured, all repositories <em>except</em> those with one (or more) topics(s) present in the exclusion filter will be ingested.</li>
 </ul></li>
 </ul></li>
-<li><strong>organization</strong>:
+<li><strong><code>host</code></strong> <em>(optional)</em>:
+The hostname of your GitHub Enterprise instance. It must match a host defined in <a href="/docs/integrations/github/locations">integrations.github</a>.</li>
+<li><strong><code>organization</code></strong>:
 Name of your organization account/workspace.
 If you want to add multiple organizations, you need to add one provider config each.</li>
-<li><strong>host</strong> <em>(optional)</em>:
-The hostname of your GitHub Enterprise instance. It must match a host defined in <a href="/docs/integrations/github/locations">integrations.github</a>.</li>
+<li><strong><code>schedule</code></strong> <em>(optional)</em>:
+<ul>
+<li><strong><code>frequency</code></strong>:
+How often you want the task to run. The system does its best to avoid overlapping invocations.</li>
+<li><strong><code>timeout</code></strong>:
+The maximum amount of time that a single task invocation can take.</li>
+<li><strong><code>initialDelay</code></strong> <em>(optional)</em>:
+The amount of time that should pass before the first invocation happens.</li>
+<li><strong><code>scope</code></strong> <em>(optional)</em>:
+<code>'global'</code> or <code>'local'</code>. Sets the scope of concurrency control.</li>
+</ul></li>
 </ul>
 <h2><a class="anchor" aria-hidden="true" id="github-api-rate-limits"></a><a href="#github-api-rate-limits" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>GitHub API Rate Limits</h2>
 <p>GitHub <a href="https://docs.github.com/en/rest/overview/resources-in-the-rest-api#rate-limiting">rate limits</a> API requests to 5,000 per hour (or more for Enterprise
