@@ -65,12 +65,18 @@
 <pre><code class="hljs css language-typescript"><span class="hljs-keyword">import</span> <span class="hljs-keyword">type</span> { Entity } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/plugin-catalog-model'</span>;
 <span class="hljs-keyword">import</span> { createCatalogPermissionRule } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/plugin-catalog-backend/alpha'</span>;
 <span class="hljs-keyword">import</span> { createConditionFactory } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/plugin-permission-node'</span>;
+<span class="hljs-keyword">import</span> { z } <span class="hljs-keyword">from</span> <span class="hljs-string">'zod'</span>;
 
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> isInSystemRule = createCatalogPermissionRule({
   name: <span class="hljs-string">'IS_IN_SYSTEM'</span>,
   description: <span class="hljs-string">'Checks if an entity is part of the system provided'</span>,
   resourceType: <span class="hljs-string">'catalog-entity'</span>,
-  apply: <span class="hljs-function">(<span class="hljs-params">resource: Entity, systemRef: <span class="hljs-built_in">string</span></span>) =&gt;</span> {
+  paramsSchema: z.object({
+    systemRef: z
+      .string()
+      .describe(<span class="hljs-string">'SystemRef to check the resource is part of'</span>),
+  }),
+  apply: <span class="hljs-function">(<span class="hljs-params">resource: Entity, { systemRef }</span>) =&gt;</span> {
     <span class="hljs-keyword">if</span> (!resource.relations) {
       <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
     }
@@ -79,7 +85,7 @@
       .filter(<span class="hljs-function"><span class="hljs-params">relation</span> =&gt;</span> relation.type === <span class="hljs-string">'partOf'</span>)
       .some(<span class="hljs-function"><span class="hljs-params">relation</span> =&gt;</span> relation.targetRef === systemRef);
   },
-  toQuery: <span class="hljs-function">(<span class="hljs-params">systemRef: <span class="hljs-built_in">string</span></span>) =&gt;</span> ({
+  toQuery: <span class="hljs-function">(<span class="hljs-params">{ systemRef }</span>) =&gt;</span> ({
     key: <span class="hljs-string">'relations.partOf'</span>,
     values: [systemRef],
   }),
@@ -125,14 +131,14 @@ class TestPermissionPolicy implements PermissionPolicy {
     if (isResourcePermission(request.permission, 'catalog-entity')) {
       return createCatalogConditionalDecision(
         request.permission,
-<span class="hljs-deletion">-       catalogConditions.isEntityOwner(</span>
-<span class="hljs-deletion">-         user?.identity.ownershipEntityRefs ?? [],</span>
-<span class="hljs-deletion">-       ),</span>
+<span class="hljs-deletion">-       catalogConditions.isEntityOwner({</span>
+<span class="hljs-deletion">-         claims: user?.identity.ownershipEntityRefs ?? [],</span>
+<span class="hljs-deletion">-       }),</span>
 <span class="hljs-addition">+       {</span>
 <span class="hljs-addition">+         anyOf: [</span>
-<span class="hljs-addition">+           catalogConditions.isEntityOwner(</span>
-<span class="hljs-addition">+             user?.identity.ownershipEntityRefs ?? []</span>
-<span class="hljs-addition">+           ),</span>
+<span class="hljs-addition">+           catalogConditions.isEntityOwner({</span>
+<span class="hljs-addition">+             claims: user?.identity.ownershipEntityRefs ?? []</span>
+<span class="hljs-addition">+           }),</span>
 <span class="hljs-addition">+           isInSystem('interviewing')</span>
 <span class="hljs-addition">+         ]</span>
 <span class="hljs-addition">+       }</span>

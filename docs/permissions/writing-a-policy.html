@@ -114,9 +114,9 @@
 <span class="hljs-deletion">-       };</span>
 <span class="hljs-addition">+       return createCatalogConditionalDecision(</span>
 <span class="hljs-addition">+         request.permission,</span>
-<span class="hljs-addition">+         catalogConditions.isEntityOwner(</span>
-<span class="hljs-addition">+           user?.identity.ownershipEntityRefs ?? [],</span>
-<span class="hljs-addition">+         ),</span>
+<span class="hljs-addition">+         catalogConditions.isEntityOwner({</span>
+<span class="hljs-addition">+           claims: user?.identity.ownershipEntityRefs ?? [],</span>
+<span class="hljs-addition">+         }),</span>
 <span class="hljs-addition">+       );</span>
       }
 
@@ -155,9 +155,9 @@ class TestPermissionPolicy implements PermissionPolicy {
 <span class="hljs-addition">+   if (isResourcePermission(request.permission, 'catalog-entity')) {</span>
       return createCatalogConditionalDecision(
         request.permission,
-        catalogConditions.isEntityOwner(
-          user?.identity.ownershipEntityRefs ?? [],
-        ),
+        catalogConditions.isEntityOwner({
+          claims: user?.identity.ownershipEntityRefs ?? [],
+        }),
       );
     }
 
