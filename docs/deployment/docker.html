@@ -113,6 +113,10 @@ yarn build
 
 <span class="hljs-comment"># From here on we use the least-privileged `node` user to run the backend.</span>
 <span class="hljs-keyword">USER</span> node
+
+<span class="hljs-comment"># This should create the app dir as `node`.</span>
+<span class="hljs-comment"># If it is instead created as `root` then the `tar` command below will fail: `can't create directory 'packages/': Permission denied`.</span>
+<span class="hljs-comment"># If this occurs, then ensure BuildKit is enabled (`DOCKER_BUILDKIT=1`) so the app dir is correctly created as `node`.</span>
 <span class="hljs-keyword">WORKDIR</span><span class="bash"> /app</span>
 
 <span class="hljs-comment"># This switches many Node.js dependencies to production mode.</span>
@@ -233,6 +237,10 @@ the repo root:</p>
 
 <span class="hljs-comment"># From here on we use the least-privileged `node` user to run the backend.</span>
 <span class="hljs-keyword">USER</span> node
+
+<span class="hljs-comment"># This should create the app dir as `node`.</span>
+<span class="hljs-comment"># If it is instead created as `root` then the `tar` command below will fail: `can't create directory 'packages/': Permission denied`.</span>
+<span class="hljs-comment"># If this occurs, then ensure BuildKit is enabled (`DOCKER_BUILDKIT=1`) so the app dir is correctly created as `node`.</span>
 <span class="hljs-keyword">WORKDIR</span><span class="bash"> /app</span>
 
 <span class="hljs-comment"># Copy the install dependencies from the build stage and context</span>

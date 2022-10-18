@@ -75,14 +75,14 @@ yarn add --cwd packages/backend @backstage/plugin-catalog-backend-module-github
 </code></pre>
 <p>And then add the entity provider to your catalog builder:</p>
 <pre><code class="hljs css language-diff">  // In packages/backend/src/plugins/catalog.ts
-<span class="hljs-addition">+ import { GitHubEntityProvider } from '@backstage/plugin-catalog-backend-module-github';</span>
+<span class="hljs-addition">+ import { GithubEntityProvider } from '@backstage/plugin-catalog-backend-module-github';</span>
 
   export default async function createPlugin(
     env: PluginEnvironment,
   ): Promise&lt;Router&gt; {
     const builder = await CatalogBuilder.create(env);
 <span class="hljs-addition">+   builder.addEntityProvider(</span>
-<span class="hljs-addition">+     GitHubEntityProvider.fromConfig(env.config, {</span>
+<span class="hljs-addition">+     GithubEntityProvider.fromConfig(env.config, {</span>
 <span class="hljs-addition">+       logger: env.logger,</span>
 <span class="hljs-addition">+       // optional: alternatively, use scheduler with schedule defined in app-config.yaml</span>
 <span class="hljs-addition">+       schedule: env.scheduler.createScheduledTaskRunner({</span>
