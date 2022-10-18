@@ -119,35 +119,35 @@
 <pre><code class="hljs">$ <span class="hljs-string">yarn </span><span class="hljs-string">workspace </span>@<span class="hljs-string">internal/</span><span class="hljs-string">plugin-todo-</span><span class="hljs-built_in">list-backend</span> <span class="hljs-string">add </span>@<span class="hljs-string">backstage/</span><span class="hljs-string">plugin-permission-</span><span class="hljs-string">node
 </span></code></pre>
 <p>Create a new <code>plugins/todo-list-backend/src/service/rules.ts</code> file and append the following code:</p>
-<pre><code class="hljs css language-typescript">import { makeCreatePermissionRule } from '@backstage/plugin-permission-node';
-import { TODO_LIST_RESOURCE_TYPE } from '@internal/plugin-todo-list-common';
-import { z } from 'zod;
-import { Todo, TodoFilter } from './todos';
+<pre><code class="hljs css language-typescript"><span class="hljs-keyword">import</span> { makeCreatePermissionRule } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/plugin-permission-node'</span>;
+<span class="hljs-keyword">import</span> { TODO_LIST_RESOURCE_TYPE } <span class="hljs-keyword">from</span> <span class="hljs-string">'@internal/plugin-todo-list-common'</span>;
+<span class="hljs-keyword">import</span> { z } <span class="hljs-keyword">from</span> <span class="hljs-string">'zod'</span>;
+<span class="hljs-keyword">import</span> { Todo, TodoFilter } <span class="hljs-keyword">from</span> <span class="hljs-string">'./todos'</span>;
 
-export const createTodoListPermissionRule = makeCreatePermissionRule&lt;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> createTodoListPermissionRule = makeCreatePermissionRule&lt;
   Todo,
   TodoFilter
 &gt;();
 
-export const isOwner = createTodoListPermissionRule({
-  name: 'IS_OWNER',
-  description: 'Should allow only if the todo belongs to the user',
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> isOwner = createTodoListPermissionRule({
+  name: <span class="hljs-string">'IS_OWNER'</span>,
+  description: <span class="hljs-string">'Should allow only if the todo belongs to the user'</span>,
   resourceType: TODO_LIST_RESOURCE_TYPE,
   paramsSchema: z.object({
-    userId: z.string().describe('User ID to match on the resource')
+    userId: z.string().describe(<span class="hljs-string">'User ID to match on the resource'</span>)
   })
-  apply: (resource: Todo, { userId }) =&gt; {
-    return resource.author === userId;
+  apply: <span class="hljs-function">(<span class="hljs-params">resource: Todo, { userId }</span>) =&gt;</span> {
+    <span class="hljs-keyword">return</span> resource.author === userId;
   },
-  toQuery: ({ userId }) =&gt; {
-    return {
-      property: 'author',
+  toQuery: <span class="hljs-function">(<span class="hljs-params">{ userId }</span>) =&gt;</span> {
+    <span class="hljs-keyword">return</span> {
+      property: <span class="hljs-string">'author'</span>,
       values: [userId],
     };
   },
 });
 
-export const rules = { isOwner };
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> rules = { isOwner };
 </code></pre>
 <p><code>makeCreatePermissionRule</code> is a helper used to ensure that rules created for this plugin use consistent types for the resource and query.</p>
 <blockquote>
