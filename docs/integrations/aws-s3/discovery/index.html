@@ -80,6 +80,11 @@ to your instance.</p>
         <span class="hljs-attr">bucketName:</span> <span class="hljs-string">sample-bucket</span>
         <span class="hljs-attr">prefix:</span> <span class="hljs-string">prefix/</span> <span class="hljs-comment"># optional</span>
         <span class="hljs-attr">region:</span> <span class="hljs-string">us-east-2</span> <span class="hljs-comment"># optional, uses the default region otherwise</span>
+        <span class="hljs-attr">schedule:</span> <span class="hljs-comment"># optional; same options as in TaskScheduleDefinition</span>
+          <span class="hljs-comment"># supports cron, ISO duration, "human duration" as used in code</span>
+          <span class="hljs-attr">frequency:</span> <span class="hljs-string">{</span> <span class="hljs-attr">minutes:</span> <span class="hljs-number">30</span> <span class="hljs-string">}</span>
+          <span class="hljs-comment"># supports ISO duration, "human duration" as used in code</span>
+          <span class="hljs-attr">timeout:</span> <span class="hljs-string">{</span> <span class="hljs-attr">minutes:</span> <span class="hljs-number">3</span> <span class="hljs-string">}</span>
 </code></pre>
 <p>For simple setups, you can omit the provider ID at the config
 which has the same effect as using <code>default</code> for it.</p>
@@ -92,6 +97,11 @@ which has the same effect as using <code>default</code> for it.</p>
       <span class="hljs-attr">bucketName:</span> <span class="hljs-string">sample-bucket</span>
       <span class="hljs-attr">prefix:</span> <span class="hljs-string">prefix/</span> <span class="hljs-comment"># optional</span>
       <span class="hljs-attr">region:</span> <span class="hljs-string">us-east-2</span> <span class="hljs-comment"># optional, uses the default region otherwise</span>
+      <span class="hljs-attr">schedule:</span> <span class="hljs-comment"># optional; same options as in TaskScheduleDefinition</span>
+        <span class="hljs-comment"># supports cron, ISO duration, "human duration" as used in code</span>
+        <span class="hljs-attr">frequency:</span> <span class="hljs-string">{</span> <span class="hljs-attr">minutes:</span> <span class="hljs-number">30</span> <span class="hljs-string">}</span>
+        <span class="hljs-comment"># supports ISO duration, "human duration" as used in code</span>
+        <span class="hljs-attr">timeout:</span> <span class="hljs-string">{</span> <span class="hljs-attr">minutes:</span> <span class="hljs-number">3</span> <span class="hljs-string">}</span>
 </code></pre>
 <p>As this provider is not one of the default providers, you will first need to install
 the AWS catalog plugin:</p>
@@ -108,10 +118,13 @@ yarn add --cwd packages/backend @backstage/plugin-catalog-backend-module-aws
 builder.addEntityProvider(
   AwsS3EntityProvider.fromConfig(env.config, {
     logger: env.logger,
+    <span class="hljs-comment">// optional: alternatively, use scheduler with schedule defined in app-config.yaml</span>
     schedule: env.scheduler.createScheduledTaskRunner({
       frequency: { minutes: <span class="hljs-number">30</span> },
       timeout: { minutes: <span class="hljs-number">3</span> },
     }),
+    <span class="hljs-comment">// optional: alternatively, use schedule</span>
+    scheduler: env.scheduler,
   }),
 );
 </code></pre>

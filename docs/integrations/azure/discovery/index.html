@@ -84,23 +84,39 @@ DevOps Server you'll find this information in your Collection Settings.</p>
         <span class="hljs-attr">project:</span> <span class="hljs-string">myproject</span>
         <span class="hljs-attr">repository:</span> <span class="hljs-string">service-*</span> <span class="hljs-comment"># this will match all repos starting with service-*</span>
         <span class="hljs-attr">path:</span> <span class="hljs-string">/catalog-info.yaml</span>
+        <span class="hljs-attr">schedule:</span> <span class="hljs-comment"># optional; same options as in TaskScheduleDefinition</span>
+          <span class="hljs-comment"># supports cron, ISO duration, "human duration" as used in code</span>
+          <span class="hljs-attr">frequency:</span> <span class="hljs-string">{</span> <span class="hljs-attr">minutes:</span> <span class="hljs-number">30</span> <span class="hljs-string">}</span>
+          <span class="hljs-comment"># supports ISO duration, "human duration" as used in code</span>
+          <span class="hljs-attr">timeout:</span> <span class="hljs-string">{</span> <span class="hljs-attr">minutes:</span> <span class="hljs-number">3</span> <span class="hljs-string">}</span>
       <span class="hljs-attr">anotherProviderId:</span> <span class="hljs-comment"># another identifier</span>
         <span class="hljs-attr">organization:</span> <span class="hljs-string">myorg</span>
         <span class="hljs-attr">project:</span> <span class="hljs-string">myproject</span>
         <span class="hljs-attr">repository:</span> <span class="hljs-string">'*'</span> <span class="hljs-comment"># this will match all repos</span>
         <span class="hljs-attr">path:</span> <span class="hljs-string">/src/*/catalog-info.yaml</span> <span class="hljs-comment"># this will search for files deep inside the /src folder</span>
-      <span class="hljs-attr">yetAotherProviderId:</span> <span class="hljs-comment"># guess, what? Another one :)</span>
+      <span class="hljs-attr">yetAnotherProviderId:</span> <span class="hljs-comment"># guess, what? Another one :)</span>
         <span class="hljs-attr">host:</span> <span class="hljs-string">selfhostedazure.yourcompany.com</span>
         <span class="hljs-attr">organization:</span> <span class="hljs-string">myorg</span>
         <span class="hljs-attr">project:</span> <span class="hljs-string">myproject</span>
 </code></pre>
 <p>The parameters available are:</p>
 <ul>
-<li><code>host:</code> Leave empty for Cloud hosted, otherwise set to your self-hosted instance host.</li>
-<li><code>organization:</code> Your Organization slug (or Collection for on-premise users). Required.</li>
-<li><code>project:</code> Your project slug. Required.</li>
-<li><code>repository:</code> The repository name. Wildcards are supported as show on the examples above. If not set, all repositories will be searched.</li>
-<li><code>path:</code> Where to find catalog-info.yaml files. Defaults to /catalog-info.yaml.</li>
+<li><strong><code>host:</code></strong> <em>(optional)</em> Leave empty for Cloud hosted, otherwise set to your self-hosted instance host.</li>
+<li><strong><code>organization:</code></strong> Your Organization slug (or Collection for on-premise users). Required.</li>
+<li><strong><code>project:</code></strong> Your project slug. Required.</li>
+<li><strong><code>repository:</code></strong> <em>(optional)</em> The repository name. Wildcards are supported as show on the examples above. If not set, all repositories will be searched.</li>
+<li><strong><code>path:</code></strong> <em>(optional)</em> Where to find catalog-info.yaml files. Defaults to /catalog-info.yaml.</li>
+<li><strong><code>schedule</code></strong> <em>(optional)</em>:
+<ul>
+<li><strong><code>frequency</code></strong>:
+How often you want the task to run. The system does its best to avoid overlapping invocations.</li>
+<li><strong><code>timeout</code></strong>:
+The maximum amount of time that a single task invocation can take.</li>
+<li><strong><code>initialDelay</code></strong> <em>(optional)</em>:
+The amount of time that should pass before the first invocation happens.</li>
+<li><strong><code>scope</code></strong> <em>(optional)</em>:
+<code>'global'</code> or <code>'local'</code>. Sets the scope of concurrency control.</li>
+</ul></li>
 </ul>
 <p><em>Note:</em> the path parameter follows the same rules as the search on Azure DevOps
 web interface. For more details visit the
@@ -119,10 +135,13 @@ const builder = await CatalogBuilder.create(env);
 <span class="hljs-addition">+builder.addEntityProvider(</span>
 <span class="hljs-addition">+  AzureDevOpsEntityProvider.fromConfig(env.config, {</span>
 <span class="hljs-addition">+    logger: env.logger,</span>
+<span class="hljs-addition">+    // optional: alternatively, use scheduler with schedule defined in app-config.yaml</span>
 <span class="hljs-addition">+    schedule: env.scheduler.createScheduledTaskRunner({</span>
-<span class="hljs-addition">+      frequency: Duration.fromObject({ minutes: 30 }),</span>
-<span class="hljs-addition">+      timeout: Duration.fromObject({ minutes: 3 }),</span>
+<span class="hljs-addition">+      frequency: { minutes: 30 },</span>
+<span class="hljs-addition">+      timeout: { minutes: 3 },</span>
 <span class="hljs-addition">+    }),</span>
+<span class="hljs-addition">+    // optional: alternatively, use schedule</span>
+<span class="hljs-addition">+    scheduler: env.scheduler,</span>
 <span class="hljs-addition">+  }),</span>
 <span class="hljs-addition">+);</span>
 </code></pre>
