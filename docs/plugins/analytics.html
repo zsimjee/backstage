@@ -106,7 +106,8 @@ installed, may be captured.</p>
 <tbody>
 <tr><td><code>navigate</code></td><td>The URL of the page that was navigated to</td><td></td></tr>
 <tr><td><code>click</code></td><td>The text of the link that was clicked on</td><td>The <code>to</code> attribute represents the URL clicked to</td></tr>
-<tr><td><code>search</code></td><td>The search term entered in any search bar component</td><td>The <code>searchTypes</code> attribute holds <code>types</code> constraining the search</td></tr>
+<tr><td><code>create</code></td><td>The <code>name</code> of the software being created; if no <code>name</code> property is requested by the given Software Template, then the string <code>new {templateName}</code> is used instead.</td><td>The context holds an <code>entityRef</code>, set to the template's ref (e.g. <code>template:default/template-name</code>)</td></tr>
+<tr><td><code>search</code></td><td>The search term entered in any search bar component</td><td>The context holds <code>searchTypes</code>, representing <code>types</code> constraining the search</td></tr>
 <tr><td><code>discover</code></td><td>The title of the search result that was clicked on</td><td>The <code>value</code> is the result rank. A <code>to</code> attribute is also provided</td></tr>
 </tbody>
 </table>
@@ -310,11 +311,11 @@ it's important to keep each of these levels of detail disaggregated.</p>
 <code>EntityTable</code> to be specified as part of the event's <code>context</code> (most likely
 automatically as part of the <code>extension</code> in which the <code>filter</code> event was
 captured).</p></li>
-<li><p>On the flip side, when adding <code>attributes</code> to an event, look at existing
-events and see if the data you are capturing matches the intention, type, or
-even the content of <em>their</em> <code>attributes</code>. For instance, it may be common for
-events that involve the Catalog to add details like entity <code>name</code>, <code>kind</code>,
-and/or <code>namespace</code> as <code>attributes</code>. Using the same keys in your event will
+<li><p>On the flip side, when adding <code>attributes</code> to or <code>context</code> around an event,
+look at existing events and see if the data you are capturing matches the
+intention, type, or even the content of <em>their</em> <code>attributes</code> or <code>context</code>.
+For instance, it's common for events that involve the Catalog to include an
+<code>entityRef</code> contextual key. Using the same keys and values in your event will
 ensure that events instrumented across plugins can easily be aggregated.</p></li>
 </ul>
 <h3><a class="anchor" aria-hidden="true" id="unit-testing-event-capture"></a><a href="#unit-testing-event-capture" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Unit Testing Event Capture</h3>
