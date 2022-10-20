@@ -144,6 +144,13 @@ yarn add --cwd packages/backend @backstage/plugin-catalog-backend-module-github
           <span class="hljs-attr">topic:</span>
             <span class="hljs-attr">include:</span> <span class="hljs-string">['backstage-include']</span> <span class="hljs-comment"># optional array of strings</span>
             <span class="hljs-attr">exclude:</span> <span class="hljs-string">['experiments']</span> <span class="hljs-comment"># optional array of strings</span>
+      <span class="hljs-attr">validateLocationsExist:</span>
+        <span class="hljs-attr">organization:</span> <span class="hljs-string">'backstage'</span> <span class="hljs-comment"># string</span>
+        <span class="hljs-attr">catalogPath:</span> <span class="hljs-string">'/catalog-info.yaml'</span> <span class="hljs-comment"># string</span>
+        <span class="hljs-attr">filters:</span>
+          <span class="hljs-attr">branch:</span> <span class="hljs-string">'main'</span> <span class="hljs-comment"># string</span>
+          <span class="hljs-attr">repository:</span> <span class="hljs-string">'.*'</span> <span class="hljs-comment"># Regex</span>
+        <span class="hljs-attr">validateLocationsExist:</span> <span class="hljs-literal">true</span> <span class="hljs-comment"># optional boolean</span>
       <span class="hljs-attr">enterpriseProviderId:</span>
         <span class="hljs-attr">host:</span> <span class="hljs-string">ghe.example.net</span>
         <span class="hljs-attr">organization:</span> <span class="hljs-string">'backstage'</span> <span class="hljs-comment"># string</span>
@@ -158,7 +165,8 @@ If you do so, <code>default</code> will be used as provider ID.</p>
 <li><strong><code>catalogPath</code></strong> <em>(optional)</em>:
 Default: <code>/catalog-info.yaml</code>.
 Path where to look for <code>catalog-info.yaml</code> files.
-You can use wildcards - <code>*</code> or <code>**</code> - to search the path and/or the filename</li>
+You can use wildcards - <code>*</code> or <code>**</code> - to search the path and/or the filename.
+Wildcards cannot be used if the <code>validateLocationsExist</code> option is set to <code>true</code>.</li>
 <li><strong><code>filters</code></strong> <em>(optional)</em>:
 <ul>
 <li><strong><code>branch</code></strong> <em>(optional)</em>:
@@ -183,6 +191,12 @@ The hostname of your GitHub Enterprise instance. It must match a host defined in
 <li><strong><code>organization</code></strong>:
 Name of your organization account/workspace.
 If you want to add multiple organizations, you need to add one provider config each.</li>
+<li><strong><code>validateLocationsExist</code></strong> <em>(optional)</em>:
+Whether to validate locations that exist before emitting them.
+This option avoids generating locations for catalog info files that do not exist in the source repository.
+Defaults to <code>false</code>.
+Due to limitations in the GitHub API's ability to query for repository objects, this option cannot be used in
+conjunction with wildcards in the <code>catalogPath</code>.</li>
 <li><strong><code>schedule</code></strong> <em>(optional)</em>:
 <ul>
 <li><strong><code>frequency</code></strong>:
