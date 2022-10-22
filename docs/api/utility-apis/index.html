@@ -66,28 +66,28 @@ however always be a need for plugins to communicate outside of its boundaries,
 both with other plugins and the app itself.</p>
 <p>Backstage provides two primary methods for plugins to communicate across their
 boundaries in client-side code. The first one being the
-<a href="/docs/reference/core-plugin-api.createplugin">createPlugin</a> API along with the
+<a href="/docs/reference/core-plugin-api.createplugin"><code>createPlugin</code></a> API along with the
 extensions that it can provide, and the second one being Utility APIs. While the
-<a href="/docs/reference/core-plugin-api.createplugin">createPlugin</a> API is focused on
+<a href="/docs/reference/core-plugin-api.createplugin"><code>createPlugin</code></a> API is focused on
 the initialization plugins and the app, the Utility APIs provide ways for
 plugins to communicate during their entire life cycle.</p>
 <h2><a class="anchor" aria-hidden="true" id="consuming-apis"></a><a href="#consuming-apis" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Consuming APIs</h2>
-<p>Each Utility API is tied to an <a href="/docs/reference/core-plugin-api.apiref">ApiRef</a>
+<p>Each Utility API is tied to an <a href="/docs/reference/core-plugin-api.apiref"><code>ApiRef</code></a>
 instance, which is a global singleton object without any additional state or
 functionality, its only purpose is to reference Utility APIs.
-<a href="/docs/reference/core-plugin-api.apiref">ApiRef</a>s are created using
-<a href="/docs/reference/core-plugin-api.createapiref">createApiRef</a>, which is exported
-by <a href="/docs/reference/core-plugin-api">@backstage/core-plugin-api</a>. There are also
+<a href="/docs/reference/core-plugin-api.apiref"><code>ApiRef</code></a>s are created using
+<a href="/docs/reference/core-plugin-api.createapiref"><code>createApiRef</code></a>, which is exported
+by <a href="/docs/reference/core-plugin-api"><code>@backstage/core-plugin-api</code></a>. There are also
 many predefined Utility APIs in
-<a href="/docs/reference/core-plugin-api">@backstage/core-plugin-api</a>, and they're all
+<a href="/docs/reference/core-plugin-api"><code>@backstage/core-plugin-api</code></a>, and they're all
 exported with a name of the pattern <code>*ApiRef</code>, for example
-<a href="/docs/reference/core-plugin-api.errorapiref">errorApiRef</a>.</p>
+<a href="/docs/reference/core-plugin-api.errorapiref"><code>errorApiRef</code></a>.</p>
 <p>To access one of the Utility APIs inside a React component, use the
-<a href="/docs/reference/core-plugin-api.useapi">useApi</a> hook exported by
-<a href="/docs/reference/core-plugin-api">@backstage/core-plugin-api</a>, or the
-<a href="/docs/reference/core-plugin-api.withapis">withApis</a> HOC if you prefer class
+<a href="/docs/reference/core-plugin-api.useapi"><code>useApi</code></a> hook exported by
+<a href="/docs/reference/core-plugin-api"><code>@backstage/core-plugin-api</code></a>, or the
+<a href="/docs/reference/core-plugin-api.withapis"><code>withApis</code></a> HOC if you prefer class
 components. For example, the
-<a href="/docs/reference/core-plugin-api.errorapi">ErrorApi</a> can be accessed like this:</p>
+<a href="/docs/reference/core-plugin-api.errorapi"><code>ErrorApi</code></a> can be accessed like this:</p>
 <pre><code class="hljs css language-tsx"><span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
 <span class="hljs-keyword">import</span> { useApi, errorApiRef } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/core-plugin-api'</span>;
 
@@ -103,25 +103,25 @@ components. For example, the
 };
 </code></pre>
 <p>Note that there is no explicit type given for
-<a href="/docs/reference/core-plugin-api.errorapi">ErrorApi</a>. This is because the
-<a href="/docs/reference/core-plugin-api.errorapiref">errorApiRef</a> has the type
-embedded, and <a href="/docs/reference/core-plugin-api.useapi">useApi</a> is able to infer
+<a href="/docs/reference/core-plugin-api.errorapi"><code>ErrorApi</code></a>. This is because the
+<a href="/docs/reference/core-plugin-api.errorapiref"><code>errorApiRef</code></a> has the type
+embedded, and <a href="/docs/reference/core-plugin-api.useapi"><code>useApi</code></a> is able to infer
 the type.</p>
 <p>Also note that consuming Utility APIs is not limited to plugins, it can be done
 from any component inside Backstage, including the ones in
-<a href="/docs/reference/core-plugin-api">@backstage/core-plugin-api</a>. The only
+<a href="/docs/reference/core-plugin-api"><code>@backstage/core-plugin-api</code></a>. The only
 requirement is that they are beneath the <code>AppProvider</code> in the react tree.</p>
 <h2><a class="anchor" aria-hidden="true" id="supplying-apis"></a><a href="#supplying-apis" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Supplying APIs</h2>
 <h3><a class="anchor" aria-hidden="true" id="api-factories"></a><a href="#api-factories" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>API Factories</h3>
 <p>APIs are registered in the form of
-<a href="/docs/reference/core-plugin-api.apifactory">ApiFactories</a>, which encapsulate
+<a href="/docs/reference/core-plugin-api.apifactory"><code>ApiFactory</code></a> instances, which encapsulate
 the process of instantiating an API. It is a collection of three things: the
-<a href="/docs/reference/core-plugin-api.apiref">ApiRef</a> of the API to instantiate, a
+<a href="/docs/reference/core-plugin-api.apiref"><code>ApiRef</code></a> of the API to instantiate, a
 list of all required dependencies, and a factory function that returns a new API
 instance.</p>
 <p>For example, this is the default
-<a href="/docs/reference/core-plugin-api.apifactory">ApiFactory</a> for the
-<a href="/docs/reference/core-plugin-api.errorapi">ErrorApi</a>:</p>
+<a href="/docs/reference/core-plugin-api.apifactory"><code>ApiFactory</code></a> for the
+<a href="/docs/reference/core-plugin-api.errorapi"><code>ErrorApi</code></a>:</p>
 <pre><code class="hljs css language-ts">createApiFactory({
   api: errorApiRef,
   deps: { alertApi: alertApiRef },
@@ -132,24 +132,24 @@ instance.</p>
   },
 });
 </code></pre>
-<p>In this example the <a href="/docs/reference/core-plugin-api.errorapiref">errorApiRef</a>
+<p>In this example the <a href="/docs/reference/core-plugin-api.errorapiref"><code>errorApiRef</code></a>
 is our API, which encapsulates the
-<a href="/docs/reference/core-plugin-api.errorapi">ErrorApi</a> type. The
-<a href="/docs/reference/core-plugin-api.alertapiref">alertApiRef</a> is our single
+<a href="/docs/reference/core-plugin-api.errorapi"><code>ErrorApi</code></a> type. The
+<a href="/docs/reference/core-plugin-api.alertapiref"><code>alertApiRef</code></a> is our single
 dependency, which we give the name <code>alertApi</code>, and is then passed on to the
 factory function, which returns an implementation of the
-<a href="/docs/reference/core-plugin-api.errorapi">ErrorApi</a>.</p>
-<p>The <a href="/docs/reference/core-plugin-api.createapifactory">createApiFactory</a>
+<a href="/docs/reference/core-plugin-api.errorapi"><code>ErrorApi</code></a>.</p>
+<p>The <a href="/docs/reference/core-plugin-api.createapifactory"><code>createApiFactory</code></a>
 function is a thin wrapper that enables TypeScript type inference. You may
 notice that there are no type annotations in the above example, and that is
 because we're able to infer all types from the
-<a href="/docs/reference/core-plugin-api.apiref">ApiRef</a>s. TypeScript will make sure
+<a href="/docs/reference/core-plugin-api.apiref"><code>ApiRef</code></a>s. TypeScript will make sure
 that the return value of the <code>factory</code> function matches the type embedded in
-<code>api</code>'s <a href="/docs/reference/core-plugin-api.apiref">ApiRef</a>, in this case the
-<a href="/docs/reference/core-plugin-api.errorapi">ErrorApi</a>. It will also match the
+<code>api</code>'s <a href="/docs/reference/core-plugin-api.apiref"><code>ApiRef</code></a>, in this case the
+<a href="/docs/reference/core-plugin-api.errorapi"><code>ErrorApi</code></a>. It will also match the
 types between the <code>deps</code> and the parameters of the <code>factory</code> function, again
 using the type embedded within the
-<a href="/docs/reference/core-plugin-api.apiref">ApiRef</a>s.</p>
+<a href="/docs/reference/core-plugin-api.apiref"><code>ApiRef</code></a>s.</p>
 <h2><a class="anchor" aria-hidden="true" id="registering-api-factories"></a><a href="#registering-api-factories" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Registering API Factories</h2>
 <p>The responsibility for adding Utility APIs to a Backstage app lies in three
 different locations: the Backstage core library, each plugin included in the
@@ -157,23 +157,23 @@ app, and the app itself.</p>
 <h3><a class="anchor" aria-hidden="true" id="core-apis"></a><a href="#core-apis" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Core APIs</h3>
 <p>Starting with the Backstage core library, it provides implementations for all of
 the core APIs. The core APIs are the ones exported by
-<a href="/docs/reference/core-plugin-api">@backstage/core-plugin-api</a>, such as the
-<a href="/docs/reference/core-plugin-api.errorapiref">errorApiRef</a> and
-<a href="/docs/reference/core-plugin-api.configapiref">configApiRef</a>.</p>
+<a href="/docs/reference/core-plugin-api"><code>@backstage/core-plugin-api</code></a>, such as the
+<a href="/docs/reference/core-plugin-api.errorapiref"><code>errorApiRef</code></a> and
+<a href="/docs/reference/core-plugin-api.configapiref"><code>configApiRef</code></a>.</p>
 <p>The core APIs are loaded for any app created with
-<a href="/docs/reference/app-defaults.createapp">createApp</a> from
-<a href="/docs/reference/app-defaults">@backstage/core-plugin-api</a>, which means that
+<a href="/docs/reference/app-defaults.createapp"><code>createApp</code></a> from
+<a href="/docs/reference/app-defaults"><code>@backstage/core-plugin-api</code></a>, which means that
 there is no step that needs to be taken to include these APIs in an app.</p>
 <h3><a class="anchor" aria-hidden="true" id="plugin-apis"></a><a href="#plugin-apis" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Plugin APIs</h3>
 <p>In addition to the core APIs, plugins can define and export their own APIs.
 While doing so they should usually also provide default implementations of their
 own APIs, for example, the <code>catalog</code> plugin exports <code>catalogApiRef</code>, and also
-supplies a default <a href="/docs/reference/core-plugin-api.apifactory">ApiFactory</a> of
+supplies a default <a href="/docs/reference/core-plugin-api.apifactory"><code>ApiFactory</code></a> of
 that API using the <code>CatalogClient</code>. There is one restriction to plugin-provided
 API Factories: plugins may not supply factories for core APIs, trying to do so
 will cause the app to refuse to start.</p>
 <p>Plugins supply their APIs through the <code>apis</code> option of
-<a href="/docs/reference/core-plugin-api.createplugin">createPlugin</a>, for example:</p>
+<a href="/docs/reference/core-plugin-api.createplugin"><code>createPlugin</code></a>, for example:</p>
 <pre><code class="hljs css language-ts"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> techdocsPlugin = createPlugin({
   id: <span class="hljs-string">'techdocs'</span>,
   apis: [
@@ -194,7 +194,7 @@ will cause the app to refuse to start.</p>
 the final say in what APIs will be loaded at runtime. The app may override the
 factories for any of the core or plugin APIs, with the exception of the config,
 app theme, and identity APIs. These are static APIs that are tied into the
-<a href="/docs/reference/app-defaults.createapp">createApp</a> implementation, and
+<a href="/docs/reference/app-defaults.createapp"><code>createApp</code></a> implementation, and
 therefore not possible to override.</p>
 <p>Overriding APIs is useful for apps that want to switch out behavior to tailor it
 to their environment. In some cases plugins may also export multiple
@@ -244,17 +244,17 @@ this:</p>
 });
 </code></pre>
 <p>Note that the above line will cause an error if <code>IgnoreErrorApi</code> does not fully
-implement the <a href="/docs/reference/core-plugin-api.errorapi">ErrorApi</a>, as it is
+implement the <a href="/docs/reference/core-plugin-api.errorapi"><code>ErrorApi</code></a>, as it is
 checked by the type embedded in the
-<a href="/docs/reference/core-plugin-api.errorapiref">errorApiRef</a> at compile time.</p>
+<a href="/docs/reference/core-plugin-api.errorapiref"><code>errorApiRef</code></a> at compile time.</p>
 <h2><a class="anchor" aria-hidden="true" id="defining-custom-utility-apis"></a><a href="#defining-custom-utility-apis" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Defining custom Utility APIs</h2>
 <p>Plugins are free to define their own Utility APIs. Simply define the TypeScript
 interface for the API, and create an
-<a href="/docs/reference/core-plugin-api.apiref">ApiRef</a> using
-<a href="/docs/reference/core-plugin-api.createapiref">createApiRef</a> exported from
-<a href="/docs/reference/core-plugin-api">@backstage/core-plugin-api</a>. Also be sure to
+<a href="/docs/reference/core-plugin-api.apiref"><code>ApiRef</code></a> using
+<a href="/docs/reference/core-plugin-api.createapiref"><code>createApiRef</code></a> exported from
+<a href="/docs/reference/core-plugin-api"><code>@backstage/core-plugin-api</code></a>. Also be sure to
 provide at least one implementation of the API, and to declare a default factory
-for the API in <a href="/docs/reference/core-plugin-api.createplugin">createPlugin</a>.</p>
+for the API in <a href="/docs/reference/core-plugin-api.createplugin"><code>createPlugin</code></a>.</p>
 <p>Custom Utility APIs can be either public or private, which is up to the plugin
 to choose. Private APIs do not expose an external API surface, and it's
 therefore possible to make breaking changes to the API without affecting other
@@ -264,27 +264,27 @@ plugin to override the API in the app. It is however important to maintain
 backwards compatibility of public APIs, as you may otherwise break apps that are
 using your plugin.</p>
 <p>To make an API public, simply export the
-<a href="/docs/reference/core-plugin-api.apiref">ApiRef</a> of the API, and any associated
+<a href="/docs/reference/core-plugin-api.apiref"><code>ApiRef</code></a> of the API, and any associated
 types. To make an API private, just avoid exporting the
-<a href="/docs/reference/core-plugin-api.apiref">ApiRef</a>, but still be sure to supply a
-default factory to <a href="/docs/reference/core-plugin-api.createplugin">createPlugin</a>.</p>
+<a href="/docs/reference/core-plugin-api.apiref"><code>ApiRef</code></a>, but still be sure to supply a
+default factory to <a href="/docs/reference/core-plugin-api.createplugin"><code>createPlugin</code></a>.</p>
 <p>Private APIs are useful for plugins that want to depend on other APIs outside of
 React components, but not have to expose an entire API surface to maintain. When
 using private APIs, it is fine to use the <code>typeof</code> of an implementing class as
 the type parameter passed to
-<a href="/docs/reference/core-plugin-api.createapiref">createApiRef</a>, while public APIs
+<a href="/docs/reference/core-plugin-api.createapiref"><code>createApiRef</code></a>, while public APIs
 should always define a separate TypeScript interface type.</p>
 <p>Plugins may depend on APIs from other plugins, both in React components and as
 dependencies to API factories. Do however be sure to not cause circular
 dependencies between plugins.</p>
 <h2><a class="anchor" aria-hidden="true" id="architecture"></a><a href="#architecture" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Architecture</h2>
-<p>The <a href="/docs/reference/core-plugin-api.apiref">ApiRef</a> instances mentioned above
+<p>The <a href="/docs/reference/core-plugin-api.apiref"><code>ApiRef</code></a> instances mentioned above
 provide a point of indirection between consumers and producers of Utility APIs.
 It allows for plugins and components to depend on APIs in a type-safe way,
 without having a direct reference to a concrete implementation of the APIs. The
 Apps are also given a lot of flexibility in what implementations to provide. As
 long as they adhere to the contract established by an
-<a href="/docs/reference/core-plugin-api.apiref">ApiRef</a>, they are free to choose any
+<a href="/docs/reference/core-plugin-api.apiref"><code>ApiRef</code></a>, they are free to choose any
 implementation they want.</p>
 <p>The figure below shows the relationship between
 <span style="color: #82b366">different Apps</span>, that provide
@@ -305,16 +305,16 @@ directly tied to React.</p>
 components that depend on APIs, and to provide a standard common development
 environment for plugins. A proper test wrapper with mocked API implementations
 is not yet ready, but it will be provided as a part of
-<a href="/docs/reference/test-utils">@backstage/test-utils</a>. It will provide mocked
+<a href="/docs/reference/test-utils"><code>@backstage/test-utils</code></a>. It will provide mocked
 variants of APIs, with additional methods for asserting a component's
 interaction with the API.</p>
 <p>The common development environment for plugins is included in
-<a href="/docs/reference/dev-utils">@backstage/dev-utils</a>, where the exported
-<a href="/docs/reference/dev-utils.createdevapp">createDevApp</a> function creates an
+<a href="/docs/reference/dev-utils"><code>@backstage/dev-utils</code></a>, where the exported
+<a href="/docs/reference/dev-utils.createdevapp"><code>createDevApp</code></a> function creates an
 application with implementations for all core APIs already present. Contrary to
 the method for wiring up Utility API implementations in an app created with
-<a href="/docs/reference/app-defaults.createapp">createApp</a>,
-<a href="/docs/reference/dev-utils.createdevapp">createDevApp</a> uses automatic dependency
+<a href="/docs/reference/app-defaults.createapp"><code>createApp</code></a>,
+<a href="/docs/reference/dev-utils.createdevapp"><code>createDevApp</code></a> uses automatic dependency
 injection. This is to make it possible to replace any API implementation, and
 having that be reflected in dependents of that API.</p>
 </span></div></article></div><div class="docLastUpdate"><em>Last updated on 10/22/2022</em></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/dls/figma"><span class="arrow-prev">← </span><span>Figma</span></a><a class="docs-next button" href="/docs/reference/index"><span>Package Index</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#introduction">Introduction</a></li><li><a href="#consuming-apis">Consuming APIs</a></li><li><a href="#supplying-apis">Supplying APIs</a><ul class="toc-headings"><li><a href="#api-factories">API Factories</a></li></ul></li><li><a href="#registering-api-factories">Registering API Factories</a><ul class="toc-headings"><li><a href="#core-apis">Core APIs</a></li><li><a href="#plugin-apis">Plugin APIs</a></li><li><a href="#app-apis">App APIs</a></li></ul></li><li><a href="#custom-implementations-of-utility-apis">Custom implementations of Utility APIs</a></li><li><a href="#defining-custom-utility-apis">Defining custom Utility APIs</a></li><li><a href="#architecture">Architecture</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><div class="footer-title"><a href="/"><h2 class="footerLogo"></h2></a></div><div><h5>Docs</h5><a href="/docs/overview/what-is-backstage">What is Backstage?</a><a href="/docs/getting-started/">Getting started</a><a href="/docs/features/software-catalog/software-catalog-overview">Software Catalog</a><a href="/docs/plugins/create-a-plugin">Create a Plugin</a><a href="/docs/dls/design">Designing for Backstage</a></div><div><h5>Community</h5><a href="https://discord.gg/MUpMjP2">Support chatroom</a><a href="https://github.com/backstage/backstage/blob/master/CONTRIBUTING.md">Contributing</a><a href="https://backstage.spotify.com">Adopting</a><a href="https://github.com/backstage/community">Community Sessions</a><a href="https://info.backstage.spotify.com/newsletter_subscribe">Subscribe to our newsletter</a><a href="https://www.cncf.io/projects/">CNCF Incubation</a></div><div><h5>More</h5><a href="https://spotify.github.io/">Open Source @ Spotify</a><a href="https://engineering.atspotify.com/">Spotify Engineering Blog</a><a href="https://developer.spotify.com/">Spotify for Developers</a><a href="https://github.com/backstage/backstage">GitHub</a><a class="github-button" href="https://github.com/backstage/backstage" data-icon="octicon-star" data-count-href="/backstage/backstage/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a><div class="social"><a href="https://twitter.com/SpotifyEng" class="twitter-follow-button">Follow @SpotifyEng</a></div></div></section><p style="text-align:center"><a href="https://spotify.github.io">Made with ❤️ at Spotify</a></p><p class="copyright">Copyright © 2022 Backstage Project Authors. All rights reserved. The Linux Foundation has registered trademarks and uses trademarks. For a list of trademarks of The Linux Foundation, please see our Trademark Usage page: https://www.linuxfoundation.org/trademark-usage</p></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script><script>
