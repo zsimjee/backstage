@@ -90,7 +90,9 @@
 <pre><code class="hljs css language-diff">...
 
 <span class="hljs-deletion">- import { InputError } from '@backstage/errors';</span>
+<span class="hljs-deletion">- import { IdentityApi } from '@backstage/plugin-auth-node';</span>
 <span class="hljs-addition">+ import { InputError, NotAllowedError } from '@backstage/errors';</span>
+<span class="hljs-addition">+ import { getBearerTokenFromAuthorizationHeader, IdentityApi } from '@backstage/plugin-auth-node';</span>
 <span class="hljs-addition">+ import { PermissionEvaluator, AuthorizeResult } from '@backstage/plugin-permission-common';</span>
 <span class="hljs-addition">+ import { todoListCreatePermission } from '@internal/plugin-todo-list-common';</span>
 
@@ -98,7 +100,7 @@
 
   export interface RouterOptions {
     logger: Logger;
-    identity: IdentityClient;
+    identity: IdentityApi;
 <span class="hljs-addition">+   permissions: PermissionEvaluator;</span>
   }
 
@@ -111,11 +113,13 @@
     ...
 
     router.post('/todos', async (req, res) =&gt; {
-      const token = IdentityClient.getBearerToken(req.header('authorization'));
       let author: string | undefined = undefined;
 
-      const user = token ? await identity.authenticate(token) : undefined;
+      const user = await identity.getIdentity({ request: req });
       author = user?.identity.userEntityRef;
+<span class="hljs-addition">+     const token = getBearerTokenFromAuthorizationHeader(</span>
+<span class="hljs-addition">+       req.header('authorization'),</span>
+<span class="hljs-addition">+     );</span>
 <span class="hljs-addition">+     const decision = (</span>
 <span class="hljs-addition">+       await permissions.authorize([{ permission: todoListCreatePermission }], {</span>
 <span class="hljs-addition">+       token,</span>
@@ -161,10 +165,8 @@
 <p>In order to test the logic above, the integrators of your backstage instance need to change their permission policy to return <code>DENY</code> for our newly-created permission:</p>
 <pre><code class="hljs css language-diff">// packages/backend/src/plugins/permission.ts
 
-<span class="hljs-deletion">- import { IdentityClient } from '@backstage/plugin-auth-node';</span>
 <span class="hljs-addition">+ import {</span>
 <span class="hljs-addition">+   BackstageIdentityResponse,</span>
-<span class="hljs-addition">+   IdentityClient</span>
 <span class="hljs-addition">+ } from '@backstage/plugin-auth-node';</span>
   import {
     PermissionPolicy,
@@ -199,6 +201,112 @@
     };
   }
 </code></pre>
+<p>At this point everything is working but if you run <code>yarn tsc</code> you'll get some errors, let's fix those up.</p>
+<p>First we'll clean up the <code>plugins/todo-list-backend/src/service/router.test.ts</code>:</p>
+<pre><code class="hljs css language-diff">  import { getVoidLogger } from '@backstage/backend-common';
+  import { DefaultIdentityClient } from '@backstage/plugin-auth-node';
+<span class="hljs-addition">+ import { PermissionEvaluator } from '@backstage/plugin-permission-common';</span>
+  import express from 'express';
+  import request from 'supertest';
+
+  import { createRouter } from './router';
+
+<span class="hljs-addition">+ const mockedAuthorize: jest.MockedFunction&lt;PermissionEvaluator['authorize']&gt; =</span>
+<span class="hljs-addition">+   jest.fn();</span>
+<span class="hljs-addition">+ const mockedPermissionQuery: jest.MockedFunction&lt;</span>
+<span class="hljs-addition">+   PermissionEvaluator['authorizeConditional']</span>
+<span class="hljs-addition">+ &gt; = jest.fn();</span>
+
+<span class="hljs-addition">+ const permissionEvaluator: PermissionEvaluator = {</span>
+<span class="hljs-addition">+   authorize: mockedAuthorize,</span>
+<span class="hljs-addition">+   authorizeConditional: mockedPermissionQuery,</span>
+<span class="hljs-addition">+ };</span>
+
+  describe('createRouter', () =&gt; {
+    let app: express.Express;
+
+    beforeAll(async () =&gt; {
+      const router = await createRouter({
+        logger: getVoidLogger(),
+        identity: {} as DefaultIdentityClient,
+<span class="hljs-addition">+       permissions: toPermissionEvaluator,</span>
+      });
+      app = express().use(router);
+    });
+
+    beforeEach(() =&gt; {
+      jest.resetAllMocks();
+    });
+
+    describe('GET /health', () =&gt; {
+      it('returns ok', async () =&gt; {
+        const response = await request(app).get('/health');
+
+        expect(response.status).toEqual(200);
+        expect(response.body).toEqual({ status: 'ok' });
+      });
+    });
+  });
+
+</code></pre>
+<p>Then we want to update the <code>plugins/todo-list-backend/src/service/standaloneServer.ts</code>, first we need to add the <code>@backstage/plugin-permission-node</code> package to <code>plugins/todo-list-backend/package.json</code> and then we can make the following edits:</p>
+<pre><code class="hljs css language-diff">  import {
+    createServiceBuilder,
+    loadBackendConfig,
+    SingleHostDiscovery,
+<span class="hljs-addition">+   ServerTokenManager,</span>
+  } from '@backstage/backend-common';
+  import { DefaultIdentityClient } from '@backstage/plugin-auth-node';
+  import { ServerPermissionClient } from '@backstage/plugin-permission-node';
+  import { Server } from 'http';
+  import { Logger } from 'winston';
+  import { createRouter } from './router';
+
+  export interface ServerOptions {
+    port: number;
+    enableCors: boolean;
+    logger: Logger;
+  }
+
+  export async function startStandaloneServer(
+    options: ServerOptions,
+  ): Promise&lt;Server&gt; {
+    const logger = options.logger.child({ service: 'todo-list-backend' });
+    logger.debug('Starting application server...');
+    const config = await loadBackendConfig({ logger, argv: process.argv });
+    const discovery = SingleHostDiscovery.fromConfig(config);
+<span class="hljs-addition">+   const tokenManager = ServerTokenManager.fromConfig(config, {</span>
+<span class="hljs-addition">+     logger,</span>
+<span class="hljs-addition">+   });</span>
+<span class="hljs-addition">+   const permissions = ServerPermissionClient.fromConfig(config, {</span>
+<span class="hljs-addition">+     discovery,</span>
+<span class="hljs-addition">+     tokenManager,</span>
+<span class="hljs-addition">+   });</span>
+    const router = await createRouter({
+      logger,
+      identity: DefaultIdentityClient.create({
+        discovery,
+        issuer: await discovery.getExternalBaseUrl('auth'),
+      }),
+<span class="hljs-addition">+     permissions,</span>
+    });
+
+    let service = createServiceBuilder(module)
+      .setPort(options.port)
+      .addRouter('/todo-list', router);
+    if (options.enableCors) {
+      service = service.enableCors({ origin: 'http://localhost:3000' });
+    }
+
+    return await service.start().catch(err =&gt; {
+      logger.error(err);
+      process.exit(1);
+    });
+  }
+
+  module.hot?.accept();
+</code></pre>
+<p>Now when you run <code>yarn tsc</code> you should have no more errors.</p>
 </span></div></article></div><div class="docLastUpdate"><em>Last updated on 10/24/2022</em></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/permissions/plugin-authors/01-setup"><span class="arrow-prev">← </span><span>1. Tutorial setup</span></a><a class="docs-next button" href="/docs/permissions/plugin-authors/03-adding-a-resource-permission-check"><span>3. Adding a resource permission check</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#creating-a-new-permission">Creating a new permission</a></li><li><a href="#authorizing-using-the-new-permission">Authorizing using the new permission</a></li><li><a href="#test-the-authorized-create-endpoint">Test the authorized create endpoint</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><div class="footer-title"><a href="/"><h2 class="footerLogo"></h2></a></div><div><h5>Docs</h5><a href="/docs/overview/what-is-backstage">What is Backstage?</a><a href="/docs/getting-started/">Getting started</a><a href="/docs/features/software-catalog/software-catalog-overview">Software Catalog</a><a href="/docs/plugins/create-a-plugin">Create a Plugin</a><a href="/docs/dls/design">Designing for Backstage</a></div><div><h5>Community</h5><a href="https://discord.gg/MUpMjP2">Support chatroom</a><a href="https://github.com/backstage/backstage/blob/master/CONTRIBUTING.md">Contributing</a><a href="https://backstage.spotify.com">Adopting</a><a href="https://github.com/backstage/community">Community Sessions</a><a href="https://info.backstage.spotify.com/newsletter_subscribe">Subscribe to our newsletter</a><a href="https://www.cncf.io/projects/">CNCF Incubation</a></div><div><h5>More</h5><a href="https://spotify.github.io/">Open Source @ Spotify</a><a href="https://engineering.atspotify.com/">Spotify Engineering Blog</a><a href="https://developer.spotify.com/">Spotify for Developers</a><a href="https://github.com/backstage/backstage">GitHub</a><a class="github-button" href="https://github.com/backstage/backstage" data-icon="octicon-star" data-count-href="/backstage/backstage/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a><div class="social"><a href="https://twitter.com/SpotifyEng" class="twitter-follow-button">Follow @SpotifyEng</a></div></div></section><p style="text-align:center"><a href="https://spotify.github.io">Made with ❤️ at Spotify</a></p><p class="copyright">Copyright © 2022 Backstage Project Authors. All rights reserved. The Linux Foundation has registered trademarks and uses trademarks. For a list of trademarks of The Linux Foundation, please see our Trademark Usage page: https://www.linuxfoundation.org/trademark-usage</p></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script><script>
                 document.addEventListener('keyup', function(e) {
                   if (e.target !== document.body) {
