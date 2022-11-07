@@ -178,9 +178,10 @@ following schedule for determining the <a href="https://nodejs.org/en/about/rele
 <ul>
 <li>At any given point in time we support exactly two adjacent even-numbered
 releases of Node.js, for example v12 and v14.</li>
-<li>Three months before a Node.js release becomes <em>Active LTS</em> we switch support
-to that release and the previous one. This is halfway through the <em>Current LTS</em>
-cycle for that release and occurs at the end of July every year.</li>
+<li>Once a new Node.js release becomes <em>Active LTS</em> we switch to support that
+release and the previous one. The switch is not immediate but done as soon
+as possible. You can find the Node.js version supported by each release
+in the <code>engines</code> field in the root <code>package.json</code> of a new app.</li>
 </ul>
 <p>When we say <em>Supporting</em> a Node.js release, that means the following:</p>
 <ul>
