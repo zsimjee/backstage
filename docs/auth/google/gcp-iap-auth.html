@@ -73,6 +73,7 @@ configured to serve the frontend app from the backend.</p>
   <span class="hljs-attr">providers:</span>
     <span class="hljs-attr">gcp-iap:</span>
       <span class="hljs-attr">audience:</span> <span class="hljs-string">'/projects/&lt;project number&gt;/global/backendServices/&lt;backend service id&gt;'</span>
+      <span class="hljs-attr">jwtHeader:</span> <span class="hljs-string">x-custom-header</span> <span class="hljs-comment"># Optional: Only if you are using a custom header for the IAP JWT</span>
 </code></pre>
 <p>You can find the project number and service ID in the Google Cloud Console.</p>
 <p>This config section must be in place for the provider to load at all. Now let's
