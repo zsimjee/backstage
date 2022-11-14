@@ -134,7 +134,7 @@ Backstage app.</p>
 <a href="https://backstage.io/docs/features/kubernetes/configuration#clusterlocatormethods">cluster locators</a>
 don't work for your use-case, it is possible to implement a custom
 <a href="https://backstage.io/docs/reference/plugin-kubernetes-backend.kubernetesclusterssupplier">KubernetesClustersSupplier</a>.</p>
-<p>Change the following in <code>packages/backend/src/plugin/kubernetes.ts</code>:</p>
+<p>Change the following in <code>packages/backend/src/plugins/kubernetes.ts</code>:</p>
 <pre><code class="hljs css language-diff"><span class="hljs-deletion">-import { KubernetesBuilder } from '@backstage/plugin-kubernetes-backend';</span>
 <span class="hljs-addition">+import {</span>
 <span class="hljs-addition">+  ClusterDetails,</span>
