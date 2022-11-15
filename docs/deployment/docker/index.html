@@ -83,8 +83,8 @@ approach, as the build steps tend to execute faster, and it's possible to have
 more efficient caching of dependencies on the host, where a single change won't
 bust the entire cache.</p>
 <p>The required steps in the host build are to install dependencies with
-<code>yarn install</code>, generate type definitions using <code>yarn tsc</code>, and build all
-packages with <code>yarn build</code>.</p>
+<code>yarn install</code>, generate type definitions using <code>yarn tsc</code>, and build the backend
+package with <code>yarn build:backend</code>.</p>
 <blockquote>
 <p>NOTE: If you created your app prior to 2021-02-18, follow the
 <a href="https://github.com/backstage/backstage/releases/tag/release-2021-02-18">migration step</a>
@@ -96,8 +96,8 @@ to move from <code>backend:build</code> to <code>backend:bundle</code>.</p>
 <span class="hljs-comment"># tsc outputs type definitions to dist-types/ in the repo root, which are then consumed by the build</span>
 yarn tsc
 
-<span class="hljs-comment"># Build all packages and in the end bundle them all up into the packages/backend/dist folder.</span>
-yarn build
+<span class="hljs-comment"># Build the backend, which bundles it all up into the packages/backend/dist folder.</span>
+yarn build:backend
 </code></pre>
 <p>Once the host build is complete, we are ready to build our image. The following
 <code>Dockerfile</code> is included when creating a new app with <code>@backstage/create-app</code>:</p>
