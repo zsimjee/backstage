@@ -200,7 +200,12 @@ somehow, which somehow get translated to calls on the <code>connection</code> to
 the outcome of that. This example issues a <code>fetch</code> to the right service and
 issues a full refresh of its entity bucket based on that.</li>
 <li>The method translates the foreign data model to the native <code>Entity</code> form, as
-expected by the catalog.</li>
+expected by the catalog. The <code>Entity</code> must include the
+<code>backstage.io/managed-by-location</code> and
+<code>backstage.io/managed-by-origin-location annotations</code>; otherwise, it will not
+appear in the Catalog and will generate warning logs. The
+<a href="/docs/features/software-catalog/well-known-annotations#backstageiomanaged-by-location">Well-known Annotations</a>
+documentation has guidance on what values to use for these.</li>
 <li>Finally, we issue a &quot;mutation&quot; to the catalog. This persists the entities in
 our own bucket, along with an optional <code>locationKey</code> that's used for conflict
 checks. But this is a bigger topic - mutations warrant their own explanatory
