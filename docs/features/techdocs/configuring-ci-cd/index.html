@@ -164,14 +164,14 @@ use any CI and any other
 
     <span class="hljs-attr">steps:</span>
       <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Checkout</span> <span class="hljs-string">code</span>
-        <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/checkout@v2</span>
+        <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/checkout@v3</span>
 
-      <span class="hljs-bullet">-</span> <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/setup-node@v2</span>
-      <span class="hljs-bullet">-</span> <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/setup-python@v2</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/setup-node@v3</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/setup-python@v4</span>
 
       <span class="hljs-comment"># the 2 steps below can be removed if you aren't using plantuml in your documentation</span>
       <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">setup</span> <span class="hljs-string">java</span>
-        <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/setup-java@v2</span>
+        <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/setup-java@v3</span>
         <span class="hljs-attr">with:</span>
           <span class="hljs-attr">distribution:</span> <span class="hljs-string">'zulu'</span>
           <span class="hljs-attr">java-version:</span> <span class="hljs-string">'11'</span>
