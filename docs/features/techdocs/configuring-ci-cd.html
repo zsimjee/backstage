@@ -168,6 +168,8 @@ use any CI and any other
 
       <span class="hljs-bullet">-</span> <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/setup-node@v3</span>
       <span class="hljs-bullet">-</span> <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/setup-python@v4</span>
+        <span class="hljs-attr">with:</span>
+          <span class="hljs-attr">python-version:</span> <span class="hljs-string">'3.9'</span>
 
       <span class="hljs-comment"># the 2 steps below can be removed if you aren't using plantuml in your documentation</span>
       <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">setup</span> <span class="hljs-string">java</span>
