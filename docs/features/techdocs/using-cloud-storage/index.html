@@ -227,18 +227,16 @@ ListBucket, GetObject and PutObject.</p>
 <li><code>AWS_REGION</code></li>
 </ul>
 <p>are set and can be used to access the bucket you created in step 2, they will be
-used by the AWS SDK V2 Node.js client for authentication.
-<a href="https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/loading-node-credentials-environment.html">Refer to the official documentation for loading credentials in Node.js from environment variables</a>.</p>
+used by the AWS SDK V3 Node.js client for authentication.
+<a href="https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/loading-node-credentials-environment.html">Refer to the official documentation for loading credentials in Node.js from environment variables</a>.</p>
 <p>If the environment variables are missing, the AWS SDK tries to read the
 <code>~/.aws/credentials</code> file for credentials.
-<a href="https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/loading-node-credentials-shared.html">Refer to the official documentation.</a></p>
-<p>If you are using Amazon EC2 instance to deploy Backstage, you do not need to
-obtain the access keys separately. They can be made available in the environment
-automatically by defining appropriate IAM role with access to the bucket. Read
-more in
+<a href="https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/loading-node-credentials-shared.html">Refer to the official documentation.</a></p>
+<p>If you are deploying Backstage to Amazon EC2, Amazon ECS, or Amazon EKS, you do
+not need to obtain the access keys separately. They can be made available in the
+environment automatically by defining appropriate IAM role with access to the
+bucket. Read more in the
 <a href="https://docs.aws.amazon.com/general/latest/gr/aws-access-keys-best-practices.html#use-roles">official AWS documentation for using IAM roles.</a>.</p>
-<p>The AWS Region of the bucket is optional since TechDocs uses AWS SDK V2 and not
-V3.</p>
 <p><strong>4b. Authentication using app-config.yaml</strong></p>
 <p>AWS credentials and region can be provided to the AWS SDK via <code>app-config.yaml</code>.
 If the configs below are present, they will be used over existing <code>AWS_*</code>
@@ -254,7 +252,7 @@ environment variables and the <code>~/.aws/credentials</code> config file.</p>
         <span class="hljs-attr">secretAccessKey:</span> <span class="hljs-string">${AWS_SECRET_ACCESS_KEY}</span>
 </code></pre>
 <p>Refer to the
-<a href="https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/getting-your-credentials.html">official AWS documentation for obtaining the credentials</a>.</p>
+<a href="https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/setting-credentials-node.html">official AWS documentation for obtaining the credentials</a>.</p>
 <p><strong>4c. Authentication using an assumed role</strong> Users with multiple AWS accounts
 may want to use a role for S3 storage that is in a different AWS account. Using
 the <code>roleArn</code> parameter as seen below, you can instruct the TechDocs publisher
