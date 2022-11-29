@@ -73,8 +73,8 @@ instance or cluster.</p>
 <p>With infrastructure defined as code or data (Terraform, AWS CloudFormation,
 etc.), you may have database credentials which lack permissions to create new
 databases or you do not have control over the database names. In these
-instances, you can set the database name and connection information on a per
-plugin basis as mentioned earlier.</p>
+instances, you can set the database connection configuration on a [per plugin basis]
+(#connection-configuration-per-plugin).</p>
 <p>Backstage supports all of these use cases with the <code>DatabaseManager</code> provided by
 <code>@backstage/backend-common</code>. We will now cover how to use and configure
 Backstage's databases.</p>
