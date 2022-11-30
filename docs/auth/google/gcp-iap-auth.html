@@ -110,7 +110,7 @@ callbacks in actual code as well as described below.</p>
           <span class="hljs-comment">// and the IAP token and produces the Backstage token with the</span>
           <span class="hljs-comment">// relevant user info.</span>
           <span class="hljs-keyword">async</span> resolver({ profile, result: { iapToken } }, ctx) {
-            <span class="hljs-comment">// Somehow compute the Backstage token claims. Just some dummy code</span>
+            <span class="hljs-comment">// Somehow compute the Backstage token claims. Just some sample code</span>
             <span class="hljs-comment">// shown here, but you may want to query your LDAP server, or</span>
             <span class="hljs-comment">// GSuite or similar, based on the IAP token sub/email claims</span>
             <span class="hljs-keyword">const</span> id = iapToken.email.split(<span class="hljs-string">'@'</span>)[<span class="hljs-number">0</span>];
