@@ -12,7 +12,10 @@
 } | {
     <span class="hljs-keyword">type</span>: <span class="hljs-string">'delta'</span>;
     added: DeferredEntity[];
-    removed: DeferredEntity[];
+    removed: (DeferredEntity | {
+        entityRef: <span class="hljs-built_in">string</span>;
+        locationKey?: <span class="hljs-built_in">string</span>;
+    })[];
 };
 </code></pre>
 <p><b>References:</b> <a href="/docs/reference/plugin-catalog-node.deferredentity">DeferredEntity</a></p>
