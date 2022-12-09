@@ -671,7 +671,7 @@ scaffolding that component.</p>
       <span class="hljs-attr">name:</span> <span class="hljs-string">Register</span>
       <span class="hljs-attr">action:</span> <span class="hljs-string">catalog:register</span>
       <span class="hljs-attr">input:</span>
-        <span class="hljs-attr">repoContentsUrl:</span> <span class="hljs-string">'<span class="hljs-template-variable">{{ steps.publish.output.repoContentsUrl }}</span>'</span>
+        <span class="hljs-attr">repoContentsUrl:</span> <span class="hljs-string">{{</span> <span class="hljs-string">steps['publish'].output.repoContentsUrl</span> <span class="hljs-string">}}</span>
         <span class="hljs-attr">catalogInfoPath:</span> <span class="hljs-string">'/catalog-info.yaml'</span>
 </code></pre>
 <p>In addition to the <a href="#common-to-all-kinds-the-metadata">common envelope metadata</a>
