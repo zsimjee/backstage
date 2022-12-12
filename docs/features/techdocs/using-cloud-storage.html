@@ -246,10 +246,13 @@ environment variables and the <code>~/.aws/credentials</code> config file.</p>
     <span class="hljs-attr">type:</span> <span class="hljs-string">'awsS3'</span>
     <span class="hljs-attr">awsS3:</span>
       <span class="hljs-attr">bucketName:</span> <span class="hljs-string">'name-of-techdocs-storage-bucket'</span>
+      <span class="hljs-attr">accountId:</span> <span class="hljs-string">'123456789012'</span>
       <span class="hljs-attr">region:</span> <span class="hljs-string">${AWS_REGION}</span>
-      <span class="hljs-attr">credentials:</span>
-        <span class="hljs-attr">accessKeyId:</span> <span class="hljs-string">${AWS_ACCESS_KEY_ID}</span>
-        <span class="hljs-attr">secretAccessKey:</span> <span class="hljs-string">${AWS_SECRET_ACCESS_KEY}</span>
+<span class="hljs-attr">aws:</span>
+  <span class="hljs-attr">accounts:</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-attr">accountId:</span> <span class="hljs-string">'123456789012'</span>
+      <span class="hljs-attr">accessKeyId:</span> <span class="hljs-string">${AWS_ACCESS_KEY_ID}</span>
+      <span class="hljs-attr">secretAccessKey:</span> <span class="hljs-string">${AWS_SECRET_ACCESS_KEY}</span>
 </code></pre>
 <p>Refer to the
 <a href="https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/setting-credentials-node.html">official AWS documentation for obtaining the credentials</a>.</p>
