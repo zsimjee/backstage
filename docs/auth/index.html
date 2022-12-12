@@ -182,6 +182,24 @@ thing you need to do to configure the <code>ProxiedSignInPage</code> is to pass 
   },
 });
 </code></pre>
+<p>If the provider in auth backend expects additional headers such as <code>x-provider-token</code>, there is now a way to configure that in <code>ProxiedSignInPage</code> using the optional <code>headers</code> prop.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-tsx"><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">ProxiedSignInPage</span>
+  </span></span><span class="hljs-template-variable">{...props}</span><span class="xml"><span class="hljs-tag">
+  <span class="hljs-attr">provider</span>=<span class="hljs-string">"my-custom-provider"</span>
+  <span class="hljs-attr">headers</span>=</span></span><span class="hljs-template-variable">{{ 'x-some-key': someValue }</span><span class="xml"><span class="hljs-tag">}
+/&gt;</span>
+</span></code></pre>
+<p>Headers can also be returned in an async manner:</p>
+<pre><code class="hljs css language-tsx">&lt;ProxiedSignInPage
+  {...props}
+  provider=<span class="hljs-string">"my-custom-provider"</span>
+  headers={<span class="hljs-keyword">async</span> () =&gt; {
+    <span class="hljs-keyword">const</span> someValue = <span class="hljs-keyword">await</span> someFn();
+    <span class="hljs-keyword">return</span> { <span class="hljs-string">'x-some-key'</span>: someValue };
+  }}
+/&gt;
+</code></pre>
 <p>A downside of this method is that it can be cumbersome to set up for local development.
 As a workaround for this, it's possible to dynamically select the sign-in page based on
 what environment the app is running in, and then use a different sign-in method for local
