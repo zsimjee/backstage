@@ -81,6 +81,7 @@
           <span class="hljs-attr">dashboardUrl:</span> <span class="hljs-string">http://127.0.0.1:64713</span> <span class="hljs-comment"># url copied from running the command: minikube service kubernetes-dashboard -n kubernetes-dashboard</span>
           <span class="hljs-attr">dashboardApp:</span> <span class="hljs-string">standard</span>
           <span class="hljs-attr">caData:</span> <span class="hljs-string">${K8S_CONFIG_CA_DATA}</span>
+          <span class="hljs-attr">caFile:</span> <span class="hljs-string">''</span> <span class="hljs-comment"># local path to CA file</span>
           <span class="hljs-attr">customResources:</span>
             <span class="hljs-bullet">-</span> <span class="hljs-attr">group:</span> <span class="hljs-string">'argoproj.io'</span>
               <span class="hljs-attr">apiVersion:</span> <span class="hljs-string">'v1alpha1'</span>
@@ -247,8 +248,8 @@ for some dashboards, such as GKE.</p>
 </code></pre>
 <h5><a class="anchor" aria-hidden="true" id="clusterscadata-optional"></a><a href="#clusterscadata-optional" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>clusters.\*.caData</code> (optional)</h5>
 <p>Base64-encoded certificate authority bundle in PEM format. The Kubernetes client
-will verify that TLS certificate presented by the API server is signed by this
-CA.</p>
+will verify that the TLS certificate presented by the API server is signed by
+this CA.</p>
 <p>This value could be obtained via inspecting the kubeconfig file (usually
 at <code>~/.kube/config</code>) under <code>clusters[*].cluster.certificate-authority-data</code>. For
 GKE, execute the following command to obtain the value</p>
@@ -259,6 +260,12 @@ GKE, execute the following command to obtain the value</p>
 <p>See also
 <a href="https://cloud.google.com/kubernetes-engine/docs/how-to/api-server-authentication#environments-without-gcloud">https://cloud.google.com/kubernetes-engine/docs/how-to/api-server-authentication#environments-without-gcloud</a>
 for complete docs about GKE without <code>gcloud</code>.</p>
+<h5><a class="anchor" aria-hidden="true" id="clusterscafile-optional"></a><a href="#clusterscafile-optional" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>clusters.\*.caFile</code> (optional)</h5>
+<p>Filesystem path (on the host where the Backstage process is running) to a
+certificate authority bundle in PEM format. The Kubernetes client will verify
+that the TLS certificate presented by the API server is signed by this CA. Note
+that only clusters defined in the app-config via the <a href="#config"><code>config</code></a>
+cluster locator method can be configured in this way.</p>
 <h5><a class="anchor" aria-hidden="true" id="clusterscustomresources-optional"></a><a href="#clusterscustomresources-optional" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>clusters.\*.customResources</code> (optional)</h5>
 <p>Configures which <a href="https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/">custom resources</a> to look for when returning an entity's
 Kubernetes resources belonging to the cluster. Same specification as <a href="#customresources-optional"><code>customResources</code></a></p>
