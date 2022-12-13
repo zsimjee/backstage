@@ -114,7 +114,7 @@ from the previous steps.</p>
   database:
 <span class="hljs-deletion">-    client: better-sqlite3</span>
 <span class="hljs-deletion">-    connection: ':memory:'</span>
-<span class="hljs-addition">+    # config options: https://node-postgres.com/api/client</span>
+<span class="hljs-addition">+    # config options: https://node-postgres.com/apis/client</span>
 <span class="hljs-addition">+    client: pg</span>
 <span class="hljs-addition">+    connection:</span>
 <span class="hljs-addition">+      host: ${POSTGRES_HOST}</span>
