@@ -1,5 +1,17 @@
 # @backstage/backend-app-api
 
+## 0.2.4-next.4
+
+### Patch Changes
+
+- 05a928e296: Updated usages of types from `@backstage/backend-plugin-api`.
+- 5260d8fc7d: Root scoped services are now always initialized, regardless of whether they're used by any features.
+- Updated dependencies
+  - @backstage/backend-plugin-api@0.2.0-next.4
+  - @backstage/backend-common@0.17.0-next.3
+  - @backstage/backend-tasks@0.4.0-next.3
+  - @backstage/plugin-permission-node@0.7.2-next.3
+
 ## 0.2.4-next.3
 
 ### Patch Changes

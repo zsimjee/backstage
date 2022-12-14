@@ -1,5 +1,11 @@
 # @backstage/core-components
 
+## 0.12.1-next.5
+
+### Patch Changes
+
+- a236a8830d: Update sidebar icon alignment
+
 ## 0.12.1-next.4
 
 ### Patch Changes

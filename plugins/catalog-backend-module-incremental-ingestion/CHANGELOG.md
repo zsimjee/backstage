@@ -1,5 +1,18 @@
 # @backstage/plugin-catalog-backend-module-incremental-ingestion
 
+## 0.1.0-next.4
+
+### Patch Changes
+
+- 05a928e296: Updated usages of types from `@backstage/backend-plugin-api`.
+- Updated dependencies
+  - @backstage/backend-plugin-api@0.2.0-next.4
+  - @backstage/backend-test-utils@0.1.31-next.5
+  - @backstage/plugin-catalog-backend@1.6.0-next.4
+  - @backstage/plugin-catalog-node@1.3.0-next.4
+  - @backstage/backend-common@0.17.0-next.3
+  - @backstage/backend-tasks@0.4.0-next.3
+
 ## 0.1.0-next.3
 
 ### Patch Changes

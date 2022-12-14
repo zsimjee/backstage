@@ -1,5 +1,12 @@
 # @backstage/integration-react
 
+## 1.1.7-next.5
+
+### Patch Changes
+
+- Updated dependencies
+  - @backstage/core-components@0.12.1-next.5
+
 ## 1.1.7-next.4
 
 ### Patch Changes

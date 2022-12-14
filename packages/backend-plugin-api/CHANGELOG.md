@@ -1,5 +1,17 @@
 # @backstage/backend-plugin-api
 
+## 0.2.0-next.4
+
+### Minor Changes
+
+- a025190552: **BREAKING**: All service interfaces are now suffixed with `*Service`.
+
+### Patch Changes
+
+- Updated dependencies
+  - @backstage/backend-common@0.17.0-next.3
+  - @backstage/backend-tasks@0.4.0-next.3
+
 ## 0.2.0-next.3
 
 ### Patch Changes

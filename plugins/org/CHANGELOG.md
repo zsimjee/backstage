@@ -1,5 +1,14 @@
 # @backstage/plugin-org
 
+## 0.6.2-next.5
+
+### Patch Changes
+
+- 4395eac4d8: Made all the ownership boxes the same size
+- Updated dependencies
+  - @backstage/core-components@0.12.1-next.5
+  - @backstage/plugin-catalog-react@1.2.2-next.5
+
 ## 0.6.2-next.4
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # @backstage/plugin-vault-backend
 
+## 0.2.5-next.5
+
+### Patch Changes
+
+- Updated dependencies
+  - @backstage/backend-test-utils@0.1.31-next.5
+  - @backstage/backend-common@0.17.0-next.3
+  - @backstage/backend-tasks@0.4.0-next.3
+
 ## 0.2.5-next.4
 
 ### Patch Changes

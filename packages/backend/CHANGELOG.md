@@ -1,5 +1,31 @@
 # example-backend
 
+## 0.2.78-next.5
+
+### Patch Changes
+
+- Updated dependencies
+  - @backstage/plugin-jenkins-backend@0.1.29-next.4
+  - example-app@0.2.78-next.5
+  - @backstage/plugin-app-backend@0.3.39-next.4
+  - @backstage/plugin-catalog-backend@1.6.0-next.4
+  - @backstage/plugin-catalog-node@1.3.0-next.4
+  - @backstage/plugin-events-backend@0.2.0-next.4
+  - @backstage/plugin-events-node@0.2.0-next.4
+  - @backstage/plugin-scaffolder-backend@1.9.0-next.4
+  - @backstage/backend-common@0.17.0-next.3
+  - @backstage/backend-tasks@0.4.0-next.3
+  - @backstage/plugin-auth-backend@0.17.2-next.3
+  - @backstage/plugin-auth-node@0.2.8-next.3
+  - @backstage/plugin-kubernetes-backend@0.8.1-next.5
+  - @backstage/plugin-permission-node@0.7.2-next.3
+  - @backstage/plugin-playlist-backend@0.2.2-next.5
+  - @backstage/plugin-rollbar-backend@0.1.36-next.3
+  - @backstage/plugin-search-backend-module-pg@0.4.3-next.3
+  - @backstage/plugin-tech-insights-backend@0.5.5-next.3
+  - @backstage/plugin-techdocs-backend@1.5.0-next.3
+  - @backstage/plugin-scaffolder-backend-module-rails@0.4.7-next.4
+
 ## 0.2.78-next.4
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # @backstage/plugin-jenkins-backend
 
+## 0.1.29-next.4
+
+### Patch Changes
+
+- 9447b0fb46: added support for standalone jenkins projects
+- Updated dependencies
+  - @backstage/backend-common@0.17.0-next.3
+  - @backstage/plugin-auth-node@0.2.8-next.3
+
 ## 0.1.29-next.3
 
 ### Patch Changes
